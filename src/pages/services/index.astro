@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { withBase } from "../../lib/base";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order);
 ---
@@ -14,7 +15,7 @@ const services = (await getCollection("services")).sort((a, b) => a.data.order -
     <div class="grid gap-6 md:grid-cols-2">
       {services.map((service) => (
         <a
-          href={`/services/${service.id}`}
+          href={withBase(`/services/${service.id}`)}
           class="block rounded-lg border border-primary-100 p-6 hover:border-primary-500 hover:shadow-sm transition"
         >
           <p class="text-xs text-primary-500 font-semibold mb-2">0{service.data.order}</p>

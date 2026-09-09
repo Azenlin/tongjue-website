@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
+import { withBase } from "../../lib/base";
 
 export async function getStaticPaths() {
   const services = await getCollection("services");
@@ -16,13 +17,13 @@ const { Content } = await render(service);
 
 <BaseLayout title={service.data.title} description={service.data.summary}>
   <section class="mx-auto max-w-3xl px-6 py-16">
-    <a href="/services" class="text-sm text-primary-500 hover:underline">← 回服務項目列表</a>
+    <a href={withBase("/services")} class="text-sm text-primary-500 hover:underline">← 回服務項目列表</a>
     <h1 class="text-3xl font-bold text-ink-700 mt-4 mb-6">{service.data.title}</h1>
     <div class="prose prose-neutral max-w-none text-ink-500 leading-relaxed">
       <Content />
     </div>
     <a
-      href="/contact"
+      href={withBase("/contact")}
       class="mt-10 inline-block rounded-md bg-primary-500 px-6 py-3 text-white font-semibold hover:bg-primary-600 transition-colors"
     >
       聊聊這項服務

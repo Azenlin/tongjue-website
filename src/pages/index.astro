@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { withBase } from "../lib/base";
 
 const services = (await getCollection("services")).sort((a, b) => a.data.order - b.data.order).slice(0, 3);
 const cases = (await getCollection("portfolio")).sort((a, b) => a.data.order - b.data.order).slice(0, 2);
@@ -17,13 +18,13 @@ const cases = (await getCollection("portfolio")).sort((a, b) => a.data.order - b
       </p>
       <div class="mt-8 flex gap-4">
         <a
-          href="/contact"
+          href={withBase("/contact")}
           class="inline-block rounded-md bg-primary-500 px-6 py-3 text-white font-semibold hover:bg-primary-600 transition-colors"
         >
           聯絡我們
         </a>
         <a
-          href="/services"
+          href={withBase("/services")}
           class="inline-block rounded-md border border-primary-300 px-6 py-3 text-primary-500 font-semibold hover:bg-primary-50 transition-colors"
         >
           看服務項目
@@ -32,7 +33,7 @@ const cases = (await getCollection("portfolio")).sort((a, b) => a.data.order - b
     </div>
     <div class="justify-self-center">
       <img
-        src="/images/profile/hero-placeholder.svg"
+        src={withBase("/images/profile/hero-placeholder.svg")}
         alt="阿任形象照（預留位）"
         class="rounded-lg shadow-sm w-full max-w-xs"
       />
@@ -44,7 +45,7 @@ const cases = (await getCollection("portfolio")).sort((a, b) => a.data.order - b
     <div class="grid gap-6 md:grid-cols-3">
       {services.map((service) => (
         <a
-          href={`/services/${service.id}`}
+          href={withBase(`/services/${service.id}`)}
           class="block rounded-lg border border-primary-100 p-6 hover:border-primary-500 hover:shadow-sm transition"
         >
           <h3 class="font-semibold text-ink-700 mb-2">{service.data.title}</h3>
@@ -52,7 +53,7 @@ const cases = (await getCollection("portfolio")).sort((a, b) => a.data.order - b
         </a>
       ))}
     </div>
-    <a href="/services" class="mt-8 inline-block text-primary-500 font-semibold hover:underline">
+    <a href={withBase("/services")} class="mt-8 inline-block text-primary-500 font-semibold hover:underline">
       看全部 7 項服務 →
     </a>
   </section>
@@ -62,7 +63,7 @@ const cases = (await getCollection("portfolio")).sort((a, b) => a.data.order - b
     <div class="grid gap-6 md:grid-cols-2">
       {cases.map((item) => (
         <a
-          href="/portfolio"
+          href={withBase("/portfolio")}
           class="block rounded-lg border border-primary-100 p-6 hover:border-primary-500 hover:shadow-sm transition"
         >
           <p class="text-xs text-primary-500 font-semibold mb-1">{item.data.client}</p>
@@ -80,7 +81,7 @@ const cases = (await getCollection("portfolio")).sort((a, b) => a.data.order - b
       公式解決的問題，就不必強用 AI。
     </p>
     <a
-      href="/contact"
+      href={withBase("/contact")}
       class="mt-8 inline-block rounded-md bg-primary-500 px-6 py-3 text-white font-semibold hover:bg-primary-600 transition-colors"
     >
       跟阿任聊聊

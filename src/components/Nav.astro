@@ -1,4 +1,6 @@
 ---
+import { withBase } from "../lib/base";
+
 const links = [
   { href: "/", label: "首頁" },
   { href: "/about", label: "關於銅爵" },
@@ -14,10 +16,11 @@ const currentPath = Astro.url.pathname;
 
 <nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
   {links.map((link) => {
-    const isActive = link.href === "/" ? currentPath === "/" : currentPath.startsWith(link.href);
+    const target = withBase(link.href);
+    const isActive = link.href === "/" ? currentPath === target || currentPath === `${target}/` : currentPath.startsWith(target);
     return (
       <a
-        href={link.href}
+        href={target}
         class={`transition-colors hover:text-primary-500 ${isActive ? "text-primary-500 font-semibold" : "text-ink-500"}`}
       >
         {link.label}

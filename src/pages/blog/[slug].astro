@@ -2,6 +2,7 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { getCollection, render } from "astro:content";
 import InteractiveChart from "../../islands/InteractiveChart";
+import { withBase } from "../../lib/base";
 
 export async function getStaticPaths() {
   const posts = await getCollection("blog", ({ data }) => !data.draft);
@@ -17,7 +18,7 @@ const { Content } = await render(post);
 
 <BaseLayout title={post.data.title} description={post.data.description}>
   <article class="mx-auto max-w-3xl px-6 py-16">
-    <a href="/blog" class="text-sm text-primary-500 hover:underline">← 回銅爵觀點</a>
+    <a href={withBase("/blog")} class="text-sm text-primary-500 hover:underline">← 回銅爵觀點</a>
     <p class="text-xs text-ink-500/70 mt-4">
       {post.data.pubDate.toLocaleDateString("zh-TW", { year: "numeric", month: "long", day: "numeric" })}
     </p>

@@ -1,11 +1,12 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
+import { withBase } from "../lib/base";
 ---
 
 <BaseLayout title="關於銅爵" description="銅爵科技顧問創辦人林昱任的背景與顧問理念。">
   <section class="mx-auto max-w-5xl px-6 py-16 grid gap-12 md:grid-cols-[1fr_1.4fr] md:items-start">
     <img
-      src="/images/profile/about-placeholder.svg"
+      src={withBase("/images/profile/about-placeholder.svg")}
       alt="林昱任形象照（預留位）"
       class="rounded-lg shadow-sm w-full"
     />

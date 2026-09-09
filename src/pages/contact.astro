@@ -1,0 +1,30 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="聯絡我們" description="聯絡銅爵科技顧問，電話、Email、Line 都可以找到我們。">
+  <section class="mx-auto max-w-2xl px-6 py-16 text-center">
+    <h1 class="text-3xl font-bold text-ink-700 mb-4">聯絡我們</h1>
+    <p class="text-ink-500 mb-10">
+      不管你現在卡在哪個問題，先聊聊看。我們不會一開始就推銷工具。
+    </p>
+    <div class="grid gap-4 text-left rounded-lg border border-primary-100 p-8">
+      <div class="flex justify-between border-b border-primary-100 pb-3">
+        <span class="text-ink-500">電話</span>
+        <a href="tel:0963168105" class="font-semibold text-primary-500">0963-168-105</a>
+      </div>
+      <div class="flex justify-between border-b border-primary-100 pb-3">
+        <span class="text-ink-500">Email</span>
+        <a href="mailto:azen@tongjuetech.com" class="font-semibold text-primary-500">azen@tongjuetech.com</a>
+      </div>
+      <div class="flex justify-between border-b border-primary-100 pb-3">
+        <span class="text-ink-500">Line ID</span>
+        <span class="font-semibold text-ink-700">azen1027</span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-ink-500">營業時間</span>
+        <span class="font-semibold text-ink-700">週一至週五 08:00–17:30</span>
+      </div>
+    </div>
+  </section>
+</BaseLayout>

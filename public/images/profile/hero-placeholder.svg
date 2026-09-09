@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="480" height="600" viewBox="0 0 480 600">
+  <rect width="480" height="600" fill="#e5e2df"/>
+  <rect x="1" y="1" width="478" height="598" fill="none" stroke="#c9c4bd" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="240" y="290" text-anchor="middle" font-family="sans-serif" font-size="20" fill="#8a8378">形象照預留位</text>
+  <text x="240" y="320" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#a39c90">首頁 Hero・建議 4:5 直式</text>
+</svg>

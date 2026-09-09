@@ -1,0 +1,27 @@
+---
+const links = [
+  { href: "/", label: "首頁" },
+  { href: "/about", label: "關於銅爵" },
+  { href: "/services", label: "服務項目" },
+  { href: "/portfolio", label: "案例" },
+  { href: "/blog", label: "銅爵觀點" },
+  { href: "/courses", label: "課程" },
+  { href: "/contact", label: "聯絡我們" },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<nav class="flex flex-wrap gap-x-6 gap-y-2 text-sm">
+  {links.map((link) => {
+    const isActive = link.href === "/" ? currentPath === "/" : currentPath.startsWith(link.href);
+    return (
+      <a
+        href={link.href}
+        class={`transition-colors hover:text-primary-500 ${isActive ? "text-primary-500 font-semibold" : "text-ink-500"}`}
+      >
+        {link.label}
+      </a>
+    );
+  })}
+</nav>

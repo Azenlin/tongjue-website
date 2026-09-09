@@ -1,0 +1,42 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="關於銅爵" description="銅爵科技顧問創辦人林昱任的背景與顧問理念。">
+  <section class="mx-auto max-w-5xl px-6 py-16 grid gap-12 md:grid-cols-[1fr_1.4fr] md:items-start">
+    <img
+      src="/images/profile/about-placeholder.svg"
+      alt="林昱任形象照（預留位）"
+      class="rounded-lg shadow-sm w-full"
+    />
+    <div>
+      <h1 class="text-3xl font-bold text-ink-700 mb-6">關於銅爵</h1>
+      <p class="text-ink-500 leading-relaxed mb-4">
+        許多廠商一進門就推銷系統，不聽完問題就開始談導入。創辦人林昱任出身工廠，深知這通常不是客戶真正的需求。
+      </p>
+      <p class="text-ink-500 leading-relaxed mb-4">
+        他強調「先診斷，再開藥」的重點：「第一個問題永遠是——你現在最痛的地方在哪裡？」他相信「Simple is
+        good」，若能用 Excel 公式解決的問題，就不必強用 AI。
+      </p>
+      <p class="text-ink-500 leading-relaxed">
+        13 年跨科技製造、化工、能源等產業經驗，讓他能跨域看穿問題本質，站在客戶身邊、陪你一起把問題解決掉。
+      </p>
+
+      <h2 class="text-xl font-bold text-ink-700 mt-10 mb-4">選擇銅爵的三大理由</h2>
+      <ul class="space-y-4">
+        <li class="rounded-lg border border-primary-100 p-4">
+          <p class="font-semibold text-ink-700 mb-1">跨域實戰，看穿問題本質</p>
+          <p class="text-sm text-ink-500">13 年跨科技製造、化工、能源等產業經驗。</p>
+        </li>
+        <li class="rounded-lg border border-primary-100 p-4">
+          <p class="font-semibold text-ink-700 mb-1">先診斷，再開藥</p>
+          <p class="text-sm text-ink-500">不預設答案、不推銷工具。</p>
+        </li>
+        <li class="rounded-lg border border-primary-100 p-4">
+          <p class="font-semibold text-ink-700 mb-1">Simple is good</p>
+          <p class="text-sm text-ink-500">能用 Excel 解決的問題不強推 AI。</p>
+        </li>
+      </ul>
+    </div>
+  </section>
+</BaseLayout>

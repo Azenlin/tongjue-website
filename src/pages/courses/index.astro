@@ -1,0 +1,38 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+
+const courses = await getCollection("courses");
+
+const statusLabel: Record<string, string> = {
+  open: "開放報名",
+  upcoming: "即將開放",
+  closed: "已額滿",
+};
+---
+
+<BaseLayout title="課程" description="銅爵科技顧問開設的課程與報名資訊。">
+  <section class="mx-auto max-w-5xl px-6 py-16">
+    <h1 class="text-3xl font-bold text-ink-700 mb-4">課程</h1>
+    <p class="text-ink-500 mb-10 max-w-2xl">實戰導向的課程，內容陸續更新中。</p>
+    <div class="grid gap-6 md:grid-cols-2">
+      {courses.map((course) => (
+        <article class="rounded-lg border border-primary-100 p-6">
+          <p class="text-xs text-primary-500 font-semibold mb-2">{statusLabel[course.data.status]}</p>
+          <h2 class="font-semibold text-lg text-ink-700 mb-2">{course.data.title}</h2>
+          <p class="text-sm text-ink-500 leading-relaxed mb-4">{course.data.summary}</p>
+          {course.data.registrationUrl ? (
+            <a
+              href={course.data.registrationUrl}
+              class="inline-block rounded-md bg-primary-500 px-4 py-2 text-sm text-white font-semibold hover:bg-primary-600 transition-colors"
+            >
+              立即報名
+            </a>
+          ) : (
+            <span class="text-sm text-ink-500/70">報名連結準備中</span>
+          )}
+        </article>
+      ))}
+    </div>
+  </section>
+</BaseLayout>

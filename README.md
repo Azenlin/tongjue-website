@@ -86,5 +86,5 @@ Build command：`npm run build`，Output：`dist`，環境變數 `NODE_VERSION=2
 - 不要在 Google Drive 的鏡像資料夾裡跑 `npm install`（見 `開發說明.md`）。
 - 更新 Drive 備份：
   ```powershell
-  robocopy "<本機 repo>" "G:\我的雲端硬碟\00_銅爵科技顧問\00_個人網站" /MIR /XD node_modules dist .astro .git 官網表單 /XF package-lock.json
+  robocopy "<本機 repo>" "G:\我的雲端硬碟\00_銅爵科技顧問\00_個人網站" /MIR /XD node_modules dist .astro .git .check 官網表單 /XF package-lock.json
   ```

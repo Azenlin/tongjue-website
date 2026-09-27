@@ -25,3 +25,4 @@ pnpm-debug.log*
 
 # 檢查工具截圖
 .check/
+__pycache__/

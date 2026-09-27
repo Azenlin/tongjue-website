@@ -33,7 +33,7 @@ const heroCss = coverCss([post]).replace(`.post-img-${post.id}`, '.post-hero');
   css={`${pillarCss}\n${heroCss}\n${postCss}`}
   logic={pillarLogic}
   extraLd={[articleJsonLd(post)]}
-  ogImage={coverOf(post)}
+  ogImage={coverOf(post) ?? '/og-default.png'}
   ogType="article"
 >
   <Content />

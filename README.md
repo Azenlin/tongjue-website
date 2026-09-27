@@ -54,6 +54,7 @@ python tools/check.py --shot yujen --full          # 整頁長截圖
 | `public/_redirects` | 舊 WordPress 網址的 301 轉址（Cloudflare Pages 格式） |
 | `tools/import_design.py` | 設計稿 → 網站的匯入工具 |
 | `tools/check.py` | 檢查與截圖工具 |
+| `tools/og/` | 分享預覽圖來源（`og-default.html`），`python tools/og/render.py` 輸出成 `public/og-default.png`；文章頁改用各自的封面 |
 | `src/content/posts/` | 文章（每篇一個資料夾） |
 | `src/lib/posts.ts` | 文章接到設計稿頁面的規則 |
 

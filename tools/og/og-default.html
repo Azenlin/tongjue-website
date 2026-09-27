@@ -1,0 +1,36 @@
+<!doctype html>
+<!-- 分享預覽圖（1200×630）的來源；用 python tools/og/render.py 輸出成 public/og-default.png -->
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@700&display=block">
+<style>
+  html, body { margin: 0; }
+  body { width: 1200px; height: 630px; overflow: hidden; background: #f7f4f1; font-family: 'Noto Sans TC', sans-serif; }
+  .card { position: relative; width: 1200px; height: 630px; box-sizing: border-box; display: grid; grid-template-columns: 360px 1fr; align-items: center; gap: 64px; padding: 0 96px 40px; }
+  .card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 18px; background: #8d1d22; }
+  .logo { width: 360px; height: 360px; }
+  .logo img { width: 100%; height: 100%; object-fit: contain; }
+  .name { margin: 0; font-family: 'Noto Serif TC', serif; font-weight: 700; font-size: 84px; line-height: 1.15; letter-spacing: 6px; color: #1a1a1a; }
+  .rule { width: 96px; height: 4px; margin: 34px 0 30px; background: #8d1d22; }
+  .tag { margin: 0; font-size: 38px; line-height: 1.5; font-weight: 600; color: #333333; }
+  .sub { margin: 14px 0 0; font-size: 28px; line-height: 1.5; color: #6a6a6a; }
+  .url { position: absolute; left: 96px; right: 96px; bottom: 40px; display: flex; justify-content: space-between; padding-top: 22px; border-top: 1px solid #ddd3cc; font-size: 24px; color: #8d1d22; font-weight: 600; letter-spacing: 1px; }
+  .url span:last-child { color: #8a8a8a; font-weight: 400; }
+</style>
+</head>
+<body>
+  <div class="card">
+    <div class="logo"><img src="logo.png" alt=""></div>
+    <div>
+      <p class="name">銅爵科技顧問</p>
+      <div class="rule"></div>
+      <p class="tag">企業 AI 導入 ‧ 淨零碳規劃</p>
+      <p class="sub">把 AI 塑造成你的形狀</p>
+    </div>
+  </div>
+  <div class="url"><span>tongjuetech.com</span><span>林昱任　Tongjue Tech Consulting</span></div>
+</body>
+</html>

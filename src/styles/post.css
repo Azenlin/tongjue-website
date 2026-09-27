@@ -1,5 +1,9 @@
 /* 文章內文排版（MDX 產生的標準標籤）；字級、顏色沿用設計稿「中小企業 AI 導入指南」 */
 .post-body{display:block !important}
+/* 證照代碼這類含連字號的詞不要斷在連字號 */
+.post-body .nowrap{white-space:nowrap}
+/* 避免段落最後一行只剩一兩個字（孤字） */
+.post-body p,.post-body li,.post-body figcaption,.post-body td,.post-body figure span{text-wrap:pretty}
 section:has(>.post-body){padding-top:56px !important}
 .post-body>*{margin:0}
 .post-body>*+*{margin-top:26px}
@@ -26,6 +30,16 @@ section:has(>.post-body){padding-top:56px !important}
 .post-body .table-wrap{overflow-x:auto}
 .post-body code{padding:1px 6px;border-radius:4px;background:#f5f5f5;font-size:.9em}
 @media (max-width:760px){
+.post-body .stack table,.post-body .stack tbody,.post-body .stack tr,.post-body .stack td{display:block;width:auto}
+.post-body .stack thead{display:none}
+.post-body .stack tr{padding:14px 16px;border:1px solid #dddddd;border-radius:10px;background:#ffffff}
+.post-body .stack tr+tr{margin-top:10px}
+.post-body .stack td{padding:0;border:0}
+.post-body .stack td:nth-child(1),.post-body .stack td:nth-child(2){display:inline;font-weight:600;color:#1a1a1a;font-size:16px}
+.post-body .stack td:nth-child(1)::after{content:'. '}
+.post-body .stack td:nth-child(3){margin-top:6px}
+.post-body .stack td:last-child{margin-top:8px;padding-top:8px;border-top:1px solid #eeeeee;font-size:14px;line-height:22px;color:#888888}
+.post-body .stack-scenarios td:last-child::before{content:'主要考的範疇：';color:#8d1d22}
 section:has(>.post-body){padding-top:36px !important}
 .post-body h2{margin-top:52px;font-size:26px !important;line-height:36px !important}
 .post-body h3{margin-top:36px;font-size:20px;line-height:30px}

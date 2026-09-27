@@ -1,0 +1,38 @@
+---
+/** Anthropic 四張官方認證並排卡片；本文考的 CCAR-F 加紅框 */
+const certs = [
+  { code: 'CCAO-F', name: 'Associate – Foundations', who: '在工作中使用 claude.ai 的非技術職，例如行銷、PM、顧問' },
+  { code: 'CCDV-F', name: 'Developer – Foundations', who: '用 Claude API 開發應用程式的工程師' },
+  { code: 'CCAR-F', name: 'Architect – Foundations', who: '要把 Claude 組成一套實際上線系統的人', me: true },
+  { code: 'CCAR-P', name: 'Architect – Professional', who: '負責整個導入專案、從需求盤點到治理都要扛的架構師' },
+];
+---
+<div class="cc" role="list" aria-label="Anthropic 四張官方認證">
+  {certs.map((c) => (
+    <div class={`cc-card${c.me ? ' cc-me' : ''}`} role="listitem">
+      {c.me && <span class="cc-badge">本文</span>}
+      <span class="cc-code">{c.code}</span>
+      <span class="cc-name">{c.name}</span>
+      <span class="cc-who">{c.who}</span>
+    </div>
+  ))}
+</div>
+
+<style>
+.cc{margin:32px 0 !important;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.cc-card{position:relative;display:flex;flex-direction:column;gap:6px;padding:20px 16px 18px;border:1px solid #dddddd;border-radius:10px;background:#ffffff}
+.cc-me{border:2px solid #8d1d22;padding:19px 15px 17px;background:#fdf8f8}
+.cc-badge{position:absolute;top:-11px;right:12px;padding:1px 10px;border-radius:9999px;background:#8d1d22;color:#ffffff;font-size:13px;line-height:20px;font-weight:600}
+.cc-code{font-family:'Noto Serif TC',serif;font-weight:700;font-size:24px;line-height:30px;color:#1a1a1a}
+.cc-me .cc-code{color:#8d1d22}
+.cc-name{font-size:14px;line-height:20px;color:#888888}
+.cc-who{margin-top:6px;padding-top:10px;border-top:1px solid #eeeeee;font-size:15px;line-height:24px;color:#333333}
+@media (max-width:760px){
+.cc{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;row-gap:16px}
+.cc-card{padding:16px 12px 14px}
+.cc-me{padding:15px 11px 13px}
+.cc-code{font-size:20px;line-height:26px}
+.cc-name{font-size:13px;line-height:18px}
+.cc-who{font-size:14px;line-height:22px}
+}
+</style>

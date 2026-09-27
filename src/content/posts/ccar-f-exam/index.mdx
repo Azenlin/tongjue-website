@@ -1,54 +1,76 @@
 ---
-title: 英文不好，也考過了 Claude 認證架構師：我的 CCAR-F 準備心得
+title: 考過 Claude 認證架構師：我的 CCAR-F 準備心得
 description: Anthropic 第一張官方技術認證 CCAR-F 考什麼、怎麼報名、怎麼準備？我準備一個月，模擬考 911 分、正式考 827 分，整理給想考的人。
 date: 2026-09-27
 tags: ['AI 導入', '隨筆']
 services: ['ai', 'kb']
 ---
+import CertCards from './CertCards.astro';
+import ExamFlow from './ExamFlow.astro';
 import DomainPie from './DomainPie.astro';
 import ScoreCompare from './ScoreCompare.astro';
 
 ## Anthropic 的第一張官方技術認證
 
-2026 年 3 月 12 日，開發 Claude 的 Anthropic 推出了第一張官方認證：Claude Certified Architect – Foundations，成績單上的考試代碼是 CCAR-F（不少資料也簡稱 CCA-F）。7 月 23 日，認證再擴充為依職務區分的四張：
+2026 年 3 月 12 日，開發 Claude 的 Anthropic 推出了第一張官方認證：Claude Certified Architect – Foundations，成績單上的考試代碼是 <span class="nowrap">CCAR-F</span>（不少資料也簡稱 <span class="nowrap">CCA-F</span>）。7 月 23 日，認證再擴充為依職務區分的四張：
 
-- **Associate – Foundations（CCAO-F）**：給在工作中使用 claude.ai 的非技術職，例如行銷、PM、顧問
-- **Developer – Foundations（CCDV-F）**：給用 Claude API 開發應用程式的工程師
-- **Architect – Foundations（CCAR-F）**：給要把 Claude 組成一套實際上線系統的人
-- **Architect – Professional（CCAR-P）**：給負責整個導入專案、從需求盤點到治理都要扛的架構師
+<CertCards />
 
 市面上很多 AI 課程證書，考的是「會不會用某個工具」。這張證照不一樣：它由模型原廠 Anthropic 直接出題，考的是你能不能把 Claude 組成一套在企業裡穩定運作的系統——AI 什麼時候該自己往下做、什麼時候該停下來交給人，工具怎麼接、資料太多時怎麼不出錯。對要幫企業導入 AI 的人來說，這是少數由原廠背書的能力證明。
 
 ## 這張考試考什麼
 
-CCAR-F 的基本規格如下：
+<span class="nowrap">CCAR-F</span> 的基本規格如下：
 
-- **題型**：60 題選擇題，約四分之一是複選題
+- **題型**：60 題單選題（四選一）
 - **時間**：120 分鐘
 - **計分**：100–1000 分制，720 分及格
 - **費用**：每次 125 美元
 - **語言**：全英文
 - **應試方式**：Pearson VUE 監考，可以到考場，也可以線上考
-- **報名管道**：Anthropic Partner Academy，需要先加入 Claude Partner Network（免費）
+- **報名管道**：[Anthropic Partner Academy](https://anthropic-partners.skilljar.com/)，需要先加入 Claude Partner Network（免費）
 - **效期**：一年
 
 題目分屬五個範疇，各自的占比如下：
 
 <DomainPie />
 
-題目不是單純考名詞定義，而是以六種「實際運作中的 AI 系統」為情境出題，例如自動化程式碼審查、客服升級處理、大量文件擷取、知識庫問答。每次考試抽其中四種，問你：「這個系統出了這個狀況，一位稱職的架構師會怎麼處理？」
+出題方式也跟一般考試不太一樣。官方準備了六個「企業實際在用的 AI 系統」情境：
+
+<div class="table-wrap stack stack-scenarios">
+
+| # | 情境 | 這套系統在做什麼 | 主要考的範疇 |
+|---|---|---|---|
+| 1 | 客服處理 AI | 處理退貨、帳務爭議等客服問題，並判斷什麼時候該轉給真人 | 代理架構與協同、工具設計與 MCP 整合、上下文管理與可靠性 |
+| 2 | 用 Claude Code 寫程式 | 協助團隊寫程式、改程式、除錯、寫文件 | Claude Code 設定與工作流程、上下文管理與可靠性 |
+| 3 | 多 AI 分工的研究系統 | 一個主管 AI 把搜尋、分析、彙整、寫報告分派給不同的 AI，產出附引用來源的報告 | 代理架構與協同、工具設計與 MCP 整合、上下文管理與可靠性 |
+| 4 | 工程師效率工具 | 幫工程師看懂陌生的程式、產生重複性的程式碼、自動化例行工作 | 工具設計與 MCP 整合、Claude Code 設定與工作流程、代理架構與協同 |
+| 5 | 自動化開發流程 | 把 Claude Code 接進開發流程，自動審查程式碼、產生測試 | Claude Code 設定與工作流程、提示工程與結構化輸出 |
+| 6 | 文件資料擷取 | 從各種文件裡抓出需要的欄位，並檢查格式正確 | 提示工程與結構化輸出、上下文管理與可靠性 |
+
+</div>
+
+每次考試會從這六個情境中隨機抽出四個。每個情境會先描述一套正在運作的系統，再接著出一組題目，問你：「這套系統出了這個狀況，應該怎麼處理？」所以準備時，與其背名詞定義，不如先把這六種系統怎麼運作、常見的問題出在哪裡弄清楚。
 
 ## 我為什麼會去考
 
 今年 5 月以前，我用 AI 的方式跟大多數人一樣：打開 ChatGPT 或 Gemini，在對話框裡問問題、拿答案。5 月開始接觸 Claude，才慢慢發現 AI 能做的遠不只是回答問題。
 
-讓我決定報名的，是余文皓學長的這篇整理：[〈Claude 證照是什麼？Anthropic 四張官方認證怎麼考、和免費證書差在哪〉](https://yu-wenhao.com/zh-TW/blog/anthropic-claude-certifications/)。學長把四張證照的差異、適合的對象、報名方式都講得很清楚，看完之後，我決定挑戰其中的 CCAR-F。
+在實際把 ChatGPT、Gemini、Claude 都用過一輪之後，我發現 Claude 是最能解決我工作問題的一個。它產出的內容最精確，也最能深入串接我們每天在用的行政工具——Microsoft Office、Google Drive 上的各種功能，還有 Email、行事曆等等。以我的使用經驗來說，它是目前最全面的。也因為這樣，Anthropic 推出的這張官方證照，在我心裡的份量特別重；這也是為什麼現在我選擇它來作為 AIOS 的核心 LLM。
+
+讓我決定報名的，是余文皓顧問的這篇整理：[〈Claude 證照是什麼？Anthropic 四張官方認證怎麼考、和免費證書差在哪〉](https://yu-wenhao.com/zh-TW/blog/anthropic-claude-certifications/)。他把四張證照的差異、適合的對象、報名方式都講得很清楚，私下和余顧問討論後，我決定挑戰其中的 <span class="nowrap">CCAR-F</span>。
 
 ## 報名、準備與模擬考
 
+### 報名流程
+
+從報名到應試，一共 4 個步驟：
+
+<ExamFlow />
+
 ### 報名就卡了兩個星期
 
-八月初報名繳費後，我一直收不到 Pearson VUE 的排考通知信。問 Anthropic 客服，對方說要找 Pearson VUE；問 Pearson VUE，對方說帳號建立是 Anthropic 的責任。三個窗口來回踢了將近兩週，才查出真正的原因：**Pearson VUE 的報名系統只支援英文字母，我報名時填了中文姓名，帳號就這樣卡住了**。改成護照上的英文拼音姓名後，問題當天就解決。
+我就卡在第 3 步。八月初報名繳費後，我一直收不到 Pearson VUE 的排考通知信。問 Anthropic 客服，對方說要找 Pearson VUE；問 Pearson VUE，對方說帳號建立是 Anthropic 的責任。三個窗口來回踢了將近兩週，才查出真正的原因：**Pearson VUE 的報名系統只支援英文字母，我報名時填了中文姓名，帳號就這樣卡住了**。改成護照上的英文拼音姓名後，問題當天就解決。
 
 ### 一個月、兩個主要資源
 
@@ -56,7 +78,7 @@ CCAR-F 的基本規格如下：
 
 第一個是 claudecertificationguide.com，有完整的考綱整理和模擬考。
 
-第二個是 Udemy 上 Jacob Bushong 開的課，也是目前學員人數最多的一門，將近三萬人。他在課程一開頭就提醒：AI 迭代的速度太快，證照考試的內容也必須跟著不斷更新，所以他承諾會針對新增的考試範疇持續更新課程，買過的學員之後都能回來看新內容。對一張考綱會變動的證照來說，這點很重要。
+第二個是 Udemy 上 [Jacob Bushong 開的課](https://www.udemy.com/course/certified-claude-architect-masterclass-2026/?couponCode=UDEAFFMX0926)，也是目前學員人數最多的一門，將近三萬人。他在課程一開頭就提醒：AI 迭代的速度太快，證照考試的內容也必須跟著不斷更新，所以他承諾會針對新增的考試範疇持續更新課程，買過的學員之後都能回來看新內容。對一張考綱會變動的證照來說，這點很重要。
 
 ### 模擬考 911 分，正式考 827 分
 
@@ -70,9 +92,11 @@ CCAR-F 的基本規格如下：
 
 我選擇到 Pearson VUE 的合作考場應試，而不是線上考。好處是不用自己準備符合規定的考試房間和設備，只要帶著護照和身分證到考場就能考，省事很多。
 
-考場的規定很嚴格：禁止使用任何翻譯工具，進場前甚至會檢查眼鏡，確認不是智慧眼鏡。
+考場的規定很嚴格：禁止使用任何翻譯工具，進場前甚至會檢查眼鏡，確認不是智慧眼鏡；考場內也裝有監視器全程監控，防止作弊情事的發生。
 
-對我來說，最大的挑戰是英文閱讀。考試全程是英文原文，對英文閱讀比較弱的我來說非常吃力。我必須承認，不少題目我並沒有完全讀懂題幹或選項的意思，很多時候是靠判斷、靠對題型的熟悉度去選答案。最後以 827 分通過，及格線是 720。
+對我來說，考這張證照最大的挑戰其實是英文閱讀。考題是原文，對英文閱讀比較弱的我來說壓力比較大。我必須承認，不少題目我並沒有完全讀懂題幹或選項的意思，有幾題甚至是靠判斷、靠對題型的熟悉度去選擇答案。最後以 827 分通過，及格線是 720。
+
+但老話一句：「勤能補拙」，這邊建議對於英文沒自信也別放棄，多花時間準備、刷考古題，把考試範疇裡常出現的術語記起來，一樣能夠應付考試的難度。
 
 ## 給想考的人的建議
 
@@ -80,19 +104,21 @@ CCAR-F 的基本規格如下：
 
 如果你想走向協助企業導入 AI 這條路，我很推薦這張證照。以我考過的證照來比較，它比 iPAS 的相關證照更有挑戰性，在實務上也更有幫助。
 
-準備上，我會給這幾個建議：
+最後總結一下，我會給想考照的同學們這幾個建議：
 
 1. **報名時，姓名直接填護照上的英文拼音**。Pearson VUE 的系統不支援中文字，填中文會卡住，可以省下兩個星期的來回。
 2. **模擬考分數只能參考，不能當成把握**。題庫刷久了會記住答案，正式考試的題目完全不同；要把每個範疇的觀念真正弄懂。
-3. **英文閱讀不強的人，準備時直接用英文教材**。讓自己習慣這些專有名詞與題目的寫法，考場上沒有任何翻譯可以依靠。
+3. **準備時直接用英文教材**。讓自己習慣這些專有名詞與題目的寫法，考場上沒有任何翻譯可以依靠。
 4. **不想張羅考試環境，就去考場考**。帶護照和身分證就好，不用擔心房間、網路、設備不符合線上監考的規定。
-5. **記下證照到期日**。效期一年，到期前可以在 Partner Academy 免費線上續證；過期就得付全額重考。
+5. **記下證照到期日**。證照效期一年，記得在到期前留意續證方式。
+
+如果你也想考這張證照，我很願意跟你分享細節；想知道更多的話，歡迎與我聯絡，聊聊天。
 
 ## 考試資源整理
 
-- **[Claude Certified Architect (CCA-F, CCAR-F) – 2026 Exam Prep（Udemy）](https://www.udemy.com/course/certified-claude-architect-masterclass-2026/?couponCode=UDEAFFMX0926)**：Jacob Bushong 開的課，學員人數最多，會隨考綱更新
+- **[Claude Certified Architect (<span class="nowrap">CCA-F</span>, <span class="nowrap">CCAR-F</span>) – 2026 Exam Prep（Udemy）](https://www.udemy.com/course/certified-claude-architect-masterclass-2026/?couponCode=UDEAFFMX0926)**：Jacob Bushong 開的課，學員人數最多，會隨考綱更新
 - **[claudecertificationguide.com](https://claudecertificationguide.com/#certifications)**：四張證照比較、各科考綱整理與免費模擬考
 - **[claude-certification-guide（GitHub）](https://github.com/preporato/claude-certification-guide)**：同一份考綱整理的 GitHub 版，可以整份下載成 Markdown，放進自己的筆記工具
-- **[余文皓：CCAR-F 考試心得](https://yu-wenhao.com/zh-TW/blog/ccar-f-exam-experience/)**：學長的準備經驗，他沒有靠題庫，準備了一個多月
+- **[Yu Wen-Hao：<span class="nowrap">CCAR-F</span> 考試心得](https://yu-wenhao.com/zh-TW/blog/ccar-f-exam-experience/)**：余文皓顧問的準備經驗，他考得比我好，分享的內容十分具有參考價值
 
-（考試資訊整理自官方 Exam Guide 與 claudecertificationguide.com，報考前請再以官方最新版本為準。）
+（考試資訊以官方 Exam Guide 為主，報考前請再以官方最新版本為準。）

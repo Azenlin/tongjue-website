@@ -17,7 +17,7 @@ const arcs = domains.map((d) => {
   return arc;
 });
 ---
-<figure class="dp" data-active="0">
+<figure class="dp" data-active="">
   <p class="dp-title">CCAR-F 五大考試範疇占比</p>
   <div class="dp-body">
     <div class="dp-chart">
@@ -30,6 +30,7 @@ const arcs = domains.map((d) => {
         </g>
       </svg>
       <div class="dp-center" aria-hidden="true">
+        <span class="dp-center-item dp-center-all"><b>5</b><span>個範疇</span></span>
         {domains.map((d, i) => (
           <span class="dp-center-item" data-i={i}><b>{d.pct}%</b><span>{d.zh}</span></span>
         ))}
@@ -38,7 +39,7 @@ const arcs = domains.map((d) => {
     <ol class="dp-legend">
       {domains.map((d, i) => (
         <li>
-          <button type="button" class="dp-item" data-i={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+          <button type="button" class="dp-item" data-i={i} aria-pressed="false">
             <span class="dp-dot" style={`background:${d.color}`}></span>
             <span class="dp-text">
               <span class="dp-name">{d.zh}<span class="dp-pct">{d.pct}%</span></span>
@@ -64,6 +65,8 @@ const arcs = domains.map((d) => {
       el.addEventListener('focus', () => set(el.dataset.i!));
       el.addEventListener('click', () => set(el.dataset.i!));
     });
+    // 滑鼠離開圖表就回到全部顯示
+    fig.querySelector('.dp-body')!.addEventListener('mouseleave', () => set(''));
   });
 </script>
 
@@ -78,7 +81,7 @@ const arcs = domains.map((d) => {
 .dp-center-item{position:absolute;display:none;flex-direction:column;align-items:center;max-width:120px;text-align:center}
 .dp-center-item b{font-family:'Noto Serif TC',serif;font-size:30px;line-height:36px;color:#1a1a1a}
 .dp-center-item span{font-size:13px;line-height:19px;color:#5a5a5a}
-.dp-legend{list-style:none;margin:0;padding:0 !important;display:flex;flex-direction:column;gap:4px}
+.dp-legend{list-style:none;margin:0;padding:0 !important;display:flex;flex-direction:column;gap:2px}
 .dp-legend li{margin:0 !important}
 .dp-legend li::marker{content:none}
 .dp-item{width:100%;display:flex;gap:12px;align-items:flex-start;padding:8px 12px;border:0;border-radius:7px;background:transparent;text-align:left;font:inherit;cursor:pointer;transition:background-color .15s}
@@ -88,12 +91,11 @@ const arcs = domains.map((d) => {
 .dp-name{font-size:16px;line-height:26px;font-weight:600;color:#1a1a1a}
 .dp-pct{margin-left:8px;color:#8d1d22}
 .dp-en{font-size:13px;line-height:20px;color:#888888}
-.dp-plain{display:none;margin-top:4px;font-size:15px;line-height:24px;color:#5a5a5a}
+.dp-plain{text-wrap:balance;margin-top:2px;font-size:15px;line-height:24px;color:#5a5a5a}
 .dp-item[aria-pressed="true"]{background:#f7ecec}
-.dp-item[aria-pressed="true"] .dp-plain{display:block}
 .dp figcaption{margin-top:20px;font-size:15px;line-height:24px;color:#888888;text-align:center}
 .dp[data-active="0"] .dp-arc:not([data-i="0"]),.dp[data-active="1"] .dp-arc:not([data-i="1"]),.dp[data-active="2"] .dp-arc:not([data-i="2"]),.dp[data-active="3"] .dp-arc:not([data-i="3"]),.dp[data-active="4"] .dp-arc:not([data-i="4"]){opacity:.35}
-.dp[data-active="0"] .dp-center-item[data-i="0"],.dp[data-active="1"] .dp-center-item[data-i="1"],.dp[data-active="2"] .dp-center-item[data-i="2"],.dp[data-active="3"] .dp-center-item[data-i="3"],.dp[data-active="4"] .dp-center-item[data-i="4"]{display:flex}
+.dp[data-active=""] .dp-center-all,.dp[data-active="0"] .dp-center-item[data-i="0"],.dp[data-active="1"] .dp-center-item[data-i="1"],.dp[data-active="2"] .dp-center-item[data-i="2"],.dp[data-active="3"] .dp-center-item[data-i="3"],.dp[data-active="4"] .dp-center-item[data-i="4"]{display:flex}
 @media (max-width:760px){
 .dp{padding:20px 14px}
 .dp-body{grid-template-columns:minmax(0,1fr);gap:16px;justify-items:center}

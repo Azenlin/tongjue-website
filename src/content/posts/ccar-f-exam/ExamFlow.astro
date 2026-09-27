@@ -1,0 +1,40 @@
+---
+/** 報名到應試的四個步驟；第 2 步可點擊連到 Anthropic Partner Academy */
+const steps = [
+  { title: '加入 Claude Partner Network', note: '免費' },
+  { title: '到 Anthropic Partner Academy 報名繳費', note: '每次 125 美元', href: 'https://anthropic-partners.skilljar.com/' },
+  { title: '取得 Pearson VUE 考試資格', note: '預約考場與時間' },
+  { title: '進行考試', note: '120 分鐘、60 題' },
+];
+---
+<ol class="ef" aria-label="CCAR-F 報名到應試的四個步驟">
+  {steps.map((s, i) => (
+    <li class="ef-step">
+      <span class="ef-num" aria-hidden="true">{i + 1}</span>
+      {s.href
+        ? <a class="ef-title ef-link" href={s.href} target="_blank" rel="noopener">{s.title.slice(0, -2)}<span class="ef-nb">{s.title.slice(-2)}<span class="ef-arrow" aria-hidden="true"> ↗</span></span></a>
+        : <span class="ef-title">{s.title}</span>}
+      <span class="ef-note">{s.note}</span>
+    </li>
+  ))}
+</ol>
+
+<style>
+.ef{list-style:none;margin:32px 0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;counter-reset:none}
+.ef-step{position:relative;margin:0 !important;display:flex;flex-direction:column;align-items:center;gap:8px;padding:0 10px;text-align:center}
+.ef-step::marker{content:none}
+/* 步驟之間的連接線 */
+.ef-step+.ef-step::before{content:'';position:absolute;top:22px;right:calc(50% + 26px);width:calc(100% - 52px);border-top:2px solid #d9b3b5}
+.ef-num{display:flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:9999px;background:#8d1d22;color:#ffffff;font-family:'Noto Serif TC',serif;font-weight:700;font-size:20px;line-height:1}
+.ef-title{text-wrap:balance;margin-top:6px;font-size:16px;line-height:24px;font-weight:600;color:#1a1a1a}
+.post-body .ef-link{color:#8d1d22;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.ef-nb{white-space:nowrap}
+.ef-note{font-size:14px;line-height:20px;color:#888888}
+@media (max-width:760px){
+.ef{grid-template-columns:minmax(0,1fr);gap:18px}
+.ef-step{display:grid;grid-template-columns:40px minmax(0,1fr);column-gap:14px;row-gap:2px;align-items:center;padding:0;text-align:left}
+.ef-num{grid-row:1 / span 2;width:40px;height:40px;font-size:18px}
+.ef-title{margin-top:0;font-size:16px}
+.ef-step+.ef-step::before{top:-18px;left:19px;right:auto;width:0;height:18px;border-top:0;border-left:2px solid #d9b3b5}
+}
+</style>

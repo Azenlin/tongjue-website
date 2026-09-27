@@ -6,6 +6,7 @@ section:has(>.post-body){padding-top:56px !important}
 .post-body h2{margin-top:72px;font-family:'Noto Serif TC',serif;font-weight:700;font-size:34px;line-height:48px;color:#1a1a1a}
 .post-body h3{margin-top:48px;font-weight:600;font-size:23px;line-height:34px;color:#1a1a1a}
 .post-body h2+*,.post-body h3+*{margin-top:18px}
+.post-body>h2:first-child,.post-body>h3:first-child{margin-top:0}
 .post-body strong{color:#1a1a1a;font-weight:600}
 .post-body a{color:#8d1d22;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
 .post-body a:hover{text-decoration-thickness:2px}

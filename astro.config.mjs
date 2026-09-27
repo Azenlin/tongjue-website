@@ -1,21 +1,13 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
+import sitemap from '@astrojs/sitemap';
 
-import tailwindcss from '@tailwindcss/vite';
-
-import react from '@astrojs/react';
-
-// GH_PAGES 只在 GitHub Actions 部署預覽時設定，正式上線到 tongjuetech.com 用根目錄，不受影響
-const isGhPagesPreview = process.env.GH_PAGES === "true";
-
-// https://astro.build/config
+// 頁面內容來自 src/design/（由 tools/import_design.py 從設計稿匯入），網址設定在 src/design/pages.json
 export default defineConfig({
-  site: isGhPagesPreview ? "https://azenlin.github.io" : undefined,
-  base: isGhPagesPreview ? "/tongjue-website" : "/",
-
-  vite: {
-    plugins: [tailwindcss()]
-  },
-
-  integrations: [react()]
+  site: 'https://tongjuetech.com',
+  trailingSlash: 'always',
+  build: { format: 'directory' },
+  integrations: [
+    sitemap({ filter: (page) => !page.includes('/coming-soon/') }),
+  ],
 });

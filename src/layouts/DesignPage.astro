@@ -1,0 +1,77 @@
+---
+/**
+ * 設計稿頁面的共用外框：<head>（SEO、字型、設計系統樣式）＋ 該頁樣式 ＋ 版面 ＋ 元件程式。
+ * 版面、樣式、程式都是從設計稿原樣匯入（src/design/），這裡不改內容。
+ */
+interface Props {
+  name: string;
+  title: string;
+  description: string;
+  route: string;
+  dynamic: boolean;
+  body: string;
+  css: string;
+  logic: string;
+}
+const { name, title, description, route, dynamic, body, css, logic } = Astro.props;
+const canonical = new URL(route, Astro.site).href;
+const noindex = name === 'ComingSoon' || name === 'NotFound';
+
+const org = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  '@id': 'https://tongjuetech.com/#org',
+  name: '銅爵科技顧問',
+  alternateName: 'Tongjue Tech Consulting Co., Ltd.',
+  url: 'https://tongjuetech.com/',
+  logo: 'https://tongjuetech.com/assets/760c3981bfe5827be547602aad8b302c.png',
+  founder: { '@id': 'https://tongjuetech.com/yujen/#person' },
+};
+const person = {
+  '@context': 'https://schema.org',
+  '@type': 'Person',
+  '@id': 'https://tongjuetech.com/yujen/#person',
+  name: '林昱任',
+  alternateName: 'Azen Lin',
+  url: 'https://tongjuetech.com/yujen/',
+  jobTitle: '銅爵科技顧問創辦人',
+  worksFor: { '@id': 'https://tongjuetech.com/#org' },
+  sameAs: ['https://www.instagram.com/azen.comix'],
+};
+const ld = name === 'Yujen' ? [org, person] : [org];
+const mountScript = `${logic}\nDCLite.mount(Component, document.getElementById('dc-root'));`;
+---
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="only light">
+<title>{title}</title>
+<meta name="description" content={description}>
+<link rel="canonical" href={canonical}>
+{noindex && <meta name="robots" content="noindex">}
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="銅爵科技顧問">
+<meta property="og:locale" content="zh_TW">
+<meta property="og:title" content={title}>
+<meta property="og:description" content={description}>
+<meta property="og:url" content={canonical}>
+<link rel="icon" href="/favicon.ico" sizes="48x48">
+<link rel="icon" href="/favicon-48.png" type="image/png">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@700&display=swap">
+<link rel="stylesheet" href="/ds/bundle.css">
+<style is:inline set:html={css}></style>
+{dynamic && <style is:inline>#dc-root:not(.dc-ready){visibility:hidden}</style>}
+{dynamic && <noscript><style is:inline>#dc-root{visibility:visible !important}</style></noscript>}
+{ld.map((d) => <script type="application/ld+json" is:inline set:html={JSON.stringify(d)}></script>)}
+</head>
+<body>
+<div id="dc-root" set:html={body}></div>
+<script is:inline src="/js/dc-lite.js"></script>
+<script is:inline set:html={mountScript}></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+# Cloudflare Pages 轉址規則：舊 WordPress 網址 → 新網址（301 永久轉址，保留 Google 排名）
+# 格式：舊路徑  新路徑  狀態碼。中文網址要用 URL 編碼（WordPress sitemap 裡的寫法）。
+
+/about/                 /yujen/        301
+/service/               /services/     301
+/faq/                   /services/     301
+/form/                  /contact/      301
+/%e9%8a%85%e7%88%b5%e8%a7%80%e9%bb%9e/   /insights/   301
+/category/*             /insights/     301
+/tag/*                  /insights/     301
+
+# 舊文章（3 篇）：文章搬到新站後，改指向各自的新網址
+# /%e7%82%ba%e4%bb%80%e9%ba%bc...  →  /insights/.../

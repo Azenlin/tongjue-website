@@ -1,7 +1,8 @@
 {
   "name": "tongjue-website",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
+  "private": true,
   "engines": {
     "node": ">=22.12.0"
   },
@@ -12,17 +13,7 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/react": "^6.0.5",
-    "@tailwindcss/vite": "^4.3.3",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.7",
-    "astro": "^7.3.2",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "recharts": "^3.10.1",
-    "tailwindcss": "^4.3.3"
-  },
-  "allowScripts": {
-    "esbuild": true
+    "@astrojs/sitemap": "^3.6.0",
+    "astro": "^7.3.2"
   }
 }

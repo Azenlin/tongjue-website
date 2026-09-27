@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@700&display=swap');
+/* 銅爵只有一套淺色配色：宣告 only light，避免瀏覽器自動深色化 */
+:root { color-scheme: only light; }
+html { background: var(--surface); }
+body { margin: 0; font-family: var(--font-sans); font-size: 16px; line-height: 24px; background: var(--surface); color: var(--ink-body); }
+.tj-row { display: flex; flex-wrap: wrap; gap: var(--space-6); align-items: center; padding: var(--space-6); }
+
+.tj-btn { display: inline-flex; align-items: center; justify-content: center; font-family: var(--font-sans); font-weight: 600; letter-spacing: 0.4px; border-radius: var(--radius-sm); border: 1px solid var(--brand); cursor: pointer; text-decoration: none; transition: background-color .15s, color .15s, border-color .15s; }
+.tj-btn-md { font-size: 18px; line-height: 24px; padding: var(--space-3) var(--space-5); }
+.tj-btn-lg { font-size: 24px; line-height: 24px; padding: var(--space-3) var(--space-5); }
+.tj-btn-primary { background: var(--brand); color: var(--on-brand); }
+.tj-btn-primary:hover { background: var(--brand-hover); border-color: var(--brand-hover); color: var(--on-brand); }
+.tj-btn-outline { background: var(--surface); color: var(--brand); }
+.tj-btn-outline:hover { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+.tj-btn:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.tj-btn:disabled { background: var(--surface-alt); border-color: var(--line); color: var(--ink-body); cursor: not-allowed; }
+
+.tj-sh { max-width: 720px; }
+.tj-sh-center { margin: 0 auto; text-align: center; }
+.tj-eyebrow { display: flex; align-items: center; gap: var(--space-4); margin: 0 0 var(--space-4); font-family: var(--font-sans); font-size: 22px; line-height: 30px; color: var(--brand); }
+.tj-sh-center .tj-eyebrow { justify-content: center; }
+.tj-eyebrow::before { content: ""; width: 32px; height: 1px; background: var(--line-strong); }
+.tj-sh-title { margin: 0; font-family: var(--font-serif); font-weight: 700; font-size: 45px; line-height: 58.5px; letter-spacing: 2.4px; color: var(--ink); }
+.tj-sh-lead { margin-top: var(--space-4); font-size: 19px; line-height: 33px; letter-spacing: .5px; color: var(--ink-body); }
+
+.tj-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: var(--space-8); padding: var(--space-6); }
+.tj-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: var(--space-6); }
+.tj-card-icon { width: 40px; height: 40px; margin-bottom: var(--space-4); color: var(--brand); }
+.tj-card-title { margin: 0 0 var(--space-2); font-family: var(--font-serif); font-weight: 700; font-size: 27px; line-height: 32.4px; color: var(--ink); }
+.tj-card-text { margin: 0; font-size: 19px; line-height: 36px; color: var(--ink-body); }

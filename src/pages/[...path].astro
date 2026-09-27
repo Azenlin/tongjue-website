@@ -1,0 +1,32 @@
+---
+/**
+ * 依 src/design/pages.json 產生每一頁：網址、標題、描述都在那份設定裡，
+ * 版面/樣式/程式分別讀 src/design/<Name>.body.html / .css / .logic.js。
+ */
+import DesignPage from '../layouts/DesignPage.astro';
+import pages from '../design/pages.json';
+
+export function getStaticPaths() {
+  return Object.entries(pages).map(([name, p]) => ({
+    params: { path: p.route === '/' ? undefined : p.route.replace(/^\/|\/$/g, '') },
+    props: { name },
+  }));
+}
+
+const bodies = import.meta.glob('../design/*.body.html', { query: '?raw', import: 'default', eager: true });
+const styles = import.meta.glob('../design/*.css', { query: '?raw', import: 'default', eager: true });
+const logics = import.meta.glob('../design/*.logic.js', { query: '?raw', import: 'default', eager: true });
+
+const { name } = Astro.props;
+const p = pages[name as keyof typeof pages];
+---
+<DesignPage
+  name={name}
+  title={p.title}
+  description={p.description}
+  route={p.route}
+  dynamic={p.dynamic}
+  body={bodies[`../design/${name}.body.html`] as string}
+  css={styles[`../design/${name}.css`] as string}
+  logic={logics[`../design/${name}.logic.js`] as string}
+/>

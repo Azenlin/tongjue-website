@@ -1,0 +1,24 @@
+---
+/**
+ * 找不到頁面：沿用設計稿「此頁設計中」的版型，只換標題與說明文字。
+ * 舊 WordPress 網址若沒有列進 public/_redirects，訪客會落到這裡。
+ */
+import DesignPage from '../layouts/DesignPage.astro';
+import body from '../design/ComingSoon.body.html?raw';
+import css from '../design/ComingSoon.css?raw';
+import logic from '../design/ComingSoon.logic.js?raw';
+
+const notFound = body
+  .replace(/>這一頁還在設計中</, '>找不到這一頁<')
+  .replace(/(<p style="margin: 0; max-width: 640px;[^"]*">)[^<]*(<\/p>)/, '$1網址可能打錯了，或是這一頁已經搬家。可以回首頁看看，或直接跟我聯絡。$2');
+---
+<DesignPage
+  name="NotFound"
+  title="找不到這一頁｜銅爵科技顧問"
+  description="找不到這一頁。"
+  route="/404/"
+  dynamic={false}
+  body={notFound}
+  css={css}
+  logic={logic}
+/>

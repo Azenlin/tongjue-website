@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /coming-soon/
+
+Sitemap: https://tongjuetech.com/sitemap-index.xml

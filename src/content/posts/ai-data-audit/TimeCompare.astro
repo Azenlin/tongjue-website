@@ -1,0 +1,46 @@
+---
+/** 人工核對 vs AI 協作的耗時對比；捲到畫面時，AI 那一側的時間條才跑完 */
+---
+<figure class="tc">
+  <div class="tc-row">
+    <span class="tc-label">人力逐份核對十幾個部門的表單</span>
+    <span class="tc-track"><span class="tc-bar tc-human"></span></span>
+    <span class="tc-num">1 天</span>
+  </div>
+  <div class="tc-row">
+    <span class="tc-label">AI 協作理解結構並找出落差</span>
+    <span class="tc-track"><span class="tc-bar tc-ai"></span></span>
+    <span class="tc-num tc-num-ai">20 分</span>
+  </div>
+  <figcaption>依我過去的查核經驗估算，不是正式統計數字；實際耗時依專案規模而異。</figcaption>
+</figure>
+
+<script>
+  // 進入畫面才播放時間條動畫；不支援或偏好減少動態時直接顯示結果
+  document.querySelectorAll<HTMLElement>('.tc').forEach((el) => {
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { el.classList.add('tc-in'); return; }
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { el.classList.add('tc-in'); io.disconnect(); } }, { threshold: 0.5 });
+    io.observe(el);
+  });
+</script>
+
+<style>
+.tc{margin:40px 0 !important;padding:28px 32px;border:1px solid #dddddd;border-radius:12px;background:#ffffff;display:flex;flex-direction:column;gap:18px}
+.tc-row{display:grid;grid-template-columns:250px minmax(0,1fr) 72px;align-items:center;gap:16px}
+.tc-label{font-size:16px;line-height:24px;color:#333333}
+.tc-track{height:14px;border-radius:9999px;background:#f5f5f5;overflow:hidden}
+.tc-bar{display:block;height:100%;width:0;border-radius:9999px;transition:width 1.6s cubic-bezier(.2,.7,.2,1)}
+.tc-human{background:#9a9a9a;transition-duration:2.4s}
+.tc-ai{background:#8d1d22}
+.tc-in .tc-human{width:100%}
+.tc-in .tc-ai{width:4.2%;min-width:10px}
+.tc-num{font-family:'Noto Serif TC',serif;font-weight:700;font-size:26px;line-height:32px;color:#5a5a5a;text-align:right;white-space:nowrap}
+.tc-num-ai{color:#8d1d22}
+.tc figcaption{font-size:15px;line-height:24px;color:#888888}
+@media (max-width:760px){
+.tc{padding:20px 16px}
+.tc-row{grid-template-columns:minmax(0,1fr) auto;gap:6px 12px}
+.tc-label{grid-column:1 / -1;font-size:15px}
+.tc-num{font-size:22px}
+}
+</style>

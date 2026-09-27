@@ -6,6 +6,7 @@
     python tools/check.py --shot home             # 首頁截圖（桌機 1440、手機 390，畫面最上方）
     python tools/check.py --shot home --find 檔案超級多   # 捲到含這段文字的地方截圖
     python tools/check.py --shot yujen --full     # 整頁長截圖（網址寫 yujen 或 /yujen/ 都可以）
+    python tools/check.py --shot insights/ai-data-audit --find 同一次查核 --click 用水   # 點開互動圖表再截圖
 
 檢查項目：頁面有沒有正常啟動（dc-ready）、有沒有殘留 {{ }}、JS 錯誤、手機版有沒有左右溢出。
 截圖存在 .check/（不進 git）。檢查的是 dist/，所以改完要先 build（或加 --build）。
@@ -89,7 +90,7 @@ def check_all(browser, base, pages):
     return problems
 
 
-def shoot(browser, base, route, find, full, dynamic):
+def shoot(browser, base, route, find, full, dynamic, click=None):
     os.makedirs(OUT, exist_ok=True)
     slug = re.sub(r'[^\w-]+', '_', route.strip('/')) or 'home'
     for vp in VIEWPORTS:
@@ -101,6 +102,12 @@ def shoot(browser, base, route, find, full, dynamic):
             except Exception:
                 print('找不到文字：%s（%s）' % (find, vp)); page.close(); continue
             page.wait_for_timeout(700)  # 等捲動觸發的淡入動畫
+        if click:
+            try:
+                page.get_by_text(click).filter(visible=True).first.click(timeout=3000)
+                page.wait_for_timeout(500)
+            except Exception:
+                print('點不到：%s（%s）' % (click, vp))
         path = os.path.join(OUT, '%s_%s.png' % (slug, vp))
         page.screenshot(path=path, full_page=full)
         page.close()
@@ -122,6 +129,7 @@ def main():
     ap.add_argument('--shot', metavar='ROUTE', help='截圖某一頁，例如 / 或 /yujen/')
     ap.add_argument('--find', metavar='TEXT', help='搭配 --shot：捲到含這段文字的位置')
     ap.add_argument('--full', action='store_true', help='搭配 --shot：整頁長截圖')
+    ap.add_argument('--click', metavar='TEXT', help='搭配 --shot：截圖前先點這段文字（測試互動圖表）')
     args = ap.parse_args()
 
     if args.build:
@@ -134,6 +142,13 @@ def main():
 
     with open(os.path.join(ROOT, 'src', 'design', 'pages.json'), encoding='utf-8') as f:
         pages = json.load(f)
+    # 文章頁（src/content/posts/）：從 dist/insights/<slug>/ 找
+    known = {i['route'] for i in pages.values()}
+    ins = os.path.join(DIST, 'insights')
+    for slug in sorted(os.listdir(ins)) if os.path.isdir(ins) else []:
+        route = '/insights/%s/' % slug
+        if route not in known and os.path.exists(os.path.join(ins, slug, 'index.html')):
+            pages['post:' + slug] = {'route': route, 'dynamic': True}
     from playwright.sync_api import sync_playwright
     base = serve_dist()
     with sync_playwright() as p:
@@ -141,7 +156,7 @@ def main():
         if args.shot:
             args.shot = norm_route(args.shot)
             dynamic = any(i['route'] == args.shot and i.get('dynamic') for i in pages.values())
-            shoot(browser, base, args.shot, args.find, args.full, dynamic)
+            shoot(browser, base, args.shot, args.find, args.full, dynamic, args.click)
             code = 0
         else:
             code = 1 if check_all(browser, base, pages) else 0

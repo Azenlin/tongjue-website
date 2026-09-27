@@ -21,6 +21,26 @@ python tools/check.py --shot yujen --full          # 整頁長截圖
 
 檢查項目：頁面程式有沒有啟動（dc-ready）、有沒有殘留 `{{ }}`、JS 錯誤、手機版左右溢出。需要 `pip install playwright`（使用電腦上的 Chrome）。
 
+## 新增文章
+
+1. 建資料夾 `src/content/posts/<英文網址代稱>/`，放 `index.mdx`（網址會是 `/insights/<代稱>/`）
+2. 開頭寫 frontmatter：
+   ```yaml
+   ---
+   title: 文章標題
+   description: 列表卡片與搜尋結果的摘要，約 40–60 字
+   date: 2026-09-14          # 顯示的發表日期，可以填過去；填未來的日期不會上架，直到那天之後重新部署
+   tags: ['AI 導入', '碳規劃']  # 只能用：AI 導入、知識管理、碳規劃、中小企業、隨筆
+   services: ['ai', 'netzero'] # 選填，文末相關服務：ai / kb / netzero；沒填就依標籤推斷
+   draft: true               # 選填，true = 不上網站
+   ---
+   ```
+3. 內文用 Markdown。互動圖表寫成同資料夾的 `.astro` 元件，在 MDX 裡 `import X from './X.astro'` 後用 `<X />` 放進文中（範例：`ai-data-audit/`）
+4. 封面圖放 `public/insights/<代稱>/cover.jpg`（沒有就用灰色預設底）
+5. `python tools/check.py --build` 檢查，`--shot insights/<代稱> --full` 看整篇
+
+文章頁版型取自設計稿「中小企業 AI 導入指南」頁，觀點列表、首頁與個人頁的「最新觀點」卡片都會自動更新；接法在 `src/lib/posts.ts`。
+
 ## 資料夾
 
 | 路徑 | 內容 |
@@ -34,6 +54,8 @@ python tools/check.py --shot yujen --full          # 整頁長截圖
 | `public/_redirects` | 舊 WordPress 網址的 301 轉址（Cloudflare Pages 格式） |
 | `tools/import_design.py` | 設計稿 → 網站的匯入工具 |
 | `tools/check.py` | 檢查與截圖工具 |
+| `src/content/posts/` | 文章（每篇一個資料夾） |
+| `src/lib/posts.ts` | 文章接到設計稿頁面的規則 |
 
 ## 在另一台電腦接手
 

@@ -1,0 +1,35 @@
+/* 文章內文排版（MDX 產生的標準標籤）；字級、顏色沿用設計稿「中小企業 AI 導入指南」 */
+.post-body{display:block !important}
+section:has(>.post-body){padding-top:56px !important}
+.post-body>*{margin:0}
+.post-body>*+*{margin-top:26px}
+.post-body h2{margin-top:72px;font-family:'Noto Serif TC',serif;font-weight:700;font-size:34px;line-height:48px;color:#1a1a1a}
+.post-body h3{margin-top:48px;font-weight:600;font-size:23px;line-height:34px;color:#1a1a1a}
+.post-body h2+*,.post-body h3+*{margin-top:18px}
+.post-body strong{color:#1a1a1a;font-weight:600}
+.post-body a{color:#8d1d22;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
+.post-body a:hover{text-decoration-thickness:2px}
+.post-body ul,.post-body ol{padding-left:1.4em}
+.post-body li+li{margin-top:10px}
+.post-body li::marker{color:#8d1d22}
+.post-body blockquote{margin-left:0;margin-right:0;padding:4px 0 4px 24px;border-left:3px solid #8d1d22;color:#333333}
+.post-body blockquote>*{margin:0}
+.post-body blockquote>*+*{margin-top:14px}
+.post-body img{display:block;max-width:100%;height:auto;border-radius:7px}
+.post-body figure{margin-left:0;margin-right:0}
+.post-body figcaption{margin-top:12px;font-size:15px;line-height:24px;color:#888888;text-align:center}
+.post-body hr{height:0;border:0;border-top:1px solid #dddddd;margin:64px 0}
+.post-body table{width:100%;border-collapse:collapse;font-size:17px;line-height:28px}
+.post-body th,.post-body td{padding:12px 14px;border-bottom:1px solid #dddddd;text-align:left;vertical-align:top}
+.post-body th{background:#f5f5f5;color:#1a1a1a;font-weight:600}
+.post-body .table-wrap{overflow-x:auto}
+.post-body code{padding:1px 6px;border-radius:4px;background:#f5f5f5;font-size:.9em}
+@media (max-width:760px){
+section:has(>.post-body){padding-top:36px !important}
+.post-body h2{margin-top:52px;font-size:26px !important;line-height:36px !important}
+.post-body h3{margin-top:36px;font-size:20px;line-height:30px}
+.post-body>*+*{margin-top:22px}
+.post-body blockquote{padding-left:16px}
+.post-body table{font-size:15px;line-height:24px}
+.post-body th,.post-body td{padding:10px 8px}
+}

@@ -1,0 +1,52 @@
+---
+/** 十幾個部門、格式各異的表單；有問題的那一份（工程部用水）可點開看落差 */
+const forms = [
+  ['工程部', '用電'], ['工程部', '用水', true], ['餐飲部', '冷媒'], ['客房部', '房務'],
+  ['客房部', '客務'], ['業務部', '外購電力'], ['業務部', '自來水'], ['行政部', '差旅'],
+  ['人資部', '通勤'], ['採購部', '物料'], ['餐飲部', '瓦斯'], ['工程部', '鍋爐'],
+] as const;
+---
+<figure class="fg">
+  <p class="fg-title">同一次查核，十幾個部門、格式各異的表單</p>
+  <div class="fg-grid">
+    {forms.map(([dept, item, bad]) => bad ? (
+      <details class="fg-cell fg-bad">
+        <summary><span>{dept}</span><span>{item} <span aria-hidden="true">⚠</span></span></summary>
+        <div class="fg-pop" role="note">
+          <span>合計欄 <b>61,040</b> 度</span>
+          <span>逐月重算 <b class="fg-red">67,233</b> 度</span>
+          <span class="fg-diff">差 6,193 度，接近一成</span>
+        </div>
+      </details>
+    ) : (
+      <div class="fg-cell"><span>{dept}</span><span>{item}</span></div>
+    ))}
+  </div>
+  <figcaption>格式不統一、命名不一致、分頁邏輯各自為政——AI 需要先理解每一份的結構，才有辦法比對。<span class="fg-hint">點紅框那一格看落差。</span></figcaption>
+</figure>
+
+<style>
+.fg{margin:40px 0 !important;padding:28px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.fg-title{margin:0 0 20px;text-align:center;font-size:17px;line-height:26px;font-weight:600;color:#1a1a1a}
+.fg-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.fg-cell{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:64px;padding:10px 6px;border-radius:7px;background:#f5f5f5;font-size:15px;line-height:22px;color:#5a5a5a;text-align:center}
+.fg-cell>span,.fg-cell summary>span{display:block}
+.fg-bad{padding:0;background:#f7ecec;outline:1.5px dashed #8d1d22;outline-offset:-1.5px;color:#8d1d22;font-weight:600;animation:fg-pulse 2.4s ease-in-out infinite}
+.fg-bad summary{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:64px;padding:10px 6px;cursor:pointer;list-style:none}
+.fg-bad summary::-webkit-details-marker{display:none}
+.fg-bad summary:focus-visible{outline:2px solid #8d1d22;outline-offset:2px;border-radius:7px}
+.fg-bad[open]{animation:none}
+.fg-pop{position:absolute;z-index:3;top:calc(100% + 8px);left:50%;transform:translateX(-50%);width:max-content;max-width:240px;display:flex;flex-direction:column;gap:2px;padding:12px 16px;border-radius:7px;background:#1a1a1a;color:#ffffff;font-size:14px;line-height:22px;font-weight:400;text-align:left;box-shadow:0 6px 20px rgba(0,0,0,.18)}
+.fg-pop b{font-weight:600}
+.fg-red{color:#ff9d9d}
+.fg-diff{margin-top:4px;padding-top:6px;border-top:1px solid rgba(255,255,255,.2);color:#ffd2d2}
+.fg figcaption{margin-top:20px;font-size:15px;line-height:24px;color:#5a5a5a;text-align:center}
+.fg-hint{color:#8d1d22}
+@keyframes fg-pulse{0%,100%{box-shadow:0 0 0 0 rgba(141,29,34,0)}50%{box-shadow:0 0 0 5px rgba(141,29,34,.12)}}
+@media (prefers-reduced-motion:reduce){.fg-bad{animation:none}}
+@media (max-width:760px){
+.fg{padding:18px 14px}
+.fg-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.fg-cell{font-size:14px;line-height:20px}
+}
+</style>

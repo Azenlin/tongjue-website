@@ -1,0 +1,40 @@
+---
+/**
+ * 文章頁：版型取自設計稿「中小企業 AI 導入指南」（PillarAI），內文來自 src/content/posts/<slug>/index.mdx。
+ * 版型替換規則見 src/lib/posts.ts。
+ */
+import { render } from 'astro:content';
+import DesignPage from '../../layouts/DesignPage.astro';
+import { getPosts, postRoute, articleShell, articleJsonLd, coverCss, coverOf, type Post } from '../../lib/posts';
+import pillarBody from '../../design/PillarAI.body.html?raw';
+import pillarCss from '../../design/PillarAI.css?raw';
+import pillarLogic from '../../design/PillarAI.logic.js?raw';
+import postCss from '../../styles/post.css?raw';
+
+export async function getStaticPaths() {
+  const posts = await getPosts();
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props as { post: Post };
+const { Content } = await render(post);
+const [before, after] = articleShell(pillarBody, post);
+// 標題區底圖：換成這篇的封面（沒有封面就用灰色預設底）
+const heroCss = coverCss([post]).replace(`.post-img-${post.id}`, '.post-hero');
+---
+<DesignPage
+  name="Post"
+  title={`${post.data.title}｜銅爵觀點`}
+  description={post.data.description}
+  route={postRoute(post)}
+  dynamic={true}
+  body={before}
+  bodyAfter={after}
+  css={`${pillarCss}\n${heroCss}\n${postCss}`}
+  logic={pillarLogic}
+  extraLd={[articleJsonLd(post)]}
+  ogImage={coverOf(post)}
+  ogType="article"
+>
+  <Content />
+</DesignPage>

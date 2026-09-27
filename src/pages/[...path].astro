@@ -5,6 +5,7 @@
  */
 import DesignPage from '../layouts/DesignPage.astro';
 import pages from '../design/pages.json';
+import { getPosts, blogLogic, latestCards, coverCss } from '../lib/posts';
 
 export function getStaticPaths() {
   return Object.entries(pages).map(([name, p]) => ({
@@ -19,6 +20,17 @@ const logics = import.meta.glob('../design/*.logic.js', { query: '?raw', import:
 
 const { name } = Astro.props;
 const p = pages[name as keyof typeof pages];
+
+// 文章列表與「最新觀點」卡片換成 src/content/posts/ 的真實文章（見 src/lib/posts.ts）
+let body = bodies[`../design/${name}.body.html`] as string;
+let css = styles[`../design/${name}.css`] as string;
+let logic = logics[`../design/${name}.logic.js`] as string;
+if (name === 'Blog' || name === 'Main' || name === 'Yujen') {
+  const posts = await getPosts();
+  css += '\n' + coverCss(posts);
+  if (name === 'Blog') logic = blogLogic(logic, posts);
+  else body = latestCards(body, posts);
+}
 ---
 <DesignPage
   name={name}
@@ -26,7 +38,7 @@ const p = pages[name as keyof typeof pages];
   description={p.description}
   route={p.route}
   dynamic={p.dynamic}
-  body={bodies[`../design/${name}.body.html`] as string}
-  css={styles[`../design/${name}.css`] as string}
-  logic={logics[`../design/${name}.logic.js`] as string}
+  body={body}
+  css={css}
+  logic={logic}
 />

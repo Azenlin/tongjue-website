@@ -24,9 +24,31 @@ npm run preview      # 預覽 build 後的結果
 | `public/_redirects` | 舊 WordPress 網址的 301 轉址（Cloudflare Pages 格式） |
 | `tools/import_design.py` | 設計稿 → 網站的匯入工具 |
 
+## 在另一台電腦接手
+
+GitHub（`Azenlin/tongjue-website`）是正本；任何一台電腦上的資料夾都只是工作副本，Google Drive 的 `00_銅爵科技顧問\00_個人網站` 則是唯讀備份。
+
+第一次設定：
+
+1. 安裝 Git 與 Node.js 22.12 以上
+2. clone 到本機硬碟（**不要放在 Google Drive 裡**，串流模式跑 `npm install` 會壞）：
+   ```sh
+   git clone https://github.com/Azenlin/tongjue-website.git C:/Users/<名字>/dev/tongjue-website
+   cd C:/Users/<名字>/dev/tongjue-website
+   npm install
+   ```
+3. `npm run dev` 確認能開
+
+之後每次開工前先 `git pull`，改完 `git push`（push 到 `master` 就會自動上線）。兩台電腦輪流用時，忘了 pull 會造成衝突。
+
+設計稿不在 repo 裡，在 claude.ai 上（見下一節），換電腦一樣打得開。
+
 ## 設計稿改了之後怎麼同步
 
-1. 從設計稿下載最新的 `project/*.dc.html` 與用到的素材圖檔
+設計稿：claude.ai Artifact「銅爵官網改版設計稿」https://claude.ai/artifact/4ZmRb7UvCXT1EmC4EzhiCf
+（設計系統：「銅爵科技顧問」https://claude.ai/artifact/SY4aQLNDVXwyJaz2g7Vq1o）
+
+1. 從設計稿下載最新的 `project/*.dc.html` 與用到的素材圖檔（Claude Code 可用 Artifact read 取得，存到暫存資料夾）
 2. `python tools/import_design.py <dc.html 所在資料夾> <圖檔資料夾>`
 3. `npm run build` 檢查，commit、push
 
@@ -35,9 +57,23 @@ npm run preview      # 預覽 build 後的結果
 ## 部署
 
 Cloudflare Pages 連接這個 GitHub repo，push 到 `master` 自動部署。
-Build command：`npm run build`，Output：`dist`。
+Build command：`npm run build`，Output：`dist`，環境變數 `NODE_VERSION=22.12.0`。
+測試網址：https://tongjue-website.pages.dev
+
+流量統計：Cloudflare Web Analytics（Pages 專案 → 指標），部署時自動注入，程式碼裡沒有。
+
+## 預約表單
+
+- 表單送到 Google Apps Script 網頁應用程式，網址設定在 `src/site.json` 的 `formEndpoint`
+- Apps Script 原始碼：`tools/contact-form.gs`（實際跑的那份在 Google 試算表「銅爵官網諮詢表單」→ 擴充功能 → Apps Script，改了 repo 這份要手動貼過去並重新部署新版本）
+- 收件：寫入試算表、寄通知信到 azen741027@gmail.com、匯出 CSV
+- 試算表與 CSV 在 Google Drive `00_銅爵科技顧問\官網表單\`（刻意放在網站備份資料夾外面，備份同步會清掉非原始碼的檔案）
 
 ## 注意
 
 - 設計稿的網址互連（`Xxx.dc.html`）在匯入時自動換成正式網址，對照表就是 `PAGES`。
 - 不要在 Google Drive 的鏡像資料夾裡跑 `npm install`（見 `開發說明.md`）。
+- 更新 Drive 備份：
+  ```powershell
+  robocopy "<本機 repo>" "G:\我的雲端硬碟\00_銅爵科技顧問\00_個人網站" /MIR /XD node_modules dist .astro .git 官網表單 /XF package-lock.json
+  ```

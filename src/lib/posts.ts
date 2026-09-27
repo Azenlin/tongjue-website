@@ -85,7 +85,13 @@ export function blogLogic(logic: string, posts: Post[]) {
   must(logic, 'const all = [', '觀點列表的文章資料');
   // 置頂指南（PILLAR）2026-09-27 暫時下架，補完後再加回陣列最前面
   const data = JSON.stringify(posts.map(card));
-  return `window.TJ_POSTS = ${data};\n` + logic.replace('const all = [', 'const all = window.TJ_POSTS || [');
+  // 標籤篩選只列出目前有文章在用的標籤（依設計稿的順序）
+  const used = new Set(posts.flatMap((p) => p.data.tags));
+  const catRe = /\['全部', ([^\]]*)\]\.map/;
+  must(logic, catRe, '標籤篩選清單');
+  const cats = [...logic.match(catRe)![1].matchAll(/'([^']+)'/g)].map((m) => m[1]).filter((t) => used.has(t as any));
+  const withCats = logic.replace(catRe, `[${['全部', ...cats].map((t) => `'${t}'`).join(', ')}].map`);
+  return `window.TJ_POSTS = ${data};\n` + withCats.replace('const all = [', 'const all = window.TJ_POSTS || [');
 }
 
 // ---------- 首頁／個人頁的最新觀點 ----------

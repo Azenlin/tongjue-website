@@ -1,0 +1,56 @@
+---
+/** 關鍵礦物 2040 年需求成長倍數（書中引用 IEA 預估）；捲到畫面時長條才長出來 */
+const rows = [
+  { name: '鋰', x: 42 },
+  { name: '鈷', x: 21 },
+  { name: '鎳', x: 19 },
+];
+const max = 42;
+---
+<figure class="md">
+  <p class="md-title">到 2040 年，關鍵礦物需求會是現在的幾倍？</p>
+  <div class="md-rows">
+    {rows.map((r) => (
+      <div class="md-row">
+        <span class="md-name">{r.name}</span>
+        <span class="md-track"><span class="md-bar" style={`--w:${(r.x / max) * 100}%`}></span></span>
+        <span class="md-num">{r.x}<small> 倍</small></span>
+      </div>
+    ))}
+  </div>
+  <p class="md-foot"><span>但新開一座礦山，平均要 <b>16 年</b></span></p>
+  <figcaption>資料來源：尤莉克．赫爾曼《資本主義的終結》引用國際能源署（IEA）預估。</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.md').forEach((el) => {
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { el.classList.add('md-in'); return; }
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { el.classList.add('md-in'); io.disconnect(); } }, { threshold: 0.5 });
+    io.observe(el);
+  });
+</script>
+
+<style>
+.md{margin:40px 0 !important;padding:28px 32px 24px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.md-title{margin:0 0 24px;text-align:center;font-size:17px;line-height:26px;font-weight:600;color:#1a1a1a}
+.md-rows{display:flex;flex-direction:column;gap:16px}
+.md-row{display:grid;grid-template-columns:40px minmax(0,1fr) 84px;gap:16px;align-items:center}
+.md-name{font-family:'Noto Serif TC',serif;font-weight:700;font-size:22px;line-height:30px;color:#1a1a1a}
+.md-track{height:18px;border-radius:9999px;background:#f5f5f5;overflow:hidden}
+.md-bar{display:block;height:100%;width:0;border-radius:9999px;background:#8d1d22;transition:width 1.6s cubic-bezier(.2,.7,.2,1)}
+.md-row+.md-row .md-bar{background:#b8474d}
+.md-row:last-child .md-bar{background:#d98a8e}
+.md-in .md-bar{width:var(--w)}
+.md-row:nth-child(2) .md-bar{transition-delay:.15s}
+.md-row:nth-child(3) .md-bar{transition-delay:.3s}
+.md-num{font-family:'Noto Serif TC',serif;font-weight:700;font-size:26px;line-height:32px;color:#8d1d22;text-align:right;white-space:nowrap}
+.md-num small{font-family:'Noto Sans TC',sans-serif;font-size:15px;font-weight:400;color:#5a5a5a}
+.md-foot{margin:22px 0 0;padding-top:18px;border-top:1px solid #eeeeee;text-align:center;font-size:17px;line-height:26px;color:#333333}
+.md-foot b{color:#8d1d22}
+.md figcaption{margin-top:14px;font-size:15px;line-height:24px;color:#888888;text-align:center}
+@media (max-width:760px){
+.md{padding:20px 16px}
+.md-row{grid-template-columns:32px minmax(0,1fr) 72px;gap:10px}
+.md-num{font-size:22px}
+}
+</style>

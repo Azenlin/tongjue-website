@@ -71,9 +71,12 @@ const PILLAR = {
   tags: ['AI 導入', '知識管理', '中小企業'], href: '/insights/ai-adoption/',
 };
 
+// 卡片文字裡的證照代碼（CCAR-F 等）不要在連字號處斷行：連字號兩側加「不斷行」字元 U+2060
+const noBreakCodes = (t: string) => t.replace(/(CC[A-Z]{1,2})-([A-Z])/g, '$1⁠-⁠$2');
+
 const card = (p: Post) => ({
   pinned: false, imgClass: `post-img-${p.id}`, date: formatDate(p.data.date), read: `約 ${readMinutes(p)} 分鐘閱讀`,
-  title: p.data.title, excerpt: p.data.description, tags: p.data.tags, href: postRoute(p),
+  title: noBreakCodes(p.data.title), excerpt: noBreakCodes(p.data.description), tags: p.data.tags, href: postRoute(p),
 });
 
 // ---------- 觀點列表頁 ----------

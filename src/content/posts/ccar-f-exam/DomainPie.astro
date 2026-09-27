@@ -1,0 +1,103 @@
+---
+/** CCAR-F 五大考試範疇占比（甜甜圈圖）；滑過／點選扇形或圖例，會標出對應的範疇與白話說明 */
+const domains = [
+  { zh: '代理架構與協同', en: 'Agentic Architecture & Orchestration', pct: 27, plain: '一個 AI 怎麼自己規劃、執行、判斷下一步；多個 AI 怎麼分工合作', color: '#8d1d22' },
+  { zh: 'Claude Code 設定與工作流程', en: 'Claude Code Configuration & Workflows', pct: 20, plain: '怎麼用設定檔、規則與自動化流程，讓 AI 穩定照規矩做事', color: '#b8474d' },
+  { zh: '提示工程與結構化輸出', en: 'Prompt Engineering & Structured Output', pct: 20, plain: '怎麼下指令，讓 AI 產出格式固定、可以直接交給程式處理的結果', color: '#d98a8e' },
+  { zh: '工具設計與 MCP 整合', en: 'Tool Design & MCP Integration', pct: 18, plain: '怎麼讓 AI 接上外部工具與資料，並且選對工具', color: '#5a5a5a' },
+  { zh: '上下文管理與可靠性', en: 'Context Management & Reliability', pct: 15, plain: '資料太多、對話太長時，怎麼讓 AI 不遺漏、不出錯，出錯了怎麼接手', color: '#a8a8a8' },
+];
+// 甜甜圈：半徑 80，周長 2πr；每段用 stroke-dasharray 畫
+const R = 80, C = 2 * Math.PI * R;
+let acc = 0;
+const arcs = domains.map((d) => {
+  const len = (d.pct / 100) * C;
+  const arc = { ...d, dash: `${len - 2} ${C - len + 2}`, offset: -acc };
+  acc += len;
+  return arc;
+});
+---
+<figure class="dp" data-active="0">
+  <p class="dp-title">CCAR-F 五大考試範疇占比</p>
+  <div class="dp-body">
+    <div class="dp-chart">
+      <svg viewBox="0 0 200 200" role="img" aria-label="五大範疇占比：代理架構與協同 27%、Claude Code 設定與工作流程 20%、提示工程與結構化輸出 20%、工具設計與 MCP 整合 18%、上下文管理與可靠性 15%">
+        <g transform="rotate(-90 100 100)">
+          {arcs.map((a, i) => (
+            <circle class="dp-arc" data-i={i} cx="100" cy="100" r={R} fill="none" stroke={a.color} stroke-width="34"
+              stroke-dasharray={a.dash} stroke-dashoffset={a.offset} />
+          ))}
+        </g>
+      </svg>
+      <div class="dp-center" aria-hidden="true">
+        {domains.map((d, i) => (
+          <span class="dp-center-item" data-i={i}><b>{d.pct}%</b><span>{d.zh}</span></span>
+        ))}
+      </div>
+    </div>
+    <ol class="dp-legend">
+      {domains.map((d, i) => (
+        <li>
+          <button type="button" class="dp-item" data-i={i} aria-pressed={i === 0 ? 'true' : 'false'}>
+            <span class="dp-dot" style={`background:${d.color}`}></span>
+            <span class="dp-text">
+              <span class="dp-name">{d.zh}<span class="dp-pct">{d.pct}%</span></span>
+              <span class="dp-en">{d.en}</span>
+              <span class="dp-plain">{d.plain}</span>
+            </span>
+          </button>
+        </li>
+      ))}
+    </ol>
+  </div>
+  <figcaption>60 題、120 分鐘、720 分及格（滿分 1000）。資料來源：官方 Exam Guide 與 claudecertificationguide.com。</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.dp').forEach((fig) => {
+    const set = (i: string) => {
+      fig.dataset.active = i;
+      fig.querySelectorAll<HTMLElement>('.dp-item').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.i === i)));
+    };
+    fig.querySelectorAll<HTMLElement>('.dp-item, .dp-arc').forEach((el) => {
+      el.addEventListener('mouseenter', () => set(el.dataset.i!));
+      el.addEventListener('focus', () => set(el.dataset.i!));
+      el.addEventListener('click', () => set(el.dataset.i!));
+    });
+  });
+</script>
+
+<style>
+.dp{margin:40px 0 !important;padding:28px 32px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.dp-title{margin:0 0 20px;text-align:center;font-size:17px;line-height:26px;font-weight:600;color:#1a1a1a}
+.dp-body{display:grid;grid-template-columns:240px minmax(0,1fr);gap:32px;align-items:center}
+.dp-chart{position:relative;width:240px;height:240px}
+.dp-chart svg{display:block;width:100%;height:100%}
+.dp-arc{cursor:pointer;transition:opacity .2s,stroke-width .2s}
+.dp-center{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.dp-center-item{position:absolute;display:none;flex-direction:column;align-items:center;max-width:120px;text-align:center}
+.dp-center-item b{font-family:'Noto Serif TC',serif;font-size:30px;line-height:36px;color:#1a1a1a}
+.dp-center-item span{font-size:13px;line-height:19px;color:#5a5a5a}
+.dp-legend{list-style:none;margin:0;padding:0 !important;display:flex;flex-direction:column;gap:4px}
+.dp-legend li{margin:0 !important}
+.dp-legend li::marker{content:none}
+.dp-item{width:100%;display:flex;gap:12px;align-items:flex-start;padding:8px 12px;border:0;border-radius:7px;background:transparent;text-align:left;font:inherit;cursor:pointer;transition:background-color .15s}
+.dp-item:focus-visible{outline:2px solid #8d1d22;outline-offset:1px}
+.dp-dot{flex-shrink:0;width:12px;height:12px;margin-top:7px;border-radius:3px}
+.dp-text{display:flex;flex-direction:column}
+.dp-name{font-size:16px;line-height:26px;font-weight:600;color:#1a1a1a}
+.dp-pct{margin-left:8px;color:#8d1d22}
+.dp-en{font-size:13px;line-height:20px;color:#888888}
+.dp-plain{display:none;margin-top:4px;font-size:15px;line-height:24px;color:#5a5a5a}
+.dp-item[aria-pressed="true"]{background:#f7ecec}
+.dp-item[aria-pressed="true"] .dp-plain{display:block}
+.dp figcaption{margin-top:20px;font-size:15px;line-height:24px;color:#888888;text-align:center}
+.dp[data-active="0"] .dp-arc:not([data-i="0"]),.dp[data-active="1"] .dp-arc:not([data-i="1"]),.dp[data-active="2"] .dp-arc:not([data-i="2"]),.dp[data-active="3"] .dp-arc:not([data-i="3"]),.dp[data-active="4"] .dp-arc:not([data-i="4"]){opacity:.35}
+.dp[data-active="0"] .dp-center-item[data-i="0"],.dp[data-active="1"] .dp-center-item[data-i="1"],.dp[data-active="2"] .dp-center-item[data-i="2"],.dp[data-active="3"] .dp-center-item[data-i="3"],.dp[data-active="4"] .dp-center-item[data-i="4"]{display:flex}
+@media (max-width:760px){
+.dp{padding:20px 14px}
+.dp-body{grid-template-columns:minmax(0,1fr);gap:16px;justify-items:center}
+.dp-chart{width:220px;height:220px}
+.dp-legend{width:100%}
+}
+</style>

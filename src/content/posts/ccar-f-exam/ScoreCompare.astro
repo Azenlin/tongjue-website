@@ -1,0 +1,60 @@
+---
+/** 模擬考 911 vs 正式考 827，對照 720 及格線；捲到畫面時分數條才跑出來 */
+const MIN = 100, MAX = 1000; // CCAR-F 為 100–1000 分制
+const pos = (v: number) => `${((v - MIN) / (MAX - MIN)) * 100}%`;
+const rows = [
+  { label: '模擬考（考前兩天）', score: 911, note: '60 題答對 55 題', cls: 'sc-mock' },
+  { label: '正式考試', score: 827, note: '通過', cls: 'sc-real' },
+];
+---
+<figure class="sc">
+  <p class="sc-title">模擬考與正式考試的分數落差</p>
+  <div class="sc-rows" style={`--pass:${pos(720)}`} aria-label="及格線 720 分">
+    {rows.map((r) => (
+      <div class="sc-row">
+        <span class="sc-label">{r.label}<span class="sc-note">{r.note}</span></span>
+        <span class="sc-track">
+          <span class={`sc-bar ${r.cls}`} style={`--w:${pos(r.score)}`}></span>
+        </span>
+        <span class={`sc-num ${r.cls}-num`}>{r.score}</span>
+      </div>
+    ))}
+  </div>
+  <figcaption>分數為 100–1000 分制。模擬考是固定題庫，刷久了會記住答案；正式考試的題目完全不同。</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.sc').forEach((el) => {
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { el.classList.add('sc-in'); return; }
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { el.classList.add('sc-in'); io.disconnect(); } }, { threshold: 0.5 });
+    io.observe(el);
+  });
+</script>
+
+<style>
+.sc{margin:40px 0 !important;padding:28px 32px 24px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.sc-title{margin:0 0 28px;text-align:center;font-size:17px;line-height:26px;font-weight:600;color:#1a1a1a}
+.sc-rows{position:relative;display:flex;flex-direction:column;gap:22px;padding-top:8px;--label:190px;--num:64px;--gap:16px}
+.sc-row{display:grid;grid-template-columns:var(--label) minmax(0,1fr) var(--num);gap:var(--gap);align-items:center}
+.sc-label{display:flex;flex-direction:column;font-size:16px;line-height:24px;color:#333333}
+.sc-note{font-size:13px;line-height:20px;color:#888888}
+.sc-track{position:relative;height:16px;border-radius:9999px;background:#f5f5f5}
+/* 及格線：每條分數條上各畫一段，最後一條下方標「及格 720」 */
+.sc-track::after{content:'';position:absolute;top:-7px;bottom:-7px;left:var(--pass);border-left:2px dashed #1a1a1a}
+.sc-row:last-child .sc-track::before{content:'及格 720';position:absolute;top:calc(100% + 10px);left:var(--pass);transform:translateX(-50%);white-space:nowrap;font-size:13px;line-height:20px;font-weight:600;color:#1a1a1a}
+.sc-bar{display:block;height:100%;width:0;border-radius:9999px;transition:width 1.6s cubic-bezier(.2,.7,.2,1)}
+.sc-in .sc-bar{width:var(--w)}
+.sc-mock{background:#a8a8a8}
+.sc-real{background:#8d1d22;transition-delay:.3s}
+.sc-num{font-family:'Noto Serif TC',serif;font-weight:700;font-size:26px;line-height:32px;text-align:right}
+.sc-mock-num{color:#5a5a5a}
+.sc-real-num{color:#8d1d22}
+.sc figcaption{margin-top:44px;font-size:15px;line-height:24px;color:#888888;text-align:center}
+@media (max-width:760px){
+.sc{padding:20px 16px}
+.sc-rows{--label:0px;--gap:10px;--num:48px}
+.sc-row{grid-template-columns:minmax(0,1fr) var(--num);row-gap:6px}
+.sc-label{grid-column:1 / -1;flex-direction:row;align-items:baseline;gap:8px;font-size:15px}
+.sc-num{font-size:22px}
+}
+</style>

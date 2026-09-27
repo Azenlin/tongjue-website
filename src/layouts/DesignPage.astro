@@ -36,7 +36,12 @@ const person = {
   url: 'https://tongjuetech.com/yujen/',
   jobTitle: '銅爵科技顧問創辦人',
   worksFor: { '@id': 'https://tongjuetech.com/#org' },
-  sameAs: ['https://www.instagram.com/azen.comix'],
+  sameAs: [
+    'https://www.linkedin.com/in/%E6%98%B1%E4%BB%BB-%E6%9E%97-a354a5119/',
+    'https://www.instagram.com/azen.comix',
+    'https://www.facebook.com/azen1027/',
+    'https://substack.com/@azenlin',
+  ],
 };
 const ld = name === 'Yujen' ? [org, person] : [org];
 const mountScript = `${logic}\nDCLite.mount(Component, document.getElementById('dc-root'));`;

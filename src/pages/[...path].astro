@@ -5,10 +5,12 @@
  */
 import DesignPage from '../layouts/DesignPage.astro';
 import pages from '../design/pages.json';
+// 暫時下架、只當版型用的頁面（例如 PillarAI 是文章頁版型，但「中小企業 AI 導入指南」本身先不上線）
+import hidden from '../lib/hidden-pages.json';
 import { getPosts, blogLogic, latestCards, coverCss } from '../lib/posts';
 
 export function getStaticPaths() {
-  return Object.entries(pages).map(([name, p]) => ({
+  return Object.entries(pages).filter(([name]) => !hidden.includes(name)).map(([name, p]) => ({
     params: { path: p.route === '/' ? undefined : p.route.replace(/^\/|\/$/g, '') },
     props: { name },
   }));

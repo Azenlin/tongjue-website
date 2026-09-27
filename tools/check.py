@@ -94,6 +94,9 @@ def shoot(browser, base, route, find, full, dynamic, click=None):
     os.makedirs(OUT, exist_ok=True)
     slug = re.sub(r'[^\w-]+', '_', route.strip('/')) or 'home'
     for vp in VIEWPORTS:
+        path = os.path.join(OUT, '%s_%s.png' % (slug, vp))
+        if os.path.exists(path):
+            os.remove(path)  # 失敗時不要留下上一次的截圖造成誤判
         page, errors, ready = open_page(browser, base, route, vp, dynamic)
         if find:
             loc = page.get_by_text(find).filter(visible=True).first
@@ -108,7 +111,6 @@ def shoot(browser, base, route, find, full, dynamic, click=None):
                 page.wait_for_timeout(500)
             except Exception:
                 print('點不到：%s（%s）' % (click, vp))
-        path = os.path.join(OUT, '%s_%s.png' % (slug, vp))
         page.screenshot(path=path, full_page=full)
         page.close()
         print(path)
@@ -142,6 +144,9 @@ def main():
 
     with open(os.path.join(ROOT, 'src', 'design', 'pages.json'), encoding='utf-8') as f:
         pages = json.load(f)
+    with open(os.path.join(ROOT, 'src', 'lib', 'hidden-pages.json'), encoding='utf-8') as f:
+        for name in json.load(f):
+            pages.pop(name, None)
     # 文章頁（src/content/posts/）：從 dist/insights/<slug>/ 找
     known = {i['route'] for i in pages.values()}
     ins = os.path.join(DIST, 'insights')

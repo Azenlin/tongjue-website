@@ -80,7 +80,8 @@ const card = (p: Post) => ({
 
 export function blogLogic(logic: string, posts: Post[]) {
   must(logic, 'const all = [', '觀點列表的文章資料');
-  const data = JSON.stringify([PILLAR, ...posts.map(card)]);
+  // 置頂指南（PILLAR）2026-09-27 暫時下架，補完後再加回陣列最前面
+  const data = JSON.stringify(posts.map(card));
   return `window.TJ_POSTS = ${data};\n` + logic.replace('const all = [', 'const all = window.TJ_POSTS || [');
 }
 
@@ -111,8 +112,9 @@ export function latestCards(body: string, posts: Post[]) {
     s = s.replace(/(<span style="[^"]*">#[^<]*<\/span>)+/, c.tags.map((t) => `${tagOpen}#${esc(t)}</span>`).join(''));
     return s;
   };
-  const fixedPillar = pillarCard.replace('[日期]・', `${PILLAR.date}・`);
-  const replacement = [fixedPillar, ...posts.slice(0, cards.length - 1).map(build)];
+  // 置頂指南暫時下架：三張卡片都放最新文章（pillarCard 保留給之後恢復用）
+  void pillarCard;
+  const replacement = posts.slice(0, cards.length).map(build);
   // 文章不夠時保留設計稿的示意卡
   for (let i = replacement.length; i < cards.length; i++) replacement.push(cards[i]);
   let out = body.slice(0, grid);

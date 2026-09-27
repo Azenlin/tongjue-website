@@ -35,6 +35,20 @@ componentWillUnmount() {
 }
 renderVals() {
 const sent = !!(this.state && this.state.sent);
-return { sent: sent, notSent: !sent, send: (e) => { if (e && e.preventDefault) e.preventDefault(); this.setState({ sent: true }); }, reset: () => this.setState({ sent: false }) };
+return { sent: sent, notSent: !sent, send: (e) => {
+  if (e && e.preventDefault) e.preventDefault();
+  // 正式網站才會設定 window.TJ_FORM_ENDPOINT（Google Apps Script 網址）；設計稿畫布上只切換畫面、不送資料
+  const form = e && (e.currentTarget || e.target);
+  const url = window.TJ_FORM_ENDPOINT;
+  if (!url || !form || !window.FormData) { this.setState({ sent: true }); return; }
+  const fd = new FormData(form);
+  if (fd.get('website')) { this.setState({ sent: true }); return; }
+  const data = { company: fd.get('company') || '', name: fd.get('name') || '', contact: fd.get('contact') || '', topic: fd.get('topic') || '', note: fd.get('note') || '', page: location.href };
+  const btn = form.querySelector('button[type="submit"]');
+  if (btn) { btn.disabled = true; btn.textContent = '送出中…'; }
+  fetch(url, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(data) })
+    .then(() => { this.setState({ sent: true }); })
+    .catch(() => { if (btn) { btn.disabled = false; btn.textContent = '送出'; } alert('送出失敗了，可能是網路不穩。請再試一次，或直接加 LINE（azen1027）或寫信給我。'); });
+}, reset: () => this.setState({ sent: false }) };
 }
 }

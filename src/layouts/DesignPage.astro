@@ -3,6 +3,8 @@
  * 設計稿頁面的共用外框：<head>（SEO、字型、設計系統樣式）＋ 該頁樣式 ＋ 版面 ＋ 元件程式。
  * 版面、樣式、程式都是從設計稿原樣匯入（src/design/），這裡不改內容。
  */
+import site from '../site.json';
+
 interface Props {
   name: string;
   title: string;
@@ -44,7 +46,11 @@ const person = {
   ],
 };
 const ld = name === 'Yujen' ? [org, person] : [org];
-const mountScript = `${logic}\nDCLite.mount(Component, document.getElementById('dc-root'));`;
+// 預約表單的收件網址（Google Apps Script，設定在 src/site.json），只有 Contact 頁需要
+const formInit = name === 'Contact' && site.formEndpoint
+  ? `window.TJ_FORM_ENDPOINT = ${JSON.stringify(site.formEndpoint)};\n`
+  : '';
+const mountScript = `${formInit}${logic}\nDCLite.mount(Component, document.getElementById('dc-root'));`;
 ---
 <!doctype html>
 <html lang="zh-Hant">

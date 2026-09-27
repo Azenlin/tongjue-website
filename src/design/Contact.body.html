@@ -35,14 +35,14 @@
 
 <div style="padding: 40px; border: 1px solid #dddddd; border-radius: 7px;">
 <sc-if value="{{ notSent }}" hint-placeholder-val="{{ true }}">
-<form onSubmit="{{ send }}" style="display: flex; flex-direction: column; gap: 22px;">
+<form onSubmit="{{ send }}" style="display: flex; flex-direction: column; gap: 22px;"><input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0;">
 <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px;">
-<div style="display: flex; flex-direction: column; gap: 8px;"><label for="f-company" style="font-size: 16px; line-height: 24px; font-weight: 600; color: #1a1a1a;">公司名稱</label><input id="f-company" type="text" style="height: 50px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a;"></div>
-<div style="display: flex; flex-direction: column; gap: 8px;"><label for="f-name" style="font-size: 16px; line-height: 24px; font-weight: 600; color: #1a1a1a;">怎麼稱呼你</label><input id="f-name" type="text" style="height: 50px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a;"></div>
+<div style="display: flex; flex-direction: column; gap: 8px;"><label for="f-company" style="font-size: 16px; line-height: 24px; font-weight: 600; color: #1a1a1a;">公司名稱</label><input id="f-company" name="company" type="text" autocomplete="organization" style="height: 50px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a;"></div>
+<div style="display: flex; flex-direction: column; gap: 8px;"><label for="f-name" style="font-size: 16px; line-height: 24px; font-weight: 600; color: #1a1a1a;">怎麼稱呼你</label><input id="f-name" name="name" type="text" autocomplete="name" required style="height: 50px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a;"></div>
 </div>
-<div style="display: flex; flex-direction: column; gap: 8px;"><label for="f-contact" style="font-size: 16px; line-height: 24px; font-weight: 600; color: #1a1a1a;">聯絡方式（Email、電話或 LINE）</label><input id="f-contact" type="text" style="height: 50px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a;"></div>
+<div style="display: flex; flex-direction: column; gap: 8px;"><label for="f-contact" style="font-size: 16px; line-height: 24px; font-weight: 600; color: #1a1a1a;">聯絡方式（Email、電話或 LINE）</label><input id="f-contact" name="contact" type="text" required style="height: 50px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a;"></div>
 <div style="display: flex; flex-direction: column; gap: 8px;"><label for="f-topic" style="font-size: 16px; line-height: 24px; font-weight: 600; color: #1a1a1a;">想談的主題</label>
-<select id="f-topic" class="tj-select" style="height: 50px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a; background: #ffffff;">
+<select id="f-topic" name="topic" class="tj-select" style="height: 50px; box-sizing: border-box; padding: 0 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a; background: #ffffff;">
 <option>還不確定，想先聊聊</option>
 <option>AI 知識庫建置</option>
 <option>AI 導入與數位轉型</option>
@@ -50,7 +50,7 @@
 <option>AIOS 企業導入工作坊</option>
 <option>非營利組織方案</option>
 </select></div>
-<div style="display: flex; flex-direction: column; gap: 8px;"><label for="f-note" style="font-size: 16px; line-height: 24px; font-weight: 600; color: #1a1a1a;">現在遇到的狀況<span style="font-weight: 400; color: #5a5a5a;">（選填）</span></label><textarea id="f-note" rows="4" style="box-sizing: border-box; padding: 12px 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; line-height: 28px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a; resize: vertical;"></textarea></div>
+<div style="display: flex; flex-direction: column; gap: 8px;"><label for="f-note" style="font-size: 16px; line-height: 24px; font-weight: 600; color: #1a1a1a;">現在遇到的狀況<span style="font-weight: 400; color: #5a5a5a;">（選填）</span></label><textarea id="f-note" name="note" rows="4" style="box-sizing: border-box; padding: 12px 14px; border: 1px solid #dddddd; border-radius: 7px; font-size: 17px; line-height: 28px; font-family: 'Noto Sans TC', sans-serif; color: #1a1a1a; resize: vertical;"></textarea></div>
 <button type="submit" style="align-self: center; min-height: 52px; padding: 0 32px; border: 1px solid #8d1d22; border-radius: 7px; background: #8d1d22; color: #ffffff; font-size: 20px; font-weight: 600; font-family: 'Noto Sans TC', sans-serif; cursor: pointer;">送出</button>
 </form>
 </sc-if>

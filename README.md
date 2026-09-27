@@ -11,6 +11,16 @@ npm run build        # 產出 dist/（部署用）
 npm run preview      # 預覽 build 後的結果
 ```
 
+## 改完之後的檢查
+
+```sh
+python tools/check.py --build                      # build 後檢查全部頁面（桌機＋手機，約 15 秒）
+python tools/check.py --shot home --find 某段文字   # 捲到那段文字，截桌機＋手機圖到 .check/
+python tools/check.py --shot yujen --full          # 整頁長截圖
+```
+
+檢查項目：頁面程式有沒有啟動（dc-ready）、有沒有殘留 `{{ }}`、JS 錯誤、手機版左右溢出。需要 `pip install playwright`（使用電腦上的 Chrome）。
+
 ## 資料夾
 
 | 路徑 | 內容 |
@@ -23,6 +33,7 @@ npm run preview      # 預覽 build 後的結果
 | `public/assets/` | 圖檔（檔名是設計稿素材庫的 id） |
 | `public/_redirects` | 舊 WordPress 網址的 301 轉址（Cloudflare Pages 格式） |
 | `tools/import_design.py` | 設計稿 → 網站的匯入工具 |
+| `tools/check.py` | 檢查與截圖工具 |
 
 ## 在另一台電腦接手
 
@@ -50,7 +61,7 @@ GitHub（`Azenlin/tongjue-website`）是正本；任何一台電腦上的資料�
 
 1. 從設計稿下載最新的 `project/*.dc.html` 與用到的素材圖檔（Claude Code 可用 Artifact read 取得，存到暫存資料夾）
 2. `python tools/import_design.py <dc.html 所在資料夾> <圖檔資料夾>`
-3. `npm run build` 檢查，commit、push
+3. `python tools/check.py --build` 檢查（需要看版面時加 `--shot`），commit、push
 
 新頁面：在設計稿加頁後，到 `tools/import_design.py` 的 `PAGES` 加一行（網址、標題、描述）再重跑。
 

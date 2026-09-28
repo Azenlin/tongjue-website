@@ -60,14 +60,28 @@ export function coverOf(p: Post): string | undefined {
   }
 }
 
-/** 每篇文章的卡片／標題區底圖 class（沿用設計稿置頂文章的處理：50% 淡化＋底部暗色漸層） */
-export function coverCss(posts: Post[]) {
+/**
+ * 封面上的深色漸層（照片維持全彩，只在白字後面變暗；與設計稿同一組數值）：
+ *   card：卡片，字在下半部，從底部往上淡到透明
+ *   hero：文章頁標題區，字從上排到下，整張帶一點底色、下半部較深
+ * frontmatter 的 coverDark: true 換成加深版（白色元素多的照片用）；coverPosition 調整取景位置。
+ */
+const SCRIM = {
+  card: 'linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.45) 40%,rgba(0,0,0,0) 75%)',
+  hero: 'linear-gradient(to top,rgba(0,0,0,.72) 0%,rgba(0,0,0,.4) 50%,rgba(0,0,0,.25) 100%)',
+};
+const SCRIM_DARK = {
+  card: 'linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.6) 45%,rgba(0,0,0,.15) 85%)',
+  hero: 'linear-gradient(to top,rgba(0,0,0,.85) 0%,rgba(0,0,0,.55) 50%,rgba(0,0,0,.4) 100%)',
+};
+
+/** 每篇文章的卡片／標題區底圖 class */
+export function coverCss(posts: Post[], kind: 'card' | 'hero' = 'card', selector?: string) {
   return posts.map((p) => {
     const url = coverOf(p);
-    const img = url
-      ? `linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,.05)),linear-gradient(rgba(255,255,255,.5),rgba(255,255,255,.5)),url("${url}")`
-      : 'linear-gradient(to top,rgba(0,0,0,.5),rgba(0,0,0,.05)),linear-gradient(135deg,#9a9a9a,#c8c8c8)';
-    return `.post-img-${p.id}{background-image:${img};background-size:cover;background-position:center}`;
+    const scrim = (p.data.coverDark ? SCRIM_DARK : SCRIM)[kind];
+    const img = url ? `${scrim},url("${url}")` : `${scrim},linear-gradient(135deg,#9a9a9a,#c8c8c8)`;
+    return `${selector ?? `.post-img-${p.id}`}{background-image:${img};background-size:cover;background-position:${p.data.coverPosition ?? 'center'}}`;
   }).join('\n');
 }
 

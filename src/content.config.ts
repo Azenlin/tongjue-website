@@ -16,6 +16,8 @@ const posts = defineCollection({
     services: z.array(z.enum(['ai', 'kb', 'netzero'])).optional(), // 文末「相關服務」；沒填就依標籤推斷
     draft: z.boolean().default(false),  // true = 不上網站
     readMinutes: z.number().optional(), // 沒填就依字數估算
+    coverDark: z.boolean().optional(),  // 封面白色元素多、白字看不清楚時設 true：字後面的深色漸層加深
+    coverPosition: z.string().optional(), // 封面取景位置（CSS background-position），例如 'center 30%'；預設 center
   }),
 });
 

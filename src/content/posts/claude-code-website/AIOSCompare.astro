@@ -1,0 +1,81 @@
+---
+/** 兩種用 AI 的方式：每次上傳 vs AIOS；滑鼠移過（手機點選）右欄時亮起、左欄變淡 */
+const kb = ['證照', '學歷', '經歷', '寫作風格'];
+---
+<figure class="ac">
+  <p class="ac-title">兩種用 AI 的方式</p>
+  <div class="ac-cols">
+    <div class="ac-col ac-old">
+      <p class="ac-h">每次上傳</p>
+      <ol class="ac-steps">
+        <li>上傳資料</li>
+        <li>AI 回答</li>
+        <li>對話結束</li>
+      </ol>
+      <p class="ac-loop"><span aria-hidden="true">↻</span> 下次重來，再交代一遍</p>
+    </div>
+    <div class="ac-col ac-new" tabindex="0" role="button" aria-label="AIOS 的運作方式">
+      <p class="ac-h">AIOS</p>
+      <div class="ac-kb">
+        <span class="ac-kb-label">知識庫</span>
+        <div class="ac-chips">{kb.map((k) => <span>{k}</span>)}</div>
+      </div>
+      <p class="ac-step">AI 自己去找 <span aria-hidden="true">↓</span></p>
+      <p class="ac-result">長成個人頁</p>
+      <p class="ac-loop ac-grow"><span aria-hidden="true">↗</span> 累積得越多，AI 幫得越多</p>
+    </div>
+  </div>
+  <figcaption><span class="ac-hint-mouse">把滑鼠移到右欄</span><span class="ac-hint-touch">點一下右欄</span>，看看 AI 用的是誰的經驗。</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.ac').forEach((el) => {
+    const col = el.querySelector<HTMLElement>('.ac-new')!;
+    col.addEventListener('click', () => el.classList.toggle('ac-on'));
+    col.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.classList.toggle('ac-on'); } });
+    col.addEventListener('mouseleave', () => el.classList.remove('ac-on'));
+  });
+</script>
+
+<style>
+.ac{margin:40px 0 !important;padding:28px 32px 24px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.ac-title{margin:0 0 20px;text-align:center;font-size:17px;line-height:26px;font-weight:600;color:#1a1a1a}
+.ac-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.ac-col{display:flex;flex-direction:column;align-items:center;gap:12px;padding:20px 18px;border:1px solid #dddddd;border-radius:10px;background:#fafafa;text-align:center;transition:opacity .3s,border-color .3s,background .3s,box-shadow .3s,transform .3s}
+.ac-h{margin:0;font-family:'Noto Serif TC',serif;font-weight:700;font-size:22px;line-height:30px;color:#5a5a5a}
+.ac-steps{list-style:none;margin:0 !important;padding:0 !important;display:flex;flex-direction:column;align-items:center;gap:0}
+.ac-steps li{margin:0 !important;padding:6px 16px;border:1px solid #dddddd;border-radius:7px;background:#ffffff;font-size:15px;line-height:22px;color:#333333}
+.ac-steps li::marker{content:none}
+.ac-steps li+li::before{content:'↓';display:block;margin:-2px 0 4px;color:#bbbbbb}
+.ac-steps li+li{border:0;background:none;padding-top:0}
+.ac-loop{margin:auto 0 0;font-size:14px;line-height:21px;color:#888888}
+.ac-loop span{font-weight:700}
+.ac-new{cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+.ac-new:focus-visible{outline:2px dashed #8d1d22;outline-offset:4px}
+.ac-kb{box-sizing:border-box;width:100%;padding:12px;border:1px dashed #d9b3b5;border-radius:8px;background:#ffffff}
+.ac-kb-label{display:block;margin-bottom:8px;font-size:13px;line-height:19px;color:#888888}
+.ac-chips{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
+.ac-chips span{padding:2px 10px;border-radius:9999px;background:#f0f0f0;color:#5a5a5a;font-size:14px;line-height:22px;transition:background .3s,color .3s}
+.ac-step{margin:0;font-size:15px;line-height:22px;color:#5a5a5a}
+.ac-result{margin:0;padding:6px 18px;border-radius:7px;background:#e8e8e8;color:#1a1a1a;font-size:16px;line-height:24px;font-weight:600;transition:background .3s,color .3s}
+/* 亮起：右欄變成品牌色、左欄變淡 */
+.ac:has(.ac-new:hover) .ac-old,.ac.ac-on .ac-old{opacity:.4}
+.ac:has(.ac-new:hover) .ac-new,.ac.ac-on .ac-new{border-color:#8d1d22;background:#ffffff;box-shadow:0 8px 24px rgba(141,29,34,.12);transform:translateY(-3px)}
+.ac:has(.ac-new:hover) .ac-new .ac-h,.ac.ac-on .ac-new .ac-h{color:#8d1d22}
+.ac:has(.ac-new:hover) .ac-chips span,.ac.ac-on .ac-chips span{background:#f7ecec;color:#5e1216}
+.ac:has(.ac-new:hover) .ac-result,.ac.ac-on .ac-result{background:#8d1d22;color:#ffffff}
+.ac:has(.ac-new:hover) .ac-grow,.ac.ac-on .ac-grow{color:#8d1d22;font-weight:600}
+.ac figcaption{margin-top:16px}
+.ac-hint-touch{display:none}
+@media (hover:none){.ac-hint-mouse{display:none}.ac-hint-touch{display:inline}}
+@media (max-width:760px){
+.ac{padding:20px 16px}
+.ac-cols{gap:10px}
+.ac-col{padding:16px 10px}
+.ac-h{font-size:19px;line-height:26px}
+.ac-steps li,.ac-step{font-size:14px}
+.ac-result{padding:6px 12px;font-size:15px}
+.ac-loop{font-size:13px;line-height:19px}
+}
+@media (prefers-reduced-motion:reduce){.ac *{transition:none !important}}
+</style>

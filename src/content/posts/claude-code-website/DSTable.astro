@@ -1,0 +1,57 @@
+---
+/** 銅爵 Design System 摘要表；色碼前面加小色塊，手機版改成一列一張卡片 */
+const rows = [
+  { k: '品牌主色', rule: ['銅爵紅 #8d1d22'], use: 'Logo 印章、主要按鈕、強調文字' },
+  { k: '輔助色', rule: ['深酒紅 #5e1216', '淺紅 #f7ecec'], use: '按鈕滑鼠移上去的顏色、標籤與提示框底色' },
+  { k: '文字色', rule: ['標題 #1a1a1a', '內文 #5a5a5a'], use: '深灰而不是純黑，讀起來比較不刺眼' },
+  { k: '背景與線條', rule: ['白 #ffffff', '淺灰 #f5f5f5', '線條 #dddddd'], use: '頁面底色、交替區段、分隔線' },
+  { k: '標題字型', rule: ['思源宋體（Noto Serif TC），粗體'], use: '所有大小標題', font: 'serif' },
+  { k: '內文字型', rule: ['思源黑體（Noto Sans TC）'], use: '內文、選單、按鈕' },
+  { k: '字級', rule: ['首頁主標 75px（手機 40px）、區段標題 45px、卡片標題 27px、內文 16～19px'], use: '從大到小分層，一眼看出段落層級' },
+  { k: '間距', rule: ['4、8、16、24、40、64px 六個級距'], use: '元素之間只用這幾種距離，版面才整齊' },
+  { k: '圓角', rule: ['按鈕與卡片 7px、頭像全圓'], use: '整體偏方正，只帶一點圓角' },
+];
+const hex = (s: string) => s.match(/#[0-9a-f]{6}/i)?.[0];
+---
+<div class="table-wrap dst">
+  <table>
+    <thead><tr><th>類別</th><th>規則</th><th>用在哪裡</th></tr></thead>
+    <tbody>
+      {rows.map((r) => (
+        <tr>
+          <td class="dst-k">{r.k}</td>
+          <td class="dst-rule">
+            {r.rule.map((x, i) => (
+              <span class={`dst-item${r.font ? ' dst-serif' : ''}`}>
+                {hex(x) && <i class="dst-chip" style={`background:${hex(x)}`} aria-hidden="true"></i>}{x}{i < r.rule.length - 1 ? '、' : ''}
+              </span>
+            ))}
+          </td>
+          <td class="dst-use">{r.use}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+.dst td{vertical-align:middle}
+.dst th:nth-child(1){width:120px}
+.dst th:nth-child(3){width:38%}
+.dst-k{white-space:nowrap;font-weight:600;color:#1a1a1a}
+.dst-item{white-space:nowrap}
+.dst-rule{text-wrap:pretty}
+.dst-rule .dst-item:only-child{white-space:normal}
+.dst-serif{font-family:'Noto Serif TC',serif;font-weight:700}
+.dst-chip{display:inline-block;width:14px;height:14px;margin-right:6px;border-radius:3px;border:1px solid rgba(0,0,0,.15);vertical-align:-2px}
+@media (max-width:760px){
+.dst table,.dst tbody,.dst tr,.dst td{display:block;width:auto}
+.dst thead{display:none}
+.dst tr{padding:12px 14px;border:1px solid #dddddd;border-radius:10px;background:#ffffff}
+.dst tr+tr{margin-top:10px}
+.dst td{padding:0 !important;border:0 !important}
+.dst-k{font-size:14px;line-height:20px;color:#8d1d22}
+.dst-rule{margin-top:4px;font-size:16px;line-height:26px;color:#1a1a1a}
+.dst-use{margin-top:6px;font-size:14px;line-height:22px;color:#888888}
+}
+</style>

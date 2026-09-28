@@ -1,0 +1,51 @@
+---
+/** Logo 的由來：三個關鍵字 → 銅爵 Logo；旁邊對照暗紅（品牌主色）與鮮紅的色票 */
+const words = ['中國', '古代', '馬'];
+---
+<figure class="lo">
+  <div class="lo-main">
+    <ul class="lo-words" aria-label="發想關鍵字">
+      {words.map((w) => <li>{w}</li>)}
+    </ul>
+    <span class="lo-arrow" aria-hidden="true"></span>
+    <img class="lo-logo" src="/assets/90cf04aa33408692b2a11496b1999ea9.png" alt="銅爵科技顧問 Logo：白色宣紙上一枚暗紅色的馬頭印章" width="760" height="210" loading="lazy" />
+  </div>
+  <div class="lo-colors">
+    <div class="lo-sw lo-pick">
+      <span class="lo-chip" style="background:#8d1d22"></span>
+      <span class="lo-sw-text"><b>暗紅 #8d1d22</b>選這個：不刺眼，成了品牌主色</span>
+    </div>
+    <div class="lo-sw">
+      <span class="lo-chip" style="background:#e60012"></span>
+      <span class="lo-sw-text"><b>鮮紅 #e60012</b>太鮮豔，看久了刺眼</span>
+    </div>
+  </div>
+  <figcaption>三個關鍵字，變成一張白色宣紙上的馬頭印章；顏色選暗紅，不刺眼。</figcaption>
+</figure>
+
+<style>
+.lo{margin:40px 0 !important;padding:28px 32px 24px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.lo-main{display:grid;grid-template-columns:auto 72px minmax(0,360px);justify-content:center;align-items:center;gap:28px}
+.lo-words{list-style:none;margin:0 !important;padding:0 !important;display:flex;flex-direction:column;gap:10px}
+.lo-words li{margin:0 !important;padding:6px 18px;border:1px solid #d9b3b5;border-radius:9999px;background:#f7ecec;color:#5e1216;font-family:'Noto Serif TC',serif;font-weight:700;font-size:18px;line-height:26px;text-align:center}
+.lo-words li::marker{content:none}
+.lo-arrow{position:relative;height:2px;background:#8d1d22}
+.lo-arrow::after{content:'';position:absolute;right:-2px;top:-6px;border:7px solid transparent;border-left:10px solid #8d1d22;border-right:0}
+.lo-logo{width:100%;max-width:380px;height:auto;border-radius:0 !important;justify-self:center}
+.lo-colors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin-top:28px;padding-top:24px;border-top:1px solid #eeeeee}
+.lo-sw{display:flex;align-items:center;gap:14px;padding:12px 14px;border:1px solid #eeeeee;border-radius:10px;opacity:.7}
+.lo-pick{border-color:#8d1d22;opacity:1}
+.lo-chip{flex:none;width:44px;height:44px;border-radius:7px}
+.lo-sw-text{display:flex;flex-direction:column;font-size:14px;line-height:21px;color:#5a5a5a}
+.lo-sw-text b{font-size:16px;line-height:24px;font-weight:600;color:#1a1a1a}
+.lo figcaption{margin-top:18px}
+@media (max-width:760px){
+.lo{padding:20px 16px}
+.lo-main{grid-template-columns:minmax(0,1fr);gap:14px;justify-items:center}
+.lo-words{flex-direction:row;gap:8px}
+.lo-words li{padding:4px 14px;font-size:16px}
+.lo-arrow{width:2px;height:28px}
+.lo-arrow::after{right:auto;left:-6px;top:auto;bottom:-2px;border:7px solid transparent;border-top:10px solid #8d1d22;border-bottom:0}
+.lo-colors{grid-template-columns:minmax(0,1fr);gap:10px}
+}
+</style>

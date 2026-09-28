@@ -1,0 +1,54 @@
+---
+/** 網域架構：網域（Hostinger 註冊）→ DNS（Cloudflare）→ 網站／公司信箱；另一側列出 SEO 設定 */
+const seo = ['Google Search Console', 'Bing', '網站地圖', '分享縮圖'];
+---
+<figure class="dm">
+  <p class="dm-title">tongjuetech.com 現在的樣子</p>
+  <div class="dm-grid">
+    <div class="dm-tree">
+      <div class="dm-node dm-top"><b>網域 tongjuetech.com</b><small>Hostinger 註冊，沒有更動</small></div>
+      <span class="dm-v" aria-hidden="true"></span>
+      <div class="dm-node dm-dns"><b>DNS 網址管理</b><small>交給 Cloudflare</small></div>
+      <span class="dm-split" aria-hidden="true"></span>
+      <div class="dm-leaves">
+        <div class="dm-node"><b>網站</b><small>Cloudflare Pages</small><em>主機費 0 元</em></div>
+        <div class="dm-node"><b>公司信箱</b><small>Hostinger</small><em>照常收發</em></div>
+      </div>
+    </div>
+    <div class="dm-seo">
+      <p class="dm-seo-h">上線後的 SEO 基本功</p>
+      <ul>{seo.map((s) => <li>{s}</li>)}</ul>
+    </div>
+  </div>
+</figure>
+
+<style>
+.dm{margin:40px 0 !important;padding:28px 32px 24px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.dm-title{margin:0 0 24px;text-align:center;font-size:17px;line-height:26px;font-weight:600;color:#1a1a1a}
+.dm-grid{display:grid;grid-template-columns:minmax(0,1fr) 220px;gap:28px;align-items:center}
+.dm-tree{display:flex;flex-direction:column;align-items:center}
+.dm-node{display:flex;flex-direction:column;align-items:center;padding:12px 16px;border:1px solid #dddddd;border-radius:10px;background:#ffffff;text-align:center;min-width:200px}
+.dm-node b{font-size:15px;line-height:22px;font-weight:600;color:#1a1a1a}
+.dm-node small{font-size:13px;line-height:19px;color:#888888}
+.dm-node em{margin-top:4px;font-style:normal;font-size:13px;line-height:19px;font-weight:600;color:#8d1d22}
+.dm-dns{border-color:#8d1d22;background:#f7ecec}
+.dm-dns b{color:#5e1216}
+.dm-v{width:2px;height:22px;background:#d9b3b5}
+.dm-split{position:relative;width:50%;height:22px}
+.dm-split::before{content:'';position:absolute;left:50%;top:0;height:11px;border-left:2px solid #d9b3b5}
+.dm-split::after{content:'';position:absolute;left:0;right:0;top:11px;bottom:0;border:2px solid #d9b3b5;border-bottom:0;border-radius:6px 6px 0 0}
+.dm-leaves{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;width:100%}
+.dm-leaves .dm-node{min-width:0}
+.dm-seo{padding:16px 18px;border-radius:10px;background:#f5f5f5}
+.dm-seo-h{margin:0 0 10px;font-size:14px;line-height:20px;font-weight:600;color:#1a1a1a}
+.dm-seo ul{list-style:none;margin:0 !important;padding:0 !important;display:flex;flex-direction:column;gap:8px}
+.dm-seo li{margin:0 !important;position:relative;padding-left:22px;font-size:14px;line-height:21px;color:#333333}
+.dm-seo li::before{content:'✓';position:absolute;left:0;color:#8d1d22;font-weight:700}
+@media (max-width:760px){
+.dm{padding:20px 16px}
+.dm-grid{grid-template-columns:minmax(0,1fr);gap:20px}
+.dm-node{min-width:0;width:100%;padding:10px 12px}
+.dm-leaves .dm-node{width:auto}
+.dm-seo ul{flex-direction:row;flex-wrap:wrap;gap:8px 18px}
+}
+</style>

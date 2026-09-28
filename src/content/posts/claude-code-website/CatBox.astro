@@ -1,0 +1,53 @@
+---
+/** hover 示範「貓咪紙箱」：滑鼠移上去（手機點一下）貓咪探出頭；貓咪沿用右下角 LINE 按鈕同一份 SVG */
+---
+<figure class="cb">
+  <p class="cb-title">這就是 hover，你也試試看</p>
+  <div class="cb-stage" tabindex="0" role="button" aria-label="看看紙箱裡是誰">
+    <div class="cb-back"></div>
+    <div class="cb-catclip">
+      <div class="cb-cat"><svg viewBox="0 0 44 36" aria-hidden="true"><path d="M6 17 L9 2 L18 10 Z M38 17 L35 2 L26 10 Z" fill="#f4c98d" stroke="#6b4a2f" stroke-width="1.5" stroke-linejoin="round"></path><path d="M9.5 13 L10.5 6 L15 10 Z M34.5 13 L33.5 6 L29 10 Z" fill="#f2a7a0"></path><ellipse cx="22" cy="22" rx="17" ry="14" fill="#f4c98d" stroke="#6b4a2f" stroke-width="1.5"></ellipse><path d="M22 9.5v4 M17.5 10.5l1.2 3 M26.5 10.5l-1.2 3" stroke="#d9a25e" stroke-width="1.6" stroke-linecap="round" fill="none"></path><ellipse cx="15.5" cy="21" rx="2.2" ry="2.6" fill="#2b2b2b"></ellipse><ellipse cx="28.5" cy="21" rx="2.2" ry="2.6" fill="#2b2b2b"></ellipse><circle cx="16.3" cy="20" r=".8" fill="#ffffff"></circle><circle cx="29.3" cy="20" r=".8" fill="#ffffff"></circle><path d="M20.4 25 h3.2 l-1.6 1.7 z" fill="#e57a7a"></path><path d="M22 26.7 q-1.5 1.7 -3.2 .6 M22 26.7 q1.5 1.7 3.2 .6" stroke="#6b4a2f" stroke-width="1.1" fill="none" stroke-linecap="round"></path><path d="M11.5 24.5 h-6 M11.5 26.8 l-5.5 1.6 M32.5 24.5 h6 M32.5 26.8 l5.5 1.6" stroke="#6b4a2f" stroke-width=".9" stroke-linecap="round"></path><ellipse cx="11" cy="27.5" rx="2.4" ry="1.4" fill="#f2a7a0" opacity=".6"></ellipse><ellipse cx="33" cy="27.5" rx="2.4" ry="1.4" fill="#f2a7a0" opacity=".6"></ellipse></svg></div>
+    </div>
+    <div class="cb-front"></div>
+    <div class="cb-paws" aria-hidden="true"><span></span><span></span></div>
+    <span class="cb-bubble" aria-hidden="true">喵，被你發現了</span>
+  </div>
+  <figcaption><span class="cb-hint-mouse">把滑鼠移到紙箱上</span><span class="cb-hint-touch">點一下紙箱</span>，看看裡面藏了誰。右下角 LINE 按鈕上的，也是牠。</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.cb-stage').forEach((el) => {
+    el.addEventListener('click', () => el.classList.toggle('is-open'));
+    el.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); el.classList.toggle('is-open'); } });
+    el.addEventListener('mouseleave', () => el.classList.remove('is-open'));
+  });
+</script>
+
+<style>
+.cb{margin:40px 0 !important;padding:28px 24px 24px;border:1px solid #dddddd;border-radius:12px;background:#ffffff;text-align:center}
+.cb-title{margin:0 0 8px;font-size:17px;line-height:26px;font-weight:600;color:#1a1a1a}
+.cb-stage{position:relative;width:220px;height:230px;margin:0 auto;cursor:pointer;outline:none;-webkit-tap-highlight-color:transparent}
+.cb-stage:focus-visible{outline:2px dashed #8d1d22;outline-offset:6px;border-radius:8px}
+.cb-back{position:absolute;left:24px;bottom:0;width:172px;height:116px;background:#9a7148;border-radius:3px 3px 0 0}
+.cb-catclip{position:absolute;left:20px;bottom:100px;width:180px;height:130px;overflow:hidden}
+.cb-cat{position:absolute;left:24px;bottom:-4px;width:132px;transform:translateY(118px);transition:transform .45s cubic-bezier(.3,1.5,.5,1)}
+.cb-cat svg{display:block;width:132px;height:108px}
+.cb-front{position:absolute;left:20px;bottom:0;width:180px;height:104px;background:#c89a64;border-top:3px solid #b3854f;border-radius:2px;box-shadow:inset 0 -6px 0 rgba(0,0,0,.08)}
+.cb-front::before{content:'';position:absolute;left:50%;top:0;width:34px;height:40px;margin-left:-17px;background:rgba(255,255,255,.28)}
+.cb-front::after{content:'';position:absolute;left:14px;right:14px;bottom:18px;border-top:2px dashed rgba(107,74,47,.25)}
+.cb-paws{position:absolute;left:20px;bottom:92px;width:180px;display:flex;justify-content:center;gap:40px;opacity:0;transform:translateY(8px);transition:opacity .25s ease .18s,transform .25s ease .18s}
+.cb-paws span{width:30px;height:20px;background:#f4c98d;border:2px solid #6b4a2f;border-radius:50%;position:relative}
+.cb-paws span::before,.cb-paws span::after{content:'';position:absolute;top:5px;width:2px;height:8px;background:#6b4a2f;border-radius:2px}
+.cb-paws span::before{left:9px}.cb-paws span::after{right:9px}
+.cb-bubble{position:absolute;right:-44px;top:-6px;padding:6px 12px;border-radius:8px;background:#1a1a1a;color:#fff;font-size:14px;line-height:20px;white-space:nowrap;opacity:0;transform:translateY(6px);transition:opacity .25s ease,transform .25s ease}
+.cb-bubble::after{content:'';position:absolute;left:14px;bottom:-5px;border:6px solid transparent;border-top-color:#1a1a1a;border-bottom:0}
+.cb-stage:hover .cb-cat,.cb-stage:focus-visible .cb-cat,.cb-stage.is-open .cb-cat{transform:translateY(0);animation:cbTilt 1.6s ease-in-out .6s 1}
+.cb-stage:hover .cb-paws,.cb-stage:focus-visible .cb-paws,.cb-stage.is-open .cb-paws{opacity:1;transform:translateY(0)}
+.cb-stage:hover .cb-bubble,.cb-stage:focus-visible .cb-bubble,.cb-stage.is-open .cb-bubble{opacity:1;transform:translateY(0);transition-delay:.4s}
+@keyframes cbTilt{0%,100%{transform:translateY(0) rotate(0)}30%{transform:translateY(0) rotate(-7deg)}60%{transform:translateY(0) rotate(5deg)}}
+.cb figcaption{margin-top:18px}
+.cb-hint-touch{display:none}
+@media (hover:none){.cb-hint-mouse{display:none}.cb-hint-touch{display:inline}}
+@media (max-width:420px){.cb-bubble{right:-20px}}
+@media (prefers-reduced-motion:reduce){.cb *{transition:none !important;animation:none !important}}
+</style>

@@ -1,0 +1,61 @@
+---
+/** 一週 token 額度：上條是時間（7 天過了 2 天），下條是額度（用掉 60%）；虛線標出平均速度（2 天約 29%）；捲到畫面時長條才跑出來 */
+const USED = 60, AVG = (2 / 7) * 100;
+const days = Array.from({ length: 7 }, (_, i) => i + 1);
+---
+<figure class="tb" style={`--used:${USED}%;--avg:${AVG}%`}>
+  <p class="tb-title">兩天，燒掉一週 60% 的 token 額度</p>
+  <div class="tb-rows">
+    <div class="tb-row">
+      <span class="tb-label">時間<small>一週 7 天</small></span>
+      <span class="tb-track tb-days">
+        {days.map((d) => <i class={d <= 2 ? 'tb-day tb-past' : 'tb-day'}><em>{d}</em></i>)}
+      </span>
+      <span class="tb-num tb-num-time">2 天</span>
+    </div>
+    <div class="tb-row">
+      <span class="tb-label">token 額度<small>一週的用量上限</small></span>
+      <span class="tb-track"><span class="tb-fill"></span></span>
+      <span class="tb-num">60%</span>
+    </div>
+  </div>
+  <figcaption>虛線是平均速度：一週額度平均分給 7 天，2 天應該只用約 29%。<br />（Claude Pro 方案；全程使用 Opus 5.5、推理強度 High）</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.tb').forEach((el) => {
+    if (!('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) { el.classList.add('tb-in'); return; }
+    const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { el.classList.add('tb-in'); io.disconnect(); } }, { threshold: 0.5 });
+    io.observe(el);
+  });
+</script>
+
+<style>
+.tb{margin:40px 0 !important;padding:28px 32px 24px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.tb-title{margin:0 0 28px;text-align:center;font-size:17px;line-height:26px;font-weight:600;color:#1a1a1a}
+.tb-rows{display:flex;flex-direction:column;gap:22px;--label:112px;--num:64px;--gap:16px}
+.tb-row{display:grid;grid-template-columns:var(--label) minmax(0,1fr) var(--num);gap:var(--gap);align-items:center}
+.tb-label{display:flex;flex-direction:column;font-size:16px;line-height:24px;color:#333333}
+.tb-label small{font-size:13px;line-height:20px;color:#888888}
+.tb-track{position:relative;height:28px;border-radius:7px;background:#f5f5f5;overflow:visible}
+/* 平均速度虛線：兩條都畫一段，下條下方標字 */
+.tb-track::after{content:'';position:absolute;top:-6px;bottom:-6px;left:var(--avg);border-left:2px dashed #1a1a1a;z-index:1}
+.tb-row:last-child .tb-track::before{content:'平均速度 29%';position:absolute;top:calc(100% + 10px);left:var(--avg);transform:translateX(-50%);white-space:nowrap;font-size:13px;line-height:20px;font-weight:600;color:#1a1a1a}
+.tb-days{display:grid;grid-template-columns:repeat(7,1fr);gap:2px;background:none}
+.tb-day{display:flex;align-items:center;justify-content:center;border-radius:4px;background:#f5f5f5;font-style:normal}
+.tb-day em{font-style:normal;font-size:12px;line-height:1;color:#aaaaaa}
+.tb-past{background:#a8a8a8;transition:background .4s}
+.tb-past em{color:#ffffff}
+.tb-fill{position:absolute;left:0;top:0;bottom:0;width:0;border-radius:7px;background:#8d1d22;transition:width 1.6s cubic-bezier(.2,.7,.2,1) .3s}
+.tb-in .tb-fill{width:var(--used)}
+.tb-num{font-family:'Noto Serif TC',serif;font-weight:700;font-size:26px;line-height:32px;text-align:right;color:#8d1d22;white-space:nowrap}
+.tb-num-time{color:#5a5a5a}
+.tb figcaption{margin-top:44px}
+@media (max-width:760px){
+.tb{padding:20px 16px}
+.tb-rows{--label:0px;--gap:10px;--num:56px}
+.tb-row{grid-template-columns:minmax(0,1fr) var(--num);row-gap:6px}
+.tb-label{grid-column:1 / -1;flex-direction:row;align-items:baseline;gap:8px;font-size:15px}
+.tb-num{font-size:22px}
+}
+</style>

@@ -1,0 +1,92 @@
+---
+/** Design System 開關：關閉時每按一次「再請 AI 做一次」就隨機換配色與字型；打開時永遠是銅爵的樣子 */
+---
+<figure class="dt">
+  <div class="dt-bar">
+    <label class="dt-switch">
+      <input type="checkbox" class="dt-input" />
+      <span class="dt-knob" aria-hidden="true"></span>
+      <span class="dt-state">Design System：<b class="dt-off">關閉</b><b class="dt-on">開啟</b></span>
+    </label>
+    <button type="button" class="dt-again">再請 AI 做一次</button>
+  </div>
+  <div class="dt-stage">
+    <div class="dt-card" style="--c:#2f6fd6;--c2:#e8f0fc;--r:18px;--hf:'Noto Sans TC',sans-serif;--ink:#12305e">
+      <span class="dt-tag">服務介紹</span>
+      <p class="dt-h">AI 知識庫建置</p>
+      <p class="dt-p">把會議、文件和經驗整理成 AI 查得到的知識庫，讓 AI 繼承你的工作脈絡。</p>
+      <span class="dt-btn">預約諮詢</span>
+    </div>
+    <p class="dt-count" aria-live="polite">第 <b class="dt-n">1</b> 次請 AI 做</p>
+  </div>
+  <figcaption>沒有 Design System，AI 每次都給你新風格；有了它，每次都是同一個品牌。</figcaption>
+</figure>
+
+<script>
+  const BRAND = { c: '#8d1d22', c2: '#f7ecec', r: '7px', hf: "'Noto Serif TC',serif", ink: '#1a1a1a' };
+  const LOOKS = [
+    { c: '#2f6fd6', c2: '#e8f0fc', r: '18px', hf: "'Noto Sans TC',sans-serif", ink: '#12305e' },
+    { c: '#1f9d6b', c2: '#e3f5ec', r: '9999px', hf: "Georgia,serif", ink: '#0f3d2b' },
+    { c: '#7b3fe4', c2: '#f0e9fd', r: '2px', hf: "'Courier New',monospace", ink: '#2d1460' },
+    { c: '#f08a24', c2: '#fdf0e3', r: '24px', hf: "'Noto Serif TC',serif", ink: '#5a2e05' },
+    { c: '#e0457b', c2: '#fce8f0', r: '12px', hf: "Impact,'Arial Black',sans-serif", ink: '#5e0f2c' },
+    { c: '#0f8fa3', c2: '#e2f4f7', r: '0px', hf: "'Trebuchet MS',sans-serif", ink: '#07383f' },
+  ];
+  document.querySelectorAll<HTMLElement>('.dt').forEach((el) => {
+    const input = el.querySelector<HTMLInputElement>('.dt-input')!;
+    const card = el.querySelector<HTMLElement>('.dt-card')!;
+    const nEl = el.querySelector<HTMLElement>('.dt-n')!;
+    let n = 1, last = 0;
+    const apply = (l: typeof BRAND) => {
+      card.style.setProperty('--c', l.c); card.style.setProperty('--c2', l.c2);
+      card.style.setProperty('--r', l.r); card.style.setProperty('--hf', l.hf); card.style.setProperty('--ink', l.ink);
+      card.classList.remove('dt-pop'); void card.offsetWidth; card.classList.add('dt-pop');
+    };
+    el.querySelector('.dt-again')!.addEventListener('click', () => {
+      n += 1; nEl.textContent = String(n);
+      if (input.checked) { apply(BRAND); return; }
+      let i = last;
+      while (i === last) i = Math.floor(Math.random() * LOOKS.length);
+      last = i; apply(LOOKS[i]);
+    });
+    input.addEventListener('change', () => {
+      el.classList.toggle('dt-is-on', input.checked);
+      apply(input.checked ? BRAND : LOOKS[last]);
+    });
+  });
+</script>
+
+<style>
+.dt{margin:40px 0 !important;padding:24px 32px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.dt-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;padding-bottom:20px;border-bottom:1px solid #eeeeee}
+.dt-switch{position:relative;display:inline-flex;align-items:center;gap:12px;cursor:pointer;font-size:16px;line-height:24px;color:#333333}
+.dt-input{position:absolute;opacity:0;width:1px;height:1px}
+.dt-knob{position:relative;flex:none;width:48px;height:28px;border-radius:9999px;background:#cccccc;transition:background .2s}
+.dt-knob::after{content:'';position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#ffffff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.dt-input:checked+.dt-knob{background:#8d1d22}
+.dt-input:checked+.dt-knob::after{transform:translateX(20px)}
+.dt-input:focus-visible+.dt-knob{outline:2px dashed #8d1d22;outline-offset:3px}
+.dt-state b{font-weight:600;color:#1a1a1a}
+.dt-on{display:none}
+.dt-is-on .dt-on{display:inline;color:#8d1d22 !important}
+.dt-is-on .dt-off{display:none}
+.dt-again{padding:8px 18px;border:1px solid #1a1a1a;border-radius:7px;background:#ffffff;color:#1a1a1a;font:inherit;font-size:15px;line-height:22px;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
+.dt-again:hover{background:#1a1a1a;color:#ffffff}
+.dt-stage{display:flex;flex-direction:column;align-items:center;gap:12px;padding:28px 0 4px}
+.dt-card{width:100%;max-width:360px;padding:24px;border:1px solid var(--c2);border-radius:var(--r);background:#ffffff;box-shadow:0 6px 20px rgba(0,0,0,.06);text-align:left;transition:border-radius .3s}
+.dt-pop{animation:dtPop .35s ease}
+@keyframes dtPop{0%{transform:scale(.96);opacity:.4}100%{transform:scale(1);opacity:1}}
+.dt-tag{display:inline-block;padding:2px 10px;border-radius:var(--r);background:var(--c2);color:var(--c);font-size:13px;line-height:20px;font-weight:600}
+.dt-h{margin:12px 0 0;font-family:var(--hf);font-weight:700;font-size:24px;line-height:34px;color:var(--ink)}
+.dt-p{margin:8px 0 0;font-size:15px;line-height:25px;color:#5a5a5a}
+.dt-btn{display:inline-block;margin-top:18px;padding:8px 20px;border-radius:var(--r);background:var(--c);color:#ffffff;font-size:15px;line-height:22px;font-weight:600}
+.dt-count{margin:0;font-size:14px;line-height:20px;color:#888888}
+.dt-count b{color:#1a1a1a}
+.dt figcaption{margin-top:16px}
+@media (max-width:760px){
+.dt{padding:20px 16px}
+.dt-card{padding:20px}
+.dt-h{font-size:21px;line-height:30px}
+}
+@media (prefers-reduced-motion:reduce){.dt-pop{animation:none}}
+</style>

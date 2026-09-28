@@ -8,7 +8,8 @@
  * 每個替換都會檢查設計稿裡找得到對應的片段，找不到就讓 build 失敗，避免設計稿改版後默默壞掉。
  */
 import { getCollection, type CollectionEntry } from 'astro:content';
-import { existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { join } from 'node:path';
 
 export type Post = CollectionEntry<'posts'>;
@@ -45,10 +46,17 @@ function must(s: string, find: string | RegExp, what: string) {
 
 // ---------- 封面圖 ----------
 
-/** 封面圖：public/insights/<id>/cover.jpg|png|webp，沒有就回傳 undefined */
+/**
+ * 封面圖：public/insights/<id>/cover.jpg|png|webp，沒有就回傳 undefined。
+ * 網址帶檔案內容的指紋（?v=…）：換封面時網址跟著變，瀏覽器不會繼續顯示快取裡的舊圖。
+ */
 export function coverOf(p: Post): string | undefined {
   for (const ext of ['jpg', 'jpeg', 'png', 'webp']) {
-    if (existsSync(join(process.cwd(), 'public', 'insights', p.id, `cover.${ext}`))) return `/insights/${p.id}/cover.${ext}`;
+    const file = join(process.cwd(), 'public', 'insights', p.id, `cover.${ext}`);
+    if (existsSync(file)) {
+      const v = createHash('md5').update(readFileSync(file)).digest('hex').slice(0, 8);
+      return `/insights/${p.id}/cover.${ext}?v=${v}`;
+    }
   }
 }
 

@@ -39,6 +39,7 @@ if (name === 'Blog' || name === 'Main' || name === 'Yujen') {
   title={p.title}
   description={p.description}
   route={p.route}
+  ogImage={'ogImage' in p ? p.ogImage : undefined}
   dynamic={p.dynamic}
   body={body}
   css={css}

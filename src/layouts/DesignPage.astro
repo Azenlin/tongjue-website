@@ -76,7 +76,7 @@ const mountScript = `${formInit}${logic}\nDCLite.mount(Component, document.getEl
 <meta property="og:description" content={description}>
 <meta property="og:url" content={canonical}>
 <meta property="og:image" content={ogUrl}>
-{ogImage === '/og-default.png' && <><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"></>}
+{ogImage.startsWith('/og-') && <><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"></>}
 <meta property="og:image:alt" content={title}>
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.ico" sizes="48x48">

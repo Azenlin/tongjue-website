@@ -55,6 +55,7 @@
   },
   "Yujen": {
     "route": "/yujen/",
+    "ogImage": "/og-yujen.jpg",
     "title": "林昱任｜AI 導入與淨零碳顧問・銅爵科技顧問創辦人",
     "description": "清大化工、十三年製造業現場、前圖文作家「阿任叔叔」。AI 與淨零雙領域證照，企業內訓講師。我的經歷、文章與工作方式。",
     "dynamic": true

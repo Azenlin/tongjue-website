@@ -1,7 +1,7 @@
 ---
 /** 這次改版的數字：一排卡片 */
 const stats = [
-  { n: '12', u: '頁', label: '網站頁面', sub: '＋3 篇文章' },
+  { n: '12', u: '頁', label: '網站頁面' },
   { n: '6', u: '張', label: '互動圖表' },
   { pre: '約', n: '495', u: '版', label: '設計稿來回修改' },
   { n: '34', u: '次', label: '上線當天的更新' },
@@ -13,20 +13,18 @@ const stats = [
     <li>
       <span class="st-n">{s.pre && <small class="st-pre">{s.pre}</small>}{s.n}<small>{s.u}</small></span>
       <span class="st-l">{s.label}</span>
-      {s.sub && <span class="st-sub">{s.sub}</span>}
     </li>
   ))}
 </ul>
 
 <style>
 .st{list-style:none;margin:40px 0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
-.st li{margin:0 !important;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;padding:20px 8px;border:1px solid #dddddd;border-radius:12px;background:#ffffff;text-align:center}
+.st li{margin:0 !important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:20px 8px;border:1px solid #dddddd;border-radius:12px;background:#ffffff;text-align:center}
 .st li::marker{content:none}
 .st-n{font-family:'Noto Serif TC',serif;font-weight:700;font-size:34px;line-height:40px;color:#8d1d22;white-space:nowrap}
 .st-n small{margin-left:2px;font-family:'Noto Sans TC',sans-serif;font-size:15px;font-weight:400;color:#5a5a5a}
 .st-n .st-pre{margin:0 4px 0 0}
 .st-l{font-size:14px;line-height:21px;color:#333333}
-.st-sub{font-size:13px;line-height:19px;color:#888888}
 @media (max-width:760px){
 .st{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .st li{padding:16px 8px}

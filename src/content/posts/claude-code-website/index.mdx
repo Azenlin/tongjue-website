@@ -10,6 +10,7 @@ import LogoOrigin from './LogoOrigin.astro';
 import DSTable from './DSTable.astro';
 import DSToggle from './DSToggle.astro';
 import CatBox from './CatBox.astro';
+import DesignCanvas from './DesignCanvas.astro';
 import FormFlow from './FormFlow.astro';
 import DomainMap from './DomainMap.astro';
 import AIOSCompare from './AIOSCompare.astro';
@@ -67,7 +68,9 @@ Design System（設計系統）可以想成品牌的「視覺規則手冊」：�
 
 這是我最想分享的一個做法：**不要一開始就讓 Claude Code 直接生成網頁檔案（也就是 HTML 這類程式碼），而是先請它在 Artifacts 裡建一個初版的設計稿。**
 
-設計稿看起來就跟真的網站一樣，可以點、可以捲動，連手機版也一起做。9 月 24 日那天，我用前面做好的 Design System，一天內就做出 8 頁設計稿。看到第一版時，我的感想是：「整體畫面不錯，但字太多、圖表太少」「首頁一進來，應該要立即讓讀者知道我的名字」。這些問題，要等畫面真的擺在眼前才看得出來，光看文案是想像不到的。
+設計稿看起來就跟真的網站一樣，可以點、可以捲動；而由於電腦和手機的畫面比例不同，也會導致畫面設計不同，為了確認所有的設計都沒有問題，我設計過程中，會頻繁地切換不同設備來做觀看。9 月 24 日那天，我用前面做好的 Design System，一天內就做出 8 頁設計稿。看到第一版時，我的感想是：「整體畫面不錯，但字太多、圖表太少」「首頁一進來，應該要立即讓讀者知道我的名字」。這些問題，要等畫面真的擺在眼前才看得出來，光看文案是想像不到的。
+
+<DesignCanvas />
 
 接下來就是一頁一頁地磨。首頁主標前後換了好幾輪，從「AI 導入難的不是工具，是知道該從哪裡動手」，一路改到最後定案的「把 AI 塑造成你的形狀」；證照徽章放上去又拿掉，漂浮動畫試了覺得不好看就取消。整份設計稿前後來回修改了近 500 個版本。這些嘗試如果發生在正式網站上，每改一次都要重新上線；在設計稿裡，改錯了也不會有任何讀者看到。
 

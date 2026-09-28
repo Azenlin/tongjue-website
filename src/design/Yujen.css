@@ -256,3 +256,4 @@ dl[style*="repeat(3"]{grid-template-columns:repeat(3,minmax(0,1fr)) !important}
 dl[style*="repeat(3"]>div:nth-child(2){border-right:1px solid #dddddd !important}
 dl[style*="repeat(3"]>div:not(:first-child){padding-left:12px !important}
 }
+@media (max-width:760px){.yj-cta{justify-content:center}}

@@ -40,7 +40,7 @@ section:has(>.post-body){padding-top:56px !important}
 .post-body .stack td:nth-child(3){margin-top:6px}
 .post-body .stack td:last-child{margin-top:8px;padding-top:8px;border-top:1px solid #eeeeee;font-size:14px;line-height:22px;color:#888888}
 .post-body .stack-scenarios td:last-child::before{content:'主要考的範疇：';color:#8d1d22}
-/* 內文字級：設計稿全站規則會把 19px 在手機縮成 17px，文章內文改用 20px */
+/* 內文字級：全站內文基準 20px（手機不縮小），文章內文同樣 20px */
 article.post-body{font-size:20px !important;line-height:36px !important}
 section:has(>.post-body){padding-top:36px !important}
 .post-body h2{margin-top:52px;font-size:26px !important;line-height:36px !important}

@@ -25,6 +25,42 @@ setupCatBottom() {
     if (st.n >= AT.length) { clearInterval(this._catTimer); this._catTimer = null; }
   }, 500);
 }
+placeGlide() {
+  // 時間軸：紅圈、底框、進度線是固定元素，量出目前那一站的位置後滑過去（列表本身每次會重畫，做不了過場）
+  const track = document.querySelector('.tl-track');
+  if (!track) return;
+  const on = track.querySelector('.tl-stop.is-on');
+  const dot = on && on.querySelector('.tl-dot');
+  const label = on && on.querySelector('.tl-label');
+  const glide = track.querySelector('.tl-glide');
+  const pill = track.querySelector('.tl-pill');
+  const fill = track.querySelector('.tl-fill');
+  if (!dot || !label || !glide || !pill || !fill) return;
+  const t = track.getBoundingClientRect();
+  const d = dot.getBoundingClientRect();
+  const l = label.getBoundingClientRect();
+  glide.style.transform = 'translate(' + (d.left - t.left) + 'px,' + (d.top - t.top) + 'px)';
+  pill.style.transform = 'translate(' + (l.left - t.left) + 'px,' + (l.top - t.top) + 'px)';
+  pill.style.width = l.width + 'px';
+  pill.style.height = l.height + 'px';
+  fill.style.width = Math.max(0, d.left + d.width / 2 - t.left - t.width * 0.1) + 'px';
+  if (!track.classList.contains('has-glide')) {
+    track.classList.add('has-glide');
+    requestAnimationFrame(() => requestAnimationFrame(() => track.classList.add('tl-anim')));
+  }
+}
+setupGlide() {
+  this.placeGlide();
+  this._glideResize = () => {
+    const track = document.querySelector('.tl-track');
+    if (track) track.classList.remove('tl-anim');
+    this.placeGlide();
+    clearTimeout(this._glideT);
+    this._glideT = setTimeout(() => { if (track) track.classList.add('tl-anim'); }, 100);
+  };
+  window.addEventListener('resize', this._glideResize);
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => this.placeGlide());
+}
 setupSwipe() {
   // 手機：在說明卡上左右滑動切換時期（左滑下一站、右滑上一站）
   this._ts = (e) => {
@@ -76,6 +112,7 @@ setupMobileBits() {
 componentDidMount() {
   this.setupMobileBits();
   this.setupSwipe();
+  this.setupGlide();
   this.setupCatBottom();
 }
 componentWillUnmount() {
@@ -84,6 +121,8 @@ componentWillUnmount() {
   if (this._catBottom) window.removeEventListener('scroll', this._catBottom);
   clearInterval(this._catTimer);
   clearTimeout(this._catOff);
+  if (this._glideResize) window.removeEventListener('resize', this._glideResize);
+  clearTimeout(this._glideT);
 }
 constructor(props) {
   super(props);
@@ -135,6 +174,7 @@ renderVals() {
   ];
   const i = this.state.tl;
   this._tlMax = stages.length - 1;
+  if (typeof requestAnimationFrame === 'function') requestAnimationFrame(() => this.placeGlide());
   const go = (k) => { if (k !== i) this.setState({ tl: k, dir: k > i ? 'next' : 'prev', n: this.state.n + 1 }); };
   const dt = (stages[i].detail || '[這個階段的詳細說明待補]').split('**');
   const cur = Object.assign({}, stages[i], { d1: dt[0] || '', d2: dt[1] || '', d3: dt.slice(2).join('') , detailCls: stages[i].detail ? 'tl-detail is-real' : 'tl-detail', hasLink: !!stages[i].href, anim: this.state.dir ? 'tl-in-' + this.state.dir + '-' + (this.state.n % 2) : '', imgCls: 'tl-img-' + i, imgAlt: ['實驗室裡用滴管操作試管', '無塵室裡操作精密機台的工程師', '黃昏時的高雄港灣城市景色', '阿任叔叔的宇宙系列圖文：海王星說「永遠不要讓別人定義你的價值」', '夕陽下在草原上揚起前蹄的黑色駿馬'][i] });

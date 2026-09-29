@@ -26,7 +26,7 @@ setupCatBottom() {
   }, 500);
 }
 placeGlide() {
-  // 時間軸：紅圈、底框、進度線是固定元素，量出目前那一站的位置後滑過去（列表本身每次會重畫，做不了過場）
+  // 時間軸：紅圈、底框是固定元素，量出目前那一站的位置後滑過去（列表本身每次會重畫，做不了過場）
   const track = document.querySelector('.tl-track');
   if (!track) return;
   const on = track.querySelector('.tl-stop.is-on');
@@ -34,8 +34,7 @@ placeGlide() {
   const label = on && on.querySelector('.tl-label');
   const glide = track.querySelector('.tl-glide');
   const pill = track.querySelector('.tl-pill');
-  const fill = track.querySelector('.tl-fill');
-  if (!dot || !label || !glide || !pill || !fill) return;
+  if (!dot || !label || !glide || !pill) return;
   const t = track.getBoundingClientRect();
   const d = dot.getBoundingClientRect();
   const l = label.getBoundingClientRect();
@@ -43,7 +42,6 @@ placeGlide() {
   pill.style.transform = 'translate(' + (l.left - t.left) + 'px,' + (l.top - t.top) + 'px)';
   pill.style.width = l.width + 'px';
   pill.style.height = l.height + 'px';
-  fill.style.width = Math.max(0, d.left + d.width / 2 - t.left - t.width * 0.1) + 'px';
   if (!track.classList.contains('has-glide')) {
     track.classList.add('has-glide');
     requestAnimationFrame(() => requestAnimationFrame(() => track.classList.add('tl-anim')));

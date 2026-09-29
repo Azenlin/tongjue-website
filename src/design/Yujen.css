@@ -68,7 +68,7 @@ dl.yj-stats>div.yj-stat:not(:last-child)::after{content:"";position:absolute;rig
 .tl-img.tl-in-next-0,.tl-img.tl-in-next-1,.tl-img.tl-in-prev-0,.tl-img.tl-in-prev-1{animation-delay:.06s}
 @media (prefers-reduced-motion:reduce){.tl-in-next-0,.tl-in-next-1,.tl-in-prev-0,.tl-in-prev-1{animation:none}}
 .tl-card{touch-action:pan-y}
-.tl-track::before{content:"";position:absolute;top:17px;left:10%;right:10%;height:2px;background:#dddddd;z-index:0}
+.tl-track::before{content:"";position:absolute;top:17px;left:10%;right:10%;height:1px;background:#dddddd;z-index:0}
 .tl-stop{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;gap:14px;padding:0;border:0;background:none;cursor:pointer;font-family:inherit;text-align:center}
 .tl-dot{width:34px;height:34px;border-radius:50%;background:#d6d6d6;display:flex;align-items:center;justify-content:center;box-shadow:0 0 0 6px #ffffff;transition:background-color .4s ease,transform .4s cubic-bezier(.25,.8,.25,1)}
 .tl-label{display:flex;flex-direction:column;gap:2px;padding:10px 18px;border-radius:10px;transition:background-color .4s ease}
@@ -86,18 +86,16 @@ dl.yj-stats>div.yj-stat:not(:last-child)::after{content:"";position:absolute;rig
 .tl-arrow.is-off{opacity:0;pointer-events:none}
 .tl-arrow:focus-visible{outline:2px solid #8d1d22;outline-offset:2px}
 .tl-fx{position:absolute;inset:0;pointer-events:none;list-style:none}
-.tl-fill{position:absolute;top:17px;left:10%;width:0;height:2px;background:#8d1d22;z-index:0}
 .tl-pill{position:absolute;top:0;left:0;width:0;height:0;border-radius:10px;background:#f7ecec;z-index:0;opacity:0}
 .tl-glide{position:absolute;top:0;left:0;width:34px;height:34px;border-radius:50%;background:#8d1d22;box-shadow:0 0 0 6px #ffffff;display:flex;align-items:center;justify-content:center;z-index:2;opacity:0}
 .tl-track.has-glide .tl-pill,.tl-track.has-glide .tl-glide{opacity:1}
 .tl-track.has-glide .tl-stop.is-on .tl-dot{background:#d6d6d6;transform:none}
 .tl-track.has-glide .tl-stop.is-on .tl-label{background:none}
-.tl-track.tl-anim .tl-fill{transition:width .55s cubic-bezier(.65,0,.35,1)}
 .tl-track.tl-anim .tl-pill{transition:transform .55s cubic-bezier(.65,0,.35,1),width .55s cubic-bezier(.65,0,.35,1),height .55s cubic-bezier(.65,0,.35,1)}
 .tl-track.tl-anim .tl-glide{transition:transform .55s cubic-bezier(.65,0,.35,1)}
 .tl-track.has-glide .tl-stop.is-on .tl-year{animation:tlYearOn .55s ease both}
 @keyframes tlYearOn{from{color:#1a1a1a}to{color:#8d1d22}}
-@media (prefers-reduced-motion:reduce){.tl-track.tl-anim .tl-fill,.tl-track.tl-anim .tl-pill,.tl-track.tl-anim .tl-glide{transition:none}.tl-track.has-glide .tl-stop.is-on .tl-year{animation:none}}
+@media (prefers-reduced-motion:reduce){.tl-track.tl-anim .tl-pill,.tl-track.tl-anim .tl-glide{transition:none}.tl-track.has-glide .tl-stop.is-on .tl-year{animation:none}}
 @media (prefers-reduced-motion:reduce){.tl-dot,.tl-label,.tl-arrow{transition:none}.tl-stop.is-on .tl-dot{transform:none}}
 @media (max-width:1100px){.tl-img{min-height:220px;border-radius:0 0 16px 16px !important}.tl-body{padding:32px 28px !important}.tl-prev{left:-12px}.tl-next{right:-12px}}
 @media (max-width:760px){.tl-name{display:none}.tl-label{padding:8px 6px}.tl-year{font-size:14px;line-height:20px}.tl-arrow{display:none}}

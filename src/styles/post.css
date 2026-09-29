@@ -40,11 +40,11 @@ section:has(>.post-body){padding-top:56px !important}
 .post-body .stack td:nth-child(3){margin-top:6px}
 .post-body .stack td:last-child{margin-top:8px;padding-top:8px;border-top:1px solid #eeeeee;font-size:14px;line-height:22px;color:#888888}
 .post-body .stack-scenarios td:last-child::before{content:'主要考的範疇：';color:#8d1d22}
-/* 內文字級：設計稿全站規則會把 19px 在手機縮成 17px，文章內文改用 18px */
-article.post-body{font-size:18px !important;line-height:32px !important}
+/* 內文字級：設計稿全站規則會把 19px 在手機縮成 17px，文章內文改用 20px */
+article.post-body{font-size:20px !important;line-height:36px !important}
 section:has(>.post-body){padding-top:36px !important}
 .post-body h2{margin-top:52px;font-size:26px !important;line-height:36px !important}
-.post-body h3{margin-top:36px;font-size:20px;line-height:30px}
+.post-body h3{margin-top:36px;font-size:22px;line-height:32px}
 .post-body>*+*{margin-top:22px}
 .post-body blockquote{padding-left:16px}
 .post-body table{font-size:15px;line-height:24px}

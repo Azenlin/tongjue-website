@@ -88,14 +88,16 @@ dl.yj-stats>div.yj-stat:not(:last-child)::after{content:"";position:absolute;rig
 .tl-fx{position:absolute;inset:0;pointer-events:none;list-style:none}
 .tl-pill{position:absolute;top:0;left:0;width:0;height:0;border-radius:10px;background:#f7ecec;z-index:0;opacity:0}
 .tl-glide{position:absolute;top:0;left:0;width:34px;height:34px;border-radius:50%;background:#8d1d22;box-shadow:0 0 0 6px #ffffff;display:flex;align-items:center;justify-content:center;z-index:2;opacity:0}
-.tl-track.has-glide .tl-pill,.tl-track.has-glide .tl-glide{opacity:1}
-.tl-track.has-glide .tl-stop.is-on .tl-dot{background:#d6d6d6;transform:none}
+.tl-glide.is-off{animation:tlDotOff .3s ease-in both}
+@keyframes tlDotOff{from{opacity:1;transform:var(--tl-at) scale(1.08)}to{opacity:0;transform:var(--tl-at) scale(1)}}
+.tl-track.has-glide .tl-pill{opacity:1}
+.tl-track.tl-moved .tl-stop.is-on .tl-dot{animation:tlDotOn .55s ease-out both}
+@keyframes tlDotOn{0%,50%{background:#d6d6d6;transform:none}80%{background:#8d1d22;transform:scale(1.2)}100%{background:#8d1d22;transform:scale(1.08)}}
 .tl-track.has-glide .tl-stop.is-on .tl-label{background:none}
 .tl-track.tl-anim .tl-pill{transition:transform .55s cubic-bezier(.65,0,.35,1),width .55s cubic-bezier(.65,0,.35,1),height .55s cubic-bezier(.65,0,.35,1)}
-.tl-track.tl-anim .tl-glide{transition:transform .55s cubic-bezier(.65,0,.35,1)}
 .tl-track.has-glide .tl-stop.is-on .tl-year{animation:tlYearOn .55s ease both}
-@keyframes tlYearOn{from{color:#1a1a1a}to{color:#8d1d22}}
-@media (prefers-reduced-motion:reduce){.tl-track.tl-anim .tl-pill,.tl-track.tl-anim .tl-glide{transition:none}.tl-track.has-glide .tl-stop.is-on .tl-year{animation:none}}
+@keyframes tlYearOn{0%,50%{color:#1a1a1a}100%{color:#8d1d22}}
+@media (prefers-reduced-motion:reduce){.tl-track.tl-anim .tl-pill{transition:none}.tl-track.has-glide .tl-stop.is-on .tl-year,.tl-track.tl-moved .tl-stop.is-on .tl-dot,.tl-glide.is-off{animation:none}}
 @media (prefers-reduced-motion:reduce){.tl-dot,.tl-label,.tl-arrow{transition:none}.tl-stop.is-on .tl-dot{transform:none}}
 @media (max-width:1100px){.tl-img{min-height:220px;border-radius:0 0 16px 16px !important}.tl-body{padding:32px 28px !important}.tl-prev{left:-12px}.tl-next{right:-12px}}
 @media (max-width:760px){.tl-name{display:none}.tl-label{padding:8px 6px}.tl-year{font-size:14px;line-height:20px}.tl-arrow{display:none}}

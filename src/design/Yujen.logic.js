@@ -26,7 +26,8 @@ setupCatBottom() {
   }, 500);
 }
 placeGlide() {
-  // 時間軸：紅圈、底框是固定元素，量出目前那一站的位置後滑過去（列表本身每次會重畫，做不了過場）
+  // 時間軸：底框是固定元素，量出目前那一站的位置後滑過去（列表本身每次會重畫，做不了過場）；
+  // 圓點不移動，換站時舊站由 tl-glide 殘影熄燈、新站在底框抵達時點亮
   const track = document.querySelector('.tl-track');
   if (!track) return;
   const on = track.querySelector('.tl-stop.is-on');
@@ -38,7 +39,18 @@ placeGlide() {
   const t = track.getBoundingClientRect();
   const d = dot.getBoundingClientRect();
   const l = label.getBoundingClientRect();
-  glide.style.transform = 'translate(' + (d.left - t.left) + 'px,' + (d.top - t.top) + 'px)';
+  const at = 'translate(' + (d.left - t.left) + 'px,' + (d.top - t.top) + 'px)';
+  const idx = this.state.tl;
+  if (this._glideIdx !== undefined && this._glideIdx !== idx && this._glideAt && track.classList.contains('tl-anim')) {
+    glide.style.setProperty('--tl-at', this._glideAt);
+    glide.style.transform = this._glideAt;
+    glide.classList.remove('is-off');
+    void glide.offsetWidth;
+    glide.classList.add('is-off');
+    track.classList.add('tl-moved');
+  }
+  this._glideIdx = idx;
+  this._glideAt = at;
   pill.style.transform = 'translate(' + (l.left - t.left) + 'px,' + (l.top - t.top) + 'px)';
   pill.style.width = l.width + 'px';
   pill.style.height = l.height + 'px';

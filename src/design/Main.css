@@ -159,6 +159,7 @@ section[style*="padding: 0 var(--pad) 104px"],section[style*="padding: 0 var(--p
 
 
 .tj-sh-title,.sh-title{font-size:30px !important;line-height:42px !important;letter-spacing:1px !important}
+.sh-title.sh-fit11{font-size:min(30px,calc((100vw - 2 * var(--pad)) / 11 - 1.5px)) !important}
 .tj-eyebrow,.sh-eyebrow{font-size:17px !important;line-height:26px !important}
 .tj-btn-lg{font-size:20px !important;padding:14px 20px !important}
 [style*="justify-content: space-between"]{flex-wrap:wrap}

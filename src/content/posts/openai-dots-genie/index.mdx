@@ -42,17 +42,11 @@ Dots 有一項特色是「長期記憶」。這個 AI 到底是怎麼記住使�
 
 ### 第二，Space 以外的資料，Dots 要怎麼讀？
 
-除了 Dots，OpenAI 這次還推出一個協作空間，叫 [Space](https://chatgpt.com/zh-Hant/features/space/)。你可以把 Dots 放進 Space，和同事一起工作；文件、簡報、圖表都能在同一個頁面上共同編輯。OpenAI 的說法是，幾乎所有的生產力軟體，都不是為了讓 AI 和人一起工作而設計的，所以他們要重做一個。這個方向我理解。
+除了 Dots，OpenAI 這次還推出協作空間 [Space](https://chatgpt.com/zh-Hant/features/space/)：人和 Dots 可以在同一個頁面上共同編輯文件、簡報與圖表。這個方向我理解，但這種封閉系統比較適合一間公司內部使用；實際的專案常常是好幾家外部單位一起合作，大家最主要的協作工具還是 Microsoft 的 Office。那些不在 Space 裡的資料怎麼辦？
 
-但依我的感覺，這種封閉的系統，比較適合一間公司內部使用。實際的專案往往不只一家公司，是很多不同外部單位共同合作，而目前大家協作最主要的工具，還是 Microsoft 的 Office。那 Dots 要怎麼使用不存在於 Space 裡的資料？我實在搞不太懂。
+查了資料之後，我發現「能不能讀」其實不是問題：Dots 會沿用你已經連接的外掛，而 ChatGPT 本來就有 SharePoint 與 OneDrive 的[連接器](https://help.openai.com/en/articles/12143177-sharepoint-app-in-chatgpt)，Office 檔案都讀得到。真正的問題是**讀得有多辛苦**：連接器是依你的提問去搜尋、取回片段；當資料散落在好幾家公司的檔案、信箱與雲端硬碟裡，每次都要重新搜尋一遍，找得準不準、花多少時間、燒多少 token，發布會一個字都沒提。
 
-我再去查了資料。影片提到 Dots 會沿用你已經連接的外掛與連接器，而 ChatGPT 本來就有 SharePoint 與 OneDrive 的[連接器](https://help.openai.com/en/articles/12143177-sharepoint-app-in-chatgpt)，Word、Excel、PowerPoint、PDF 都讀得到，也遵守原本的權限。加上 OpenAI 這次說正與 Microsoft 合作，讓企業用原本的 Microsoft 工具管理 Dots，所以 Dots 能讀 Office 檔案，我猜八成不是問題。
-
-真正的問題是：**讀取的過程有多麻煩？多燒 token？** 目前 ChatGPT 連接器的做法，是依你的提問產生搜尋字串，向 Microsoft 取回相關的片段。資料越多、越雜，找得準不準、花多少時間、耗多少算力，發布會一個字都沒提。
-
-如果讀取真的夠順，那是好事；但如果你的專案資料散落在好幾家公司的 Office 檔案、信箱與雲端硬碟裡，每次都要重新搜尋、重新讀一遍，順不順、貴不貴，就是另一回事了。
-
-這兩個疑問有一個共同點：OpenAI 展示了 Dots 能做什麼，卻沒交代它背後怎麼運作、要付出多少代價。其中最實際的，就是成本。這不只是我個人的擔心。[麥肯錫 2026 年的全球調查](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai)裡，約有兩成受訪企業表示，AI 的營運成本（包含 token 費用）已經限制了他們使用 AI。這還是在多數人只拿 AI 來問答的情況下；Dots 是 24 小時在背景替你跑任務的 agent，用量只會更大。計費方式沒講清楚，企業連 token 的預算都估不出來，更別說判斷值不值得。
+這兩個疑問有一個共同點：OpenAI 展示了 Dots 能做什麼，卻沒交代它背後怎麼運作、要付出多少代價，其中最實際的就是成本。[麥肯錫 2026 年的全球調查](https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai)裡，約有兩成受訪企業表示，AI 的營運成本（包含 token 費用）已經限制了他們使用 AI；而這還只是以問答為主的用量。Dots 24 小時在背景跑任務，用量只會更大，計費方式卻沒講清楚，企業連預算都估不出來。
 
 <SaidUnsaid />
 

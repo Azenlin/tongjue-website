@@ -1,0 +1,26 @@
+---
+/** 筆記用途的轉變：全文唯一的深色底區塊 */
+---
+<figure class="ns">
+  <div class="ns-half">
+    <p class="ns-k">過去</p>
+    <p class="ns-v">筆記 <span class="ns-arrow" aria-hidden="true">→</span> 讓你回想</p>
+  </div>
+  <div class="ns-half ns-now">
+    <p class="ns-k">未來</p>
+    <p class="ns-v">筆記 <span class="ns-arrow" aria-hidden="true">→</span> 讓 AI 了解你</p>
+  </div>
+</figure>
+
+<style>
+.ns{margin:44px 0 !important;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));border-radius:12px;overflow:hidden;background:#1a1a1a}
+.ns-half{padding:36px 32px;text-align:center}
+.ns-now{background:#222222;border-left:1px solid #3a3a3a}
+.ns-k{margin:0 0 10px !important;font-size:14px;line-height:20px;letter-spacing:4px;color:#9a9a9a}
+.ns-now .ns-k{color:#d9a3a6}
+.ns-v{margin:0 !important;font-family:'Noto Serif TC',serif;font-weight:700;font-size:26px;line-height:38px;color:#bdbdbd}
+.ns-now .ns-v{color:#ffffff}
+.ns-arrow{margin:0 6px;color:#777777}
+.ns-now .ns-arrow{color:#e0484f}
+@media (max-width:760px){.ns{grid-template-columns:minmax(0,1fr)}.ns-half{padding:26px 20px}.ns-now{border-left:0;border-top:1px solid #3a3a3a}.ns-v{font-size:22px;line-height:32px}}
+</style>

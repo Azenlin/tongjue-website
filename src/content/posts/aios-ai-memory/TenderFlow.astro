@@ -1,0 +1,42 @@
+---
+/** 「掃一下標案」的流程：只有線與點，最後一步用品牌紅標出「停下來等人」 */
+const steps = [
+  { t: '「掃一下標案」', d: '我只說這一句' },
+  { t: '讀公司現況', d: '目前的服務內容與報價邏輯' },
+  { t: '決定關鍵字', d: '到政府採購網搜尋' },
+  { t: '逐案判斷', d: '檢視內容，判斷適不適合投標' },
+  { t: '寄摘要信', d: '把結果整理成一封信' },
+  { t: '我決定要不要投', d: '停下來等人', stop: true },
+];
+---
+<figure class="tf">
+  <ol class="tf-steps">
+    {steps.map((s) => (
+      <li class={s.stop ? 'tf-stop' : ''}>
+        <span class="tf-dot" aria-hidden="true"></span>
+        <span class="tf-t">{s.t}</span>
+        <span class="tf-d">{s.d}</span>
+      </li>
+    ))}
+  </ol>
+  <figcaption>工作流程寫清楚的，不只是步驟，還有哪一步要停下來問人。</figcaption>
+</figure>
+
+<style>
+.tf{margin:44px 0 !important}
+.tf-steps{list-style:none;margin:0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));position:relative}
+.tf-steps::before{content:'';position:absolute;left:8.33%;right:8.33%;top:9px;height:2px;background:#cccccc}
+.tf-steps li{margin:0 !important;position:relative;display:flex;flex-direction:column;align-items:center;gap:6px;padding:0 4px;text-align:center}
+.tf-steps li::marker{content:none}
+.tf-dot{width:20px;height:20px;border:2px solid #9a9a9a;border-radius:50%;background:#ffffff;margin-bottom:6px}
+.tf-t{font-weight:600;font-size:15px;line-height:22px;color:#1a1a1a}
+.tf-d{font-size:13px;line-height:19px;color:#5a5a5a}
+.tf-stop .tf-dot{border-color:#8d1d22;background:#8d1d22;box-shadow:0 0 0 5px rgba(141,29,34,.15)}
+.tf-stop .tf-t,.tf-stop .tf-d{color:#8d1d22;font-weight:700}
+@media (max-width:760px){
+.tf-steps{grid-template-columns:minmax(0,1fr);gap:18px}
+.tf-steps::before{left:9px;right:auto;top:10px;bottom:10px;width:2px;height:auto}
+.tf-steps li{display:grid;grid-template-columns:20px minmax(0,1fr);column-gap:14px;align-items:start;padding:0;text-align:left}
+.tf-dot{grid-row:1 / 3;margin:2px 0 0}
+}
+</style>

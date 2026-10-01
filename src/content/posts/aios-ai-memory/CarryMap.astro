@@ -1,0 +1,86 @@
+---
+/** 資訊搬運路線圖：沒有 AIOS 時每份資料都要經過「你」；打開開關，中間換成知識庫，你退到旁邊只下指令 */
+const src = ['Email', 'LINE', '共用槽', 'Drive', 'ERP'];
+const ai = ['ChatGPT', 'Gemini', 'Notebook', 'Claude'];
+const sx = src.map((_, i) => 40 + i * 70);
+const ax = ai.map((_, i) => 54 + i * 84);
+const C = { x: 180, y: 210 };
+---
+<figure class="cm">
+  <label class="cm-switch">
+    <input type="checkbox" class="cm-input" />
+    <span class="cm-knob" aria-hidden="true"></span>
+    <span class="cm-state"><b class="cm-off">沒有 AIOS</b><b class="cm-on">有 AIOS</b></span>
+  </label>
+  <svg class="cm-svg" viewBox="0 0 360 420" role="img" aria-label="資料從各個來源流向各個 AI 的路線圖">
+    <text x="180" y="18" class="cm-cap">資料來源</text>
+    <text x="180" y="414" class="cm-cap">AI</text>
+    {sx.map((x) => <line x1={x} y1="56" x2={C.x} y2={C.y} class="cm-line" />)}
+    {ax.map((x) => <line x1={C.x} y1={C.y} x2={x} y2="360" class="cm-line cm-out" />)}
+    {src.map((s, i) => (<g><rect x={sx[i] - 31} y="30" width="62" height="26" rx="13" class="cm-chip" /><text x={sx[i]} y="48" class="cm-t">{s}</text></g>))}
+    {ai.map((s, i) => (<g><rect x={ax[i] - 38} y="360" width="76" height="28" rx="6" class="cm-ai" /><text x={ax[i]} y="379" class="cm-t">{s}</text></g>))}
+    <g class="cm-you">
+      <circle cx={C.x} cy={C.y} r="36" class="cm-you-c" />
+      <text x={C.x} y={C.y + 7} class="cm-you-t">你</text>
+      <text x={C.x + 46} y={C.y + 5} class="cm-note cm-left">每份資料</text>
+      <text x={C.x + 46} y={C.y + 23} class="cm-note cm-left">都要經過你</text>
+    </g>
+    <g class="cm-kb">
+      <rect x={C.x - 54} y={C.y - 26} width="108" height="52" rx="10" class="cm-kb-r" />
+      <text x={C.x} y={C.y + 7} class="cm-kb-t">知識庫</text>
+      <line x1={C.x + 54} y1={C.y} x2="306" y2={C.y} class="cm-dash" />
+      <circle cx="322" cy={C.y} r="16" class="cm-me" />
+      <text x="322" y={C.y + 5} class="cm-me-t">你</text>
+      <text x="322" y={C.y + 36} class="cm-note">下指令</text>
+      <text x="322" y={C.y + 52} class="cm-note">做判斷</text>
+    </g>
+  </svg>
+  <figcaption>打開開關看看：資料只要進知識庫一次，每個 AI 都從那裡取用。</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.cm').forEach((el) => {
+    const input = el.querySelector<HTMLInputElement>('.cm-input')!;
+    input.addEventListener('change', () => el.classList.toggle('cm-is-on', input.checked));
+  });
+</script>
+
+<style>
+.cm{margin:40px 0 !important;padding:24px 24px 20px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.cm-switch{position:relative;display:flex;align-items:center;justify-content:center;gap:12px;cursor:pointer;font-size:16px;line-height:24px}
+.cm-input{position:absolute;opacity:0;width:1px;height:1px}
+.cm-knob{position:relative;flex:none;width:48px;height:28px;border-radius:9999px;background:#cccccc;transition:background .2s}
+.cm-knob::after{content:'';position:absolute;left:3px;top:3px;width:22px;height:22px;border-radius:50%;background:#ffffff;box-shadow:0 1px 3px rgba(0,0,0,.25);transition:transform .2s}
+.cm-input:checked+.cm-knob{background:#8d1d22}
+.cm-input:checked+.cm-knob::after{transform:translateX(20px)}
+.cm-input:focus-visible+.cm-knob{outline:2px dashed #8d1d22;outline-offset:3px}
+.cm-state b{font-weight:600;color:#1a1a1a}
+.cm-on{display:none}
+.cm-is-on .cm-on{display:inline;color:#8d1d22}
+.cm-is-on .cm-off{display:none}
+.cm-svg{display:block;width:100%;max-width:440px;height:auto;margin:16px auto 0}
+.cm-cap{font-size:12px;letter-spacing:2px;fill:#888888;text-anchor:middle}
+.cm-line{stroke:#c9c9c9;stroke-width:1.5;stroke-dasharray:4 5;animation:cmFlow 1.2s linear infinite}
+.cm-chip{fill:#f5f5f5;stroke:#cccccc}
+.cm-ai{fill:#ffffff;stroke:#1a1a1a}
+.cm-t{font-size:13px;fill:#333333;text-anchor:middle}
+.cm-you-c{fill:#8d1d22}
+.cm-you-t{font-family:'Noto Serif TC',serif;font-weight:700;font-size:22px;fill:#ffffff;text-anchor:middle}
+.cm-note{font-size:12px;fill:#8d1d22;text-anchor:middle}
+.cm-left{text-anchor:start}
+.cm-kb{opacity:0;transition:opacity .35s}
+.cm-you{transition:opacity .35s}
+.cm-kb-r{fill:#1a1a1a}
+.cm-kb-t{font-family:'Noto Serif TC',serif;font-weight:700;font-size:19px;fill:#ffffff;text-anchor:middle}
+.cm-dash{stroke:#8d1d22;stroke-width:1.5;stroke-dasharray:3 4}
+.cm-me{fill:#ffffff;stroke:#8d1d22;stroke-width:1.5}
+.cm-me-t{font-size:14px;font-weight:700;fill:#8d1d22;text-anchor:middle}
+.cm-is-on .cm-you{opacity:0}
+.cm-is-on .cm-kb{opacity:1}
+.cm-is-on .cm-line{stroke:#1a1a1a;stroke-dasharray:none;animation:none}
+.cm-is-on .cm-out{stroke:#8d1d22}
+@keyframes cmFlow{to{stroke-dashoffset:-18}}
+.cm figcaption{margin-top:8px !important}
+@media (max-width:760px){.cm{padding:20px 12px 16px}}
+@media (prefers-reduced-motion:reduce){.cm-line{animation:none}}
+</style>

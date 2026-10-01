@@ -1,0 +1,64 @@
+---
+/** AIOS 飛輪：四個節點繞成一圈，外圈箭頭隨頁面捲動越轉越快 */
+const nodes = [
+  { x: 180, y: 52, t: ['放進資料'] },
+  { x: 306, y: 180, t: ['AI 更了解你'] },
+  { x: 180, y: 308, t: ['交代更省力', '產出更準'] },
+  { x: 54, y: 180, t: ['更願意', '交給 AI'] },
+];
+---
+<figure class="fw">
+  <svg class="fw-svg" viewBox="0 0 360 360" role="img" aria-label="飛輪：放進資料、AI 更了解你、交代更省力產出更準、更願意交給 AI，再回到放進資料">
+    <g class="fw-ring">
+      <circle cx="180" cy="180" r="128" class="fw-c" />
+      {[0, 90, 180, 270].map((a) => (
+        <path d="M0 -7 L10 0 L0 7 Z" class="fw-arrow" transform={`rotate(${a + 45} 180 180) translate(180 52) rotate(0)`} />
+      ))}
+    </g>
+    {nodes.map((n, i) => (
+      <g>
+        <rect x={n.x - 52} y={n.y - (n.t.length * 11 + 8)} width="104" height={n.t.length * 22 + 16} rx="10" class={i === 0 ? 'fw-node fw-first' : 'fw-node'} />
+        {n.t.map((line, k) => <text x={n.x} y={n.y - (n.t.length - 1) * 11 + k * 22 + 5} class={i === 0 ? 'fw-t fw-t1' : 'fw-t'}>{line}</text>)}
+      </g>
+    ))}
+    <text x="180" y="176" class="fw-mid">起步最費力</text>
+    <text x="180" y="198" class="fw-mid">轉起來越來越順</text>
+  </svg>
+  <figcaption>往下捲動，飛輪會越轉越快。</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.fw').forEach((el) => {
+    const ring = el.querySelector<SVGGElement>('.fw-ring')!;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let angle = 0, visible = false, raf = 0;
+    const progress = () => {
+      const r = el.getBoundingClientRect();
+      const p = (innerHeight - r.top) / (innerHeight + r.height);
+      return Math.min(1, Math.max(0, p));
+    };
+    const tick = () => {
+      const p = progress();
+      angle = (angle + 0.2 + p * p * 4) % 360;
+      ring.setAttribute('transform', `rotate(${angle} 180 180)`);
+      raf = visible ? requestAnimationFrame(tick) : 0;
+    };
+    new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      if (visible && !raf) raf = requestAnimationFrame(tick);
+    }).observe(el);
+  });
+</script>
+
+<style>
+.fw{margin:44px 0 !important}
+.fw-svg{display:block;width:100%;max-width:400px;height:auto;margin:0 auto}
+.fw-c{fill:none;stroke:#8d1d22;stroke-width:2;stroke-dasharray:10 8}
+.fw-arrow{fill:#8d1d22}
+.fw-node{fill:#ffffff;stroke:#1a1a1a;stroke-width:1.2}
+.fw-first{fill:#8d1d22;stroke:#8d1d22}
+.fw-t{font-size:15px;font-weight:600;fill:#1a1a1a;text-anchor:middle}
+.fw-t1{fill:#ffffff}
+.fw-mid{font-family:'Noto Serif TC',serif;font-size:15px;fill:#5a5a5a;text-anchor:middle}
+.fw figcaption{margin-top:6px !important}
+</style>

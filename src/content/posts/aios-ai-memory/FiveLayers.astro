@@ -1,0 +1,58 @@
+---
+/** AIOS 五層總覽：品牌紅實心積木由下往上疊，點任一層看說明與對應床頭的哪樣東西；最下方連到工作坊 */
+const layers = [
+  { n: '人機協作', d: '先說好什麼 AI 自己做、什麼要問你', k: '行為準則' },
+  { n: '記憶庫', d: '存得進去，30 秒找得回來', k: '記憶筆記' },
+  { n: '工作流程', d: '把「憑經驗」寫成 AI 照著做的步驟', k: '操作手冊' },
+  { n: '自動化', d: '說一聲「開工」「收工」，AI 自己跑完', k: '每日例行清單' },
+  { n: '接上外部系統', d: '不再當資訊搬運工', k: '鑰匙' },
+];
+const num = ['一', '二', '三', '四', '五'];
+---
+<figure class="fl">
+  <p class="fl-title">AIOS 的五層</p>
+  <ol class="fl-stack" reversed>
+    {layers.map((x, i) => ({ ...x, i })).reverse().map((x) => (
+      <li style={`--w:${100 - x.i * 6}%;--a:${1 - x.i * 0.1}`}>
+        <button type="button" class="fl-btn" aria-expanded="false">
+          <span class="fl-n">第{num[x.i]}層</span><span class="fl-name">{x.n}</span>
+        </button>
+        <p class="fl-d">{x.d}<span class="fl-k">床頭的：{x.k}</span></p>
+      </li>
+    ))}
+  </ol>
+  <p class="fl-hint">點任一層，看它在做什麼</p>
+  <a class="fl-cta" href="/services/knowledge-base/workshop/">這五層就是工作坊的五個模組 →</a>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.fl').forEach((el) => {
+    const btns = el.querySelectorAll<HTMLButtonElement>('.fl-btn');
+    btns.forEach((b) => b.addEventListener('click', () => {
+      const open = b.getAttribute('aria-expanded') !== 'true';
+      btns.forEach((x) => { x.setAttribute('aria-expanded', 'false'); x.parentElement!.classList.remove('fl-open'); });
+      if (open) { b.setAttribute('aria-expanded', 'true'); b.parentElement!.classList.add('fl-open'); }
+    }));
+  });
+</script>
+
+<style>
+.fl{margin:44px 0 !important;padding:28px 24px 24px;border-radius:12px;background:#f7f3f2;text-align:center}
+.fl-title{margin:0 0 18px !important;font-family:'Noto Serif TC',serif;font-weight:700;font-size:20px;line-height:30px;color:#1a1a1a}
+.fl-stack{list-style:none;margin:0 auto !important;padding:0 !important;max-width:520px;display:flex;flex-direction:column;align-items:center;gap:6px}
+.fl-stack li{margin:0 !important;width:var(--w)}
+.fl-stack li::marker{content:none}
+.fl-btn{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:12px 16px;border:0;border-radius:8px;background:rgba(141,29,34,var(--a));color:#ffffff;font:inherit;cursor:pointer;transition:transform .15s,box-shadow .15s}
+.fl-btn:hover{transform:translateY(-2px);box-shadow:0 4px 10px rgba(141,29,34,.25)}
+.fl-btn:focus-visible{outline:2px dashed #1a1a1a;outline-offset:2px}
+.fl-n{font-size:13px;line-height:20px;opacity:.85}
+.fl-name{font-family:'Noto Serif TC',serif;font-weight:700;font-size:18px;line-height:26px}
+.fl-d{display:none;margin:8px 0 6px !important;font-size:15px;line-height:24px;color:#333333}
+.fl-k{display:block;margin-top:2px;font-size:13px;color:#8d1d22}
+.fl-open .fl-d{display:block}
+.fl-open .fl-btn{box-shadow:0 0 0 3px #ffffff,0 0 0 5px #8d1d22}
+.fl-hint{margin:14px 0 0 !important;font-size:13px;line-height:20px;color:#888888}
+.fl-cta{display:inline-block;margin-top:14px;padding:10px 20px;border-radius:7px;background:#1a1a1a;color:#ffffff !important;text-decoration:none !important;font-size:15px;line-height:22px;font-weight:600}
+.fl-cta:hover{background:#8d1d22}
+@media (max-width:760px){.fl{padding:22px 12px 20px}.fl-stack li{width:100%}.fl-name{font-size:16px}}
+</style>

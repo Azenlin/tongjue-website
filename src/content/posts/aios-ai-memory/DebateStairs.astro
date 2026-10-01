@@ -1,0 +1,61 @@
+---
+/** 辯論階梯：沒有記憶時每篇文章都從零辯論；有記憶時，每次辯論的結論往上疊 */
+const lessons = ['這個梗為什麼好笑', '這段邏輯要這樣接', '這個說法不能用'];
+---
+<figure class="ds">
+  <div class="ds-bar">
+    <span class="ds-label">AI <b class="ds-off">沒有記憶</b><b class="ds-on">有記憶</b> 的時候</span>
+    <button type="button" class="ds-btn" aria-pressed="false"><span class="ds-off">換成：有記憶</span><span class="ds-on">換成：沒有記憶</span></button>
+  </div>
+  <ol class="ds-cols">
+    {[0, 1, 2].map((i) => (
+      <li>
+        <div class="ds-stack">
+          <span class="ds-zero"><span aria-hidden="true">↻ </span>又從零辯論一次</span>
+          {lessons.slice(0, i + 1).map((l, k) => <span class={k === i ? 'ds-chip ds-new' : 'ds-chip'}>{l}</span>)}
+        </div>
+        <span class="ds-n">第 {i + 1} 篇文章</span>
+      </li>
+    ))}
+  </ol>
+  <figcaption>教過 AI 的事，有沒有被記下來，差別就在這裡。</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.ds').forEach((el) => {
+    const btn = el.querySelector<HTMLButtonElement>('.ds-btn')!;
+    btn.addEventListener('click', () => {
+      const on = !el.classList.contains('ds-is-on');
+      el.classList.toggle('ds-is-on', on);
+      btn.setAttribute('aria-pressed', String(on));
+    });
+  });
+</script>
+
+<style>
+.ds{margin:40px 0 !important;padding:24px 28px 20px;border-radius:12px;background:#f2f2f2}
+.ds-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px}
+.ds-label{font-size:16px;line-height:24px;color:#333333}
+.ds-label b{font-weight:700;color:#1a1a1a}
+.ds-is-on .ds-label b{color:#8d1d22}
+.ds-btn{padding:6px 2px;border:0;border-bottom:2px solid #8d1d22;background:transparent;color:#8d1d22;font:inherit;font-size:15px;font-weight:600;cursor:pointer}
+.ds-btn:focus-visible{outline:2px dashed #8d1d22;outline-offset:2px}
+.ds-on{display:none !important}
+.ds-is-on .ds-on{display:inline !important}
+.ds-is-on .ds-off{display:none !important}
+.ds-cols{list-style:none;margin:20px 0 0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:end}
+.ds-is-on .ds-cols{min-height:190px}
+.ds-cols li{margin:0 !important;display:flex;flex-direction:column;justify-content:flex-end}
+.ds-cols li::marker{content:none}
+.ds-stack{display:flex;flex-direction:column-reverse;gap:6px;padding-bottom:8px;border-bottom:3px solid #1a1a1a}
+.ds-zero{padding:12px 8px;border:1px dashed #9a9a9a;border-radius:8px;color:#5a5a5a;font-size:14px;line-height:20px;text-align:center}
+.ds-chip{display:none;padding:9px 8px;border-radius:6px;background:#ffffff;color:#333333;font-size:14px;line-height:20px;text-align:center;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.ds-new{background:#8d1d22;color:#ffffff}
+.ds-is-on .ds-zero{display:none}
+.ds-is-on .ds-chip{display:block;animation:dsIn .35s ease both}
+.ds-n{margin-top:8px;text-align:center;font-size:14px;line-height:20px;color:#5a5a5a}
+@keyframes dsIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.ds figcaption{margin-top:14px !important}
+@media (max-width:760px){.ds{padding:20px 14px 16px}.ds-cols{gap:6px}.ds-chip,.ds-zero{font-size:13px;line-height:18px;padding:8px 4px}}
+@media (prefers-reduced-motion:reduce){.ds-is-on .ds-chip{animation:none}}
+</style>

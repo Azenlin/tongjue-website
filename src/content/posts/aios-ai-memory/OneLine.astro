@@ -1,0 +1,48 @@
+---
+/** 一句話背後：對話泡泡「首頁的照片，在手機上改成圓形」，按下後依序展開 AI 讀到的記憶，最後才動手改 */
+const mem = [
+  { t: '網站在哪裡', d: '網站的程式放在電腦的哪個資料夾' },
+  { t: '改版規則', d: '版面要先改設計稿、再匯入網站，不能直接改網站' },
+  { t: '檢查方式', d: '改完先截圖檢查手機版和電腦版，確認沒問題才上線' },
+  { t: '文字修改流程', d: '改到文章文字，要先改知識庫裡的定稿，再改網站' },
+];
+---
+<figure class="ol">
+  <div class="ol-chat">
+    <p class="ol-me">首頁的照片，在手機上改成圓形。</p>
+    <button type="button" class="ol-btn">看看 AI 先讀了哪些記憶</button>
+    <ol class="ol-mem">
+      {mem.map((m, i) => (
+        <li style={`--d:${i * 0.35}s`}><span class="ol-tag">記憶</span><span><b>{m.t}</b>{m.d}</span></li>
+      ))}
+      <li class="ol-do" style={`--d:${mem.length * 0.35}s`}><span class="ol-tag ol-tag-do">動手</span><span><b>開始改</b>這些事，那天我一件都沒有交代</span></li>
+    </ol>
+  </div>
+  <figcaption>你說一句，其他的 AI 自己從記憶裡補齊。</figcaption>
+</figure>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.ol').forEach((el) => {
+    el.querySelector('.ol-btn')!.addEventListener('click', () => el.classList.add('ol-is-open'));
+  });
+</script>
+
+<style>
+.ol{margin:40px 0 !important}
+.ol-chat{display:flex;flex-direction:column;gap:12px;padding:24px;border-radius:16px;background:#eef0f2}
+.ol-me{align-self:flex-end;max-width:80%;margin:0 !important;padding:12px 18px;border-radius:18px 18px 4px 18px;background:#8d1d22;color:#ffffff;font-size:17px;line-height:26px}
+.ol-btn{align-self:flex-start;padding:10px 16px;border:1px solid #1a1a1a;border-radius:18px 18px 18px 4px;background:#ffffff;color:#1a1a1a;font:inherit;font-size:15px;line-height:22px;font-weight:600;cursor:pointer;transition:background .2s,color .2s}
+.ol-btn:hover{background:#1a1a1a;color:#ffffff}
+.ol-btn:focus-visible{outline:2px dashed #8d1d22;outline-offset:2px}
+.ol-is-open .ol-btn{display:none}
+.ol-mem{list-style:none;margin:0 !important;padding:0 !important;display:none;flex-direction:column;gap:8px}
+.ol-is-open .ol-mem{display:flex}
+.ol-mem li{margin:0 !important;display:flex;align-items:flex-start;gap:10px;max-width:88%;padding:10px 14px;border-radius:4px 14px 14px 14px;background:#ffffff;font-size:15px;line-height:24px;color:#333333;opacity:0;animation:olIn .4s ease forwards;animation-delay:var(--d)}
+.ol-mem li::marker{content:none}
+.ol-mem b{margin-right:8px;color:#1a1a1a}
+.ol-tag{flex:none;margin-top:2px;padding:0 8px;border-radius:9999px;background:#e8e8e8;color:#5a5a5a;font-size:12px;line-height:20px}
+.ol-tag-do{background:#8d1d22;color:#ffffff}
+@keyframes olIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+@media (max-width:760px){.ol-chat{padding:16px 12px}.ol-me{max-width:90%;font-size:16px}.ol-mem li{max-width:100%;font-size:14px;line-height:22px}}
+@media (prefers-reduced-motion:reduce){.ol-mem li{animation:none;opacity:1}}
+</style>

@@ -85,9 +85,8 @@ const mountScript = `${formInit}${logic}\nDCLite.mount(Component, document.getEl
 <link rel="icon" href="/favicon-48.png" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 {preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high">}
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@700&display=swap">
+{/* 正式網站的字型由 tools/subset-fonts.mjs 在建置後自架並內嵌；開發模式沒跑建置，暫用 Google Fonts */}
+{import.meta.env.DEV && <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@700&display=swap">}
 <link rel="stylesheet" href="/ds/bundle.css">
 <style is:inline>html{-webkit-text-size-adjust:100%;text-size-adjust:100%}</style>
 <style is:inline set:html={css}></style>

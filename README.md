@@ -7,7 +7,7 @@ Astro 靜態網站。版面來自 claude.ai 上的設計稿「銅爵官網改版
 ```sh
 npm install          # 第一次
 npm run dev          # 本機預覽 http://localhost:4321
-npm run build        # 產出 dist/（部署用）
+npm run build        # 產出 dist/（部署用；含字型裁切，見下方「字型」）
 npm run preview      # 預覽 build 後的結果
 ```
 
@@ -46,7 +46,7 @@ python tools/check.py --shot yujen --full          # 整頁長截圖
 | 路徑 | 內容 |
 |---|---|
 | `src/design/` | 從設計稿匯入的每頁素材：`<頁名>.body.html`（版面）、`.css`（樣式）、`.logic.js`（互動程式）；`pages.json` 是網址／標題／描述設定 |
-| `src/layouts/DesignPage.astro` | 共用外框：SEO meta、字型、結構化資料、載入頁面程式 |
+| `src/layouts/DesignPage.astro` | 共用外框：SEO meta、結構化資料、載入頁面程式 |
 | `src/pages/[...path].astro` | 依 `pages.json` 產生每一頁 |
 | `src/pages/404.astro` | 找不到頁面 |
 | `public/js/dc-lite.js` | 設計稿元件的極簡執行環境（取代 claude.ai 畫布的 DC runtime） |
@@ -54,6 +54,7 @@ python tools/check.py --shot yujen --full          # 整頁長截圖
 | `public/_redirects` | 舊 WordPress 網址的 301 轉址（Cloudflare Pages 格式） |
 | `tools/import_design.py` | 設計稿 → 網站的匯入工具 |
 | `tools/check.py` | 檢查與截圖工具 |
+| `tools/subset-fonts.mjs`、`tools/fonts/` | 字型裁切腳本與原始字型（見下方「字型」） |
 | `tools/og/` | 分享預覽圖來源（`og-default.html`），`python tools/og/render.py` 輸出成 `public/og-default.png`；文章頁改用各自的封面 |
 | `src/content/posts/` | 文章（每篇一個資料夾） |
 | `src/lib/posts.ts` | 文章接到設計稿頁面的規則 |
@@ -87,6 +88,15 @@ GitHub（`Azenlin/tongjue-website`）是正本；任何一台電腦上的資料�
 3. `python tools/check.py --build` 檢查（需要看版面時加 `--shot`），commit、push
 
 新頁面：在設計稿加頁後，到 `tools/import_design.py` 的 `PAGES` 加一行（網址、標題、描述）再重跑。
+
+## 字型
+
+思源黑體（Noto Sans TC 400／600）與思源宋體（Noto Serif TC 700）自架，不用 Google Fonts。`npm run build` 在 `astro build` 之後會跑 `tools/subset-fonts.mjs`：掃描 `dist/` 所有頁面用到的字，從 `tools/fonts/` 的原始字型裁出只含這些字的 woff2（輸出到 `dist/fonts/`，檔名帶雜湊），再把 `@font-face` 內嵌進每頁 `<head>`。新文章的字會在下次 build 自動收進去，不用手動處理。
+
+- `npm run dev` 不會跑這一步，開發模式暫時改用 Google Fonts 顯示。
+- 要新增字重或字型：改 `subset-fonts.mjs` 的 `FONTS`，原始字型（Google Fonts GitHub `ofl/` 目錄的 `[wght].ttf`）放進 `tools/fonts/`。
+- 不要在 `DesignPage.astro` 或 `public/ds/bundle.css` 加回 `fonts.googleapis.com`（設計系統重新匯出 `bundle.css` 時，開頭的 `@import` 要刪掉）；`subset-fonts.mjs` 發現會讓 build 失敗。
+- 2026-10-01 改用這個做法前，Google Fonts 光字型 CSS 就約 100 KB，而且會擋住畫面，文章頁 Lighthouse 手機效能只有 58 分。
 
 ## 部署
 

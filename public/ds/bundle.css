@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@700&display=swap');
 /* 銅爵只有一套淺色配色：宣告 only light，避免瀏覽器自動深色化 */
 :root { color-scheme: only light; }
 html { background: var(--surface); }

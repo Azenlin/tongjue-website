@@ -18,7 +18,8 @@ const SITE = 'https://tongjuetech.com';
 export async function getPosts(): Promise<Post[]> {
   const now = Date.now();
   const all = await getCollection('posts', (p) => !p.data.draft && p.data.date.getTime() <= now);
-  return all.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+  // 置頂文章排最前面，其餘依日期新到舊
+  return all.sort((a, b) => Number(!!b.data.pinned) - Number(!!a.data.pinned) || b.data.date.getTime() - a.data.date.getTime());
 }
 
 export const postRoute = (p: Post) => `/insights/${p.id}/`;
@@ -97,7 +98,7 @@ const PILLAR = {
 const noBreakCodes = (t: string) => t.replace(/(CC[A-Z]{1,2})-([A-Z])/g, '$1⁠-⁠$2');
 
 const card = (p: Post) => ({
-  pinned: false, imgClass: `post-img-${p.id}`, date: formatDate(p.data.date), read: `約 ${readMinutes(p)} 分鐘閱讀`,
+  pinned: !!p.data.pinned, imgClass: `post-img-${p.id}`, date: formatDate(p.data.date), read: `約 ${readMinutes(p)} 分鐘閱讀`,
   title: noBreakCodes(p.data.title), excerpt: noBreakCodes(p.data.description), tags: p.data.tags, href: postRoute(p),
 });
 
@@ -117,6 +118,15 @@ export function blogLogic(logic: string, posts: Post[]) {
 }
 
 // ---------- 首頁／個人頁的最新觀點 ----------
+
+const PIN_RE = /<span class="pin"[^>]*>置頂<\/span>/;
+
+/** 置頂卡片右上角的 pin icon（只用 CSS 加在卡片封面上，設計稿不用動） */
+export const PIN_CSS = `
+.post-head:has(.pin){position:relative}
+.post-head:has(.pin)::after{content:'';position:absolute;top:28px;right:32px;width:26px;height:26px;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='white' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 17v5'/%3E%3Cpath d='M9 10.76a2 2 0 0 1-1.11 1.79l-1.78.9A2 2 0 0 0 5 15.24V16a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-.76a2 2 0 0 0-1.11-1.79l-1.78-.9A2 2 0 0 1 15 10.76V7a1 1 0 0 1 1-1 2 2 0 0 0 0-4H8a2 2 0 0 0 0 4 1 1 0 0 1 1 1z'/%3E%3C/svg%3E") center/contain no-repeat;transform:rotate(30deg);filter:drop-shadow(0 1px 3px rgba(0,0,0,.55))}
+@media (max-width:760px){.post-head:has(.pin)::after{top:24px;right:24px}}
+`;
 
 const CARD_RE = /<a class="svc-card post-card" href="[^"]*"[\s\S]*?<\/a>\n?/g;
 
@@ -139,6 +149,12 @@ export function latestCards(body: string, posts: Post[]) {
       .replace('[文章標題]', esc(c.title))
       .replace(/\[日期\]・約 \d+ 分鐘閱讀/, `${c.date}・${c.read}`)
       .replace(/\[一句話摘要[^\]]*\]/, esc(c.excerpt));
+    // 置頂：把空的標記列換成置頂指南卡片裡的「置頂」標籤
+    if (c.pinned) {
+      const pin = pillarCard.match(PIN_RE)?.[0];
+      if (!pin) throw new Error('[posts] 設計稿裡找不到置頂標籤');
+      s = s.replace(/<span style="display: flex; min-height: 26px;"><\/span>/, `<span style="display: flex; min-height: 26px;">${pin}</span>`);
+    }
     // 標籤：整串換掉
     s = s.replace(/(<span style="[^"]*">#[^<]*<\/span>)+/, c.tags.map((t) => `${tagOpen}#${esc(t)}</span>`).join(''));
     return s;

@@ -36,7 +36,7 @@ python tools/check.py --shot yujen --full          # 整頁長截圖
    ---
    ```
 3. 內文用 Markdown。互動圖表寫成同資料夾的 `.astro` 元件，在 MDX 裡 `import X from './X.astro'` 後用 `<X />` 放進文中（範例：`ai-data-audit/`）
-4. 封面圖放 `public/insights/<代稱>/cover.jpg`（沒有就用灰色預設底）。照片以全彩顯示，白字後面會自動加一層深色漸層；遇到白色元素多、字看不清楚的照片，在 frontmatter 加 `coverDark: true`（漸層加深），或用 `coverPosition: 'center 30%'` 調整取景，讓較深的部分落在字後面
+4. 封面圖放 `public/insights/<代稱>/cover.jpg`（沒有就用灰色預設底）。照片以全彩顯示，白字後面會自動加一層深色漸層；遇到白色元素多、字看不清楚的照片，在 frontmatter 加 `coverDark: true`（漸層加深），或用 `coverPosition: 'center 30%'` 調整取景，讓較深的部分落在字後面。要置頂的文章加 `pinned: true`：列表與首頁排最前面，卡片標「置頂」並在右上角加 pin icon（多篇置頂時再依日期排）
 5. `python tools/check.py --build` 檢查，`--shot insights/<代稱> --full` 看整篇
 
 文章頁版型取自設計稿「中小企業 AI 導入指南」頁，觀點列表、首頁與個人頁的「最新觀點」卡片都會自動更新；接法在 `src/lib/posts.ts`。

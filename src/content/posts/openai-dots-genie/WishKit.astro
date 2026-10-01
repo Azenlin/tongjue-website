@@ -1,0 +1,37 @@
+---
+/** 許願前要先備好的三樣東西：三欄圖卡 */
+const items = [
+  { k: '脈絡', q: '它要知道什麼', d: 'Dots 再會記，也只能記到你讓它看到的東西。' },
+  { k: '規則', q: '它怎麼判斷', d: '把「這種情況怎麼處理」從員工腦中寫出來。' },
+  { k: '權限', q: '它能碰什麼', d: '神燈握在誰手上，精靈就替誰做事。' },
+];
+---
+<figure class="wk">
+  <p class="wk-t">許願前，要先備好的三樣東西</p>
+  <ul class="wk-list">
+    {items.map((x) => (
+      <li>
+        <span class="wk-k">{x.k}</span>
+        <span class="wk-q">{x.q}</span>
+        <span class="wk-d">{x.d}</span>
+      </li>
+    ))}
+  </ul>
+</figure>
+
+<style>
+.wk{margin:40px 0 !important;padding:28px 32px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.wk-t{margin:0 0 18px !important;font-family:'Noto Serif TC',serif;font-weight:700;font-size:20px;line-height:30px;color:#1a1a1a;text-align:center}
+.wk-list{list-style:none;margin:0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.wk-list li{margin:0 !important;display:flex;flex-direction:column;gap:6px;padding:20px 18px;border-top:4px solid #8d1d22;border-radius:10px;background:#f7f3f2}
+.wk-list li::marker{content:none}
+.wk-k{font-family:'Noto Serif TC',serif;font-weight:700;font-size:28px;line-height:36px;color:#8d1d22}
+.wk-q{font-size:16px;font-weight:600;line-height:24px;color:#1a1a1a}
+.wk-d{font-size:15px;line-height:24px;color:#333333}
+@media (max-width:760px){
+.wk{padding:20px 16px}
+.wk-list{grid-template-columns:minmax(0,1fr);gap:10px}
+.wk-list li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:2px 14px;padding:14px 16px;border-top:0;border-left:4px solid #8d1d22}
+.wk-k{grid-row:1 / 3;align-self:center;font-size:24px}
+}
+</style>

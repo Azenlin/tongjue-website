@@ -1,0 +1,48 @@
+---
+/** 發布會講了什麼／沒講什麼：兩欄對照，下方標出麥肯錫的成本數據 */
+const said = ['24 小時常駐', '自己的雲端電腦', '長期記憶', '遵循使用者權限', '與 Dots 對話不扣額度'];
+const unsaid = ['記憶怎麼記、存在哪裡', '記憶能否查看、修改、帶走', '背景跑任務怎麼計費', '讀 Space 以外資料的準確度與成本'];
+---
+<figure class="su">
+  <div class="su-cols">
+    <div class="su-col">
+      <p class="su-h">發布會講了</p>
+      <ul>{said.map((s) => <li>{s}</li>)}</ul>
+    </div>
+    <div class="su-col su-un">
+      <p class="su-h">發布會沒講</p>
+      <ul>{unsaid.map((s) => <li>{s}</li>)}</ul>
+    </div>
+  </div>
+  <div class="su-stat">
+    <span class="su-n">約 20<small>%</small></span>
+    <span class="su-l">的受訪企業表示，AI 的營運成本（包含 token 費用）已經限制了他們使用 AI</span>
+  </div>
+  <figcaption>資料來源：McKinsey〈The state of AI in 2026〉；左右兩欄依 OpenAI DevDay 2026 發布會內容整理。</figcaption>
+</figure>
+
+<style>
+.su{margin:40px 0 !important;padding:28px 32px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.su-cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.su-col{padding:18px 20px;border-radius:10px;background:#f5f5f5}
+.su-un{background:#f7f3f2}
+.su-h{margin:0 0 10px !important;font-family:'Noto Serif TC',serif;font-weight:700;font-size:19px;line-height:28px;color:#1a1a1a}
+.su-un .su-h{color:#8d1d22}
+.su-col ul{list-style:none;margin:0 !important;padding:0 !important}
+.su-col li{position:relative;margin:0 !important;padding-left:24px;font-size:16px;line-height:28px;color:#333333}
+.su-col li::marker{content:none}
+.su-col li::before{content:'✓';position:absolute;left:0;color:#5a5a5a}
+.su-un li::before{content:'?';color:#8d1d22;font-weight:700}
+.su-stat{margin-top:22px;display:flex;align-items:center;gap:18px;padding-top:20px;border-top:1px solid #eeeeee}
+.su-n{font-family:'Noto Serif TC',serif;font-weight:700;font-size:44px;line-height:52px;color:#8d1d22;white-space:nowrap}
+.su-n small{margin-left:2px;font-size:24px}
+.su-l{font-size:17px;line-height:28px;color:#333333}
+.su figcaption{margin-top:16px !important}
+@media (max-width:760px){
+.su{padding:20px 16px}
+.su-cols{grid-template-columns:minmax(0,1fr);gap:10px}
+.su-col{padding:14px 16px}
+.su-stat{flex-direction:column;align-items:flex-start;gap:4px}
+.su-n{font-size:38px;line-height:44px}
+}
+</style>

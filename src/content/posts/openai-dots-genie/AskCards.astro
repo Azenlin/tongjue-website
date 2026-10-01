@@ -1,0 +1,38 @@
+---
+/** 企業該問 Dots 的三個問題：三格卡片 */
+const qs = [
+  { q: '看得到嗎？', d: 'AI 記住了什麼，你查得到' },
+  { q: '帶得走嗎？', d: '換工具時，記憶不會歸零' },
+  { q: '記錯時發現得了嗎？', d: '能即時發現，並阻止它繼續照錯的做' },
+];
+---
+<figure class="aq">
+  <p class="aq-t">企業該問 Dots 的三個問題</p>
+  <ol class="aq-list">
+    {qs.map((x, i) => (
+      <li>
+        <span class="aq-n">{i + 1}</span>
+        <span class="aq-q">{x.q}</span>
+        <span class="aq-d">{x.d}</span>
+      </li>
+    ))}
+  </ol>
+</figure>
+
+<style>
+.aq{margin:40px 0 !important;padding:28px 32px;border:1px solid #dddddd;border-radius:12px;background:#ffffff}
+.aq-t{margin:0 0 18px !important;font-family:'Noto Serif TC',serif;font-weight:700;font-size:20px;line-height:30px;color:#1a1a1a;text-align:center}
+.aq-list{list-style:none;margin:0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.aq-list li{margin:0 !important;display:flex;flex-direction:column;align-items:center;gap:6px;padding:20px 12px;border-radius:10px;background:#f7f3f2;text-align:center}
+.aq-list li::marker{content:none}
+.aq-n{display:flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9999px;background:#8d1d22;color:#ffffff;font-size:15px;font-weight:600;line-height:1}
+.aq-q{font-family:'Noto Serif TC',serif;font-weight:700;font-size:20px;line-height:30px;color:#8d1d22}
+.aq-d{font-size:15px;line-height:24px;color:#333333}
+@media (max-width:760px){
+.aq{padding:20px 16px}
+.aq-list{grid-template-columns:minmax(0,1fr)}
+.aq-list li{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;gap:2px 12px;padding:14px 16px;text-align:left}
+.aq-n{grid-row:1 / 3}
+.aq-q{font-size:18px;line-height:26px}
+}
+</style>

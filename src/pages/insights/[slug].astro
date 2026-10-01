@@ -35,6 +35,7 @@ const heroCss = coverCss([post], 'hero', '.post-hero');
   extraLd={[articleJsonLd(post)]}
   ogImage={coverOf(post) ?? '/og-default.png'}
   ogType="article"
+  preloadImage={coverOf(post)}
 >
   <Content />
 </DesignPage>

@@ -33,6 +33,9 @@ if (name === 'Blog' || name === 'Main' || name === 'Yujen') {
   if (name === 'Blog') logic = blogLogic(logic, posts);
   else body = latestCards(body, posts);
 }
+// 首屏最大圖（LCP）：加 fetchpriority 並預載。在這裡處理而不改 src/design，重新匯入設計稿也不會被蓋掉
+const lcpSrc = { Main: '/assets/90a8bab566ecf3cf2ffd4e3c4e53b4da.jpg', Yujen: '/assets/1ac8a65bac4f4f647a4ab1fbafbde316.jpg' }[name as string];
+if (lcpSrc) body = body.replace(`<img src="${lcpSrc}"`, `<img fetchpriority="high" decoding="async" src="${lcpSrc}"`);
 ---
 <DesignPage
   name={name}
@@ -44,4 +47,5 @@ if (name === 'Blog' || name === 'Main' || name === 'Yujen') {
   body={body}
   css={css}
   logic={logic}
+  preloadImage={lcpSrc}
 />

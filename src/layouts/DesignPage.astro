@@ -19,8 +19,10 @@ interface Props {
   extraLd?: object[];
   ogImage?: string;
   ogType?: string;
+  /** 首屏最大圖（LCP）：提早預載 */
+  preloadImage?: string;
 }
-const { name, title, description, route, dynamic, body, css, logic, bodyAfter = '', extraLd = [], ogImage = '/og-default.png', ogType = 'website' } = Astro.props;
+const { name, title, description, route, dynamic, body, css, logic, bodyAfter = '', extraLd = [], ogImage = '/og-default.png', ogType = 'website', preloadImage } = Astro.props;
 // 分享預覽圖：文章頁用封面，其他頁用品牌預覽圖（tools/og/ 產生）
 const ogUrl = new URL(ogImage, Astro.site).href;
 const canonical = new URL(route, Astro.site).href;
@@ -82,6 +84,7 @@ const mountScript = `${formInit}${logic}\nDCLite.mount(Component, document.getEl
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/favicon-48.png" type="image/png">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+{preloadImage && <link rel="preload" as="image" href={preloadImage} fetchpriority="high">}
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;600&family=Noto+Serif+TC:wght@700&display=swap">

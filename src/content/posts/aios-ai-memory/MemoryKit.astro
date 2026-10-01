@@ -1,11 +1,11 @@
 ---
-/** 床頭的 5 樣東西：淺紅底、帶線條 icon 的卡片；每張標出對應第幾層，「記憶筆記」用品牌紅強調 */
+/** 床頭的 5 樣東西：淺紅底、帶線條 icon 的卡片；只放名稱、檔名與對應第幾層（說明文字在上方條列），「記憶筆記」用品牌紅強調 */
 const items = [
-  { n: '行為準則', f: 'CLAUDE.md 或 AGENTS.md', d: '規矩是什麼，什麼可以自己決定、什麼要先問你', l: '第一層｜人機協作', icon: 'rule' },
-  { n: '記憶筆記', f: 'knowledge.md', d: '你是誰、客戶是誰、以前發生過什麼、做過哪些決定', l: '第二層｜記憶庫', icon: 'note', key: true },
-  { n: '操作手冊', f: 'skill.md', d: '常做的工作，一步一步該怎麼做', l: '第三層｜工作流程', icon: 'book' },
-  { n: '每日例行清單', f: 'index.md', d: '每天開始、結束時固定要做的事', l: '第四層｜自動化', icon: 'list' },
-  { n: '鑰匙', f: 'API、MCP、connector', d: '能自己打開 email、行事曆、公司系統，不必每份資料都等你遞給他', l: '第五層｜接上外部系統', icon: 'key' },
+  { n: '行為準則', f: 'CLAUDE.md 或 AGENTS.md', l: '第一層｜人機協作', icon: 'rule' },
+  { n: '記憶筆記', f: 'knowledge.md', l: '第二層｜記憶庫', icon: 'note', key: true },
+  { n: '操作手冊', f: 'skill.md', l: '第三層｜工作流程', icon: 'book' },
+  { n: '每日例行清單', f: 'index.md', l: '第四層｜自動化', icon: 'list' },
+  { n: '鑰匙', f: 'API、MCP、connector', l: '第五層｜接上外部系統', icon: 'key' },
 ];
 const paths: Record<string, string> = {
   rule: 'M6 3h9l3 3v15H6z M9 9h6 M9 13h6 M9 17h4',
@@ -21,7 +21,6 @@ const paths: Record<string, string> = {
       <svg class="mk-ic" viewBox="0 0 24 24" aria-hidden="true"><path d={paths[x.icon]} /></svg>
       <p class="mk-n"><span class="mk-i">{i + 1}</span>{x.n}</p>
       <p class="mk-f">{x.f}</p>
-      <p class="mk-d">{x.d}</p>
       <p class="mk-l">{x.l}</p>
     </li>
   ))}
@@ -34,20 +33,18 @@ const paths: Record<string, string> = {
 .mk-ic{width:30px;height:30px;fill:none;stroke:#5a5a5a;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .mk-n{margin:12px 0 0 !important;font-family:'Noto Serif TC',serif;font-weight:700;font-size:18px;line-height:26px;color:#1a1a1a}
 .mk-i{margin-right:6px;font-family:'Noto Sans TC',sans-serif;font-size:13px;color:#8d1d22}
-.mk-f{margin:2px 0 0 !important;font-size:12px;line-height:18px;color:#888888;word-break:break-word}
-.mk-d{margin:10px 0 0 !important;flex:1;font-size:14px;line-height:22px;color:#333333}
-.mk-l{margin:12px 0 0 !important;padding-top:10px;border-top:1px solid #e6dcda;font-size:12px;line-height:18px;font-weight:600;color:#8d1d22}
+.mk-f{margin:2px 0 14px !important;font-size:12px;line-height:18px;color:#888888;word-break:break-word}
+.mk-l{margin:auto 0 0 !important;padding-top:10px;border-top:1px solid #e6dcda;font-size:12px;line-height:18px;font-weight:600;color:#8d1d22}
 .mk-key{background:#8d1d22 !important}
 .mk-key .mk-ic{stroke:#ffffff}
-.mk-key .mk-n,.mk-key .mk-d,.mk-key .mk-i{color:#ffffff}
+.mk-key .mk-n,.mk-key .mk-i{color:#ffffff}
 .mk-key .mk-f{color:#e9c4c6}
 .mk-key .mk-l{color:#ffffff;border-top-color:rgba(255,255,255,.3)}
 @media (max-width:760px){
 .mk{grid-template-columns:minmax(0,1fr);gap:8px}
 .mk li{display:grid;grid-template-columns:36px minmax(0,1fr);column-gap:12px;padding:14px 16px}
-.mk-ic{grid-row:1 / 5;width:28px;height:28px;margin-top:2px}
+.mk-ic{grid-row:1 / 4;width:28px;height:28px;margin-top:2px}
 .mk-n{margin:0 !important}
-.mk-d{margin-top:4px !important}
 .mk-l{margin-top:8px !important;padding-top:8px}
 }
 </style>

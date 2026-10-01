@@ -1,13 +1,12 @@
 ---
-/** 重點句：全文統一樣式，上下細線、品牌紅襯線字置中，讓讀者一眼認得「這句要記住」 */
+/** 重點句：全文統一樣式，上下細線、品牌紅襯線字置中，不加其他標記，讓讀者一眼認得「這句要記住」 */
 interface Props { text: string }
 const { text } = Astro.props;
 ---
-<aside class="kl"><span class="kl-mark" aria-hidden="true"></span><p>{text}</p></aside>
+<aside class="kl"><p>{text}</p></aside>
 
 <style>
-.kl{margin:40px 0 !important;padding:26px 8px 24px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;text-align:center}
-.kl-mark{display:block;width:28px;height:3px;margin:0 auto 14px;border-radius:2px;background:#8d1d22}
+.kl{margin:40px 0 !important;padding:24px 8px;border-top:1px solid #dddddd;border-bottom:1px solid #dddddd;text-align:center}
 .kl p{margin:0 !important;font-family:'Noto Serif TC',serif;font-weight:700;font-size:23px;line-height:38px;color:#8d1d22;text-wrap:balance}
-@media (max-width:760px){.kl{padding:20px 4px 18px}.kl p{font-size:20px;line-height:32px}}
+@media (max-width:760px){.kl{padding:18px 4px}.kl p{font-size:20px;line-height:32px}}
 </style>

@@ -1,28 +1,35 @@
 ---
-/** 我的知識庫的數字：一排白底外框卡片 */
+/** 我的知識庫的數字：一排白底外框卡片，上方標題、下方圖說交代每個數字的意思 */
 const stats = [
-  { n: '387', u: '則', label: '筆記' },
-  { n: '222', u: '則', label: '可跨專案重用的知識筆記' },
-  { n: '30', u: '秒', label: '找回任何記錄過的事' },
-  { pre: '約', n: '10', u: '倍', label: '摘要比全文小' },
+  { n: '387', u: '則', label: '知識庫裡的筆記總數' },
+  { n: '222', u: '則', label: '其中可跨專案重用的知識筆記' },
+  { n: '30', u: '秒', label: '唯一的 KPI：記錄過的事要能在這時間內找回' },
+  { pre: '約', n: '1/10', u: '', label: '摘要的長度只有全文的十分之一' },
 ];
 ---
-<ul class="st" aria-label="我的知識庫的數字">
-  {stats.map((s) => (
-    <li>
-      <span class="st-n">{s.pre && <small class="st-pre">{s.pre}</small>}{s.n}<small>{s.u}</small></span>
-      <span class="st-l">{s.label}</span>
-    </li>
-  ))}
-</ul>
+<figure class="st-fig">
+  <p class="st-title">我的知識庫，用數字看</p>
+  <ul class="st" aria-label="我的知識庫的數字">
+    {stats.map((s) => (
+      <li>
+        <span class="st-n">{s.pre && <small class="st-pre">{s.pre}</small>}{s.n}{s.u && <small>{s.u}</small>}</span>
+        <span class="st-l">{s.label}</span>
+      </li>
+    ))}
+  </ul>
+  <figcaption>AI 找資料時先讀摘要，只打開需要的那幾則，所以筆記越積越多，也不會越找越慢。</figcaption>
+</figure>
 
 <style>
-.st{list-style:none;margin:40px 0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
-.st li{margin:0 !important;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:20px 8px;border:1px solid #dddddd;border-radius:12px;background:#ffffff;text-align:center}
+.st-fig{margin:40px 0 !important}
+.st-title{margin:0 0 14px !important;text-align:center;font-family:'Noto Serif TC',serif;font-weight:700;font-size:20px;line-height:30px;color:#1a1a1a}
+.st{list-style:none;margin:0 !important;padding:0 !important;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.st li{margin:0 !important;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;padding:20px 12px;border:1px solid #dddddd;border-radius:12px;background:#ffffff;text-align:center}
 .st li::marker{content:none}
 .st-n{font-family:'Noto Serif TC',serif;font-weight:700;font-size:34px;line-height:40px;color:#8d1d22;white-space:nowrap}
 .st-n small{margin-left:2px;font-family:'Noto Sans TC',sans-serif;font-size:15px;font-weight:400;color:#5a5a5a}
 .st-n .st-pre{margin:0 4px 0 0}
 .st-l{font-size:14px;line-height:21px;color:#333333}
-@media (max-width:760px){.st{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.st li{padding:16px 8px}}
+.st-fig figcaption{margin-top:14px !important}
+@media (max-width:760px){.st{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.st li{padding:16px 10px}}
 </style>

@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1110" width="720" height="1110" font-family="'Noto Sans TC','Microsoft JhengHei','PingFang TC',sans-serif">
+  <rect width="720" height="1110" fill="#ffffff"/>
+
+  <!-- 上半：我負責的準備 -->
+  <text x="24" y="44" font-size="26" font-weight="700" fill="#8d1d22">我負責：準備</text>
+  <rect x="16" y="64" width="688" height="500" rx="20" fill="#f5f5f5"/>
+
+  <!-- 第一 -->
+  <circle cx="76" cy="139" r="30" fill="#8d1d22"/>
+  <text x="76" y="150" font-size="30" font-weight="700" fill="#ffffff" text-anchor="middle">1</text>
+  <text x="130" y="132" font-size="30" font-weight="700" fill="#1a1a1a">設計資料庫結構</text>
+  <text x="130" y="174" font-size="24" fill="#5a5a5a">6 張表：老師、地點、學員、班次、</text>
+  <text x="130" y="206" font-size="24" fill="#5a5a5a">報名紀錄、請假／缺課單，彼此連結</text>
+  <line x1="40" y1="236" x2="680" y2="236" stroke="#dddddd" stroke-width="2"/>
+
+  <!-- 第二 -->
+  <circle cx="76" cy="304" r="30" fill="#8d1d22"/>
+  <text x="76" y="315" font-size="30" font-weight="700" fill="#ffffff" text-anchor="middle">2</text>
+  <text x="130" y="297" font-size="30" font-weight="700" fill="#1a1a1a">開一個專屬帳號</text>
+  <text x="130" y="339" font-size="24" fill="#5a5a5a">「Claude API」服務帳號，</text>
+  <text x="130" y="371" font-size="24" fill="#5a5a5a">只看得到課程相關的表單</text>
+  <line x1="40" y1="401" x2="680" y2="401" stroke="#dddddd" stroke-width="2"/>
+
+  <!-- 第三 -->
+  <circle cx="76" cy="469" r="30" fill="#8d1d22"/>
+  <text x="76" y="480" font-size="30" font-weight="700" fill="#ffffff" text-anchor="middle">3</text>
+  <text x="130" y="462" font-size="30" font-weight="700" fill="#1a1a1a">交代位置與目的</text>
+  <text x="130" y="504" font-size="24" fill="#5a5a5a">「舊資料在這些資料夾，</text>
+  <text x="130" y="536" font-size="24" fill="#5a5a5a">把學員和老師整理進這幾張表」</text>
+
+  <!-- 箭頭 -->
+  <rect x="352" y="582" width="16" height="36" fill="#8d1d22"/>
+  <polygon points="332,616 388,616 360,650" fill="#8d1d22"/>
+
+  <!-- 下半：Claude 負責的搬家 -->
+  <text x="24" y="696" font-size="26" font-weight="700" fill="#8d1d22">Claude 負責：搬家</text>
+  <rect x="16" y="716" width="688" height="330" rx="20" fill="#8d1d22"/>
+  <text x="360" y="826" font-size="84" font-weight="700" fill="#ffffff" text-anchor="middle">10 分鐘</text>
+  <text x="360" y="872" font-size="26" fill="#ffffff" text-anchor="middle">全部寫入新系統</text>
+  <line x1="56" y1="906" x2="664" y2="906" stroke="#ffd0d0" stroke-opacity="0.5" stroke-width="2"/>
+
+  <text x="128" y="968" font-size="30" font-weight="700" fill="#ffffff" text-anchor="middle">近 2,000 筆</text>
+  <text x="128" y="1006" font-size="22" fill="#ffd0d0" text-anchor="middle">學員資料</text>
+  <text x="360" y="968" font-size="30" font-weight="700" fill="#ffffff" text-anchor="middle">近 90 位</text>
+  <text x="360" y="1006" font-size="22" fill="#ffd0d0" text-anchor="middle">老師資料</text>
+  <text x="592" y="968" font-size="30" font-weight="700" fill="#ffffff" text-anchor="middle">證照判讀</text>
+  <text x="592" y="1006" font-size="22" fill="#ffd0d0" text-anchor="middle">照片、PDF</text>
+
+  <text x="360" y="1090" font-size="22" fill="#5a5a5a" text-anchor="middle">順便抓出：欄位類型設錯、同一身分證對應不同姓名</text>
+</svg>

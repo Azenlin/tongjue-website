@@ -25,8 +25,27 @@ setupCatBottom() {
     if (st.n >= AT.length) { clearInterval(this._catTimer); this._catTimer = null; }
   }, 500);
 }
+setupSecParallax() {
+  // 首屏底圖：依區塊相對視窗中心的位置，以 0.3 倍速度位移（與服務頁相同）
+  const bg = document.querySelector('.para-bg');
+  if (!bg) return;
+  let ticking = false;
+  const update = () => {
+    ticking = false;
+    const r = bg.parentElement.getBoundingClientRect();
+    if (r.bottom < 0 || r.top > window.innerHeight) return;
+    const d = (r.top + r.height / 2) - window.innerHeight / 2;
+    const y = Math.max(-150, Math.min(150, d * -0.3));
+    bg.style.transform = 'translate3d(0,' + y.toFixed(1) + 'px,0)';
+  };
+  this._onParaScroll = () => { if (!ticking) { ticking = true; requestAnimationFrame(update); } };
+  window.addEventListener('scroll', this._onParaScroll, { passive: true });
+  window.addEventListener('resize', this._onParaScroll);
+  update();
+}
 componentDidMount() {
   this.setupCatBottom();
+  if (!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches)) this.setupSecParallax();
   const reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const el = document.querySelector('.case-grid');
   if (reduce || !el || !('IntersectionObserver' in window)) return;
@@ -41,6 +60,7 @@ componentDidMount() {
   this._io.observe(el);
 }
 componentWillUnmount() {
+  if (this._onParaScroll) { window.removeEventListener('scroll', this._onParaScroll); window.removeEventListener('resize', this._onParaScroll); }
   if (this._catBottom) window.removeEventListener('scroll', this._catBottom);
   clearInterval(this._catTimer);
   clearTimeout(this._catOff);

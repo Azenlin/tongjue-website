@@ -24,3 +24,20 @@ export function swapSubstackButton(html: string): string {
 export function stripSubstackIcon(html: string): string {
   return html.replace(/<a class="foot-icon" href="https:\/\/substack\.com\/@azenlin"[^>]*>[\s\S]*?<\/a>/g, '');
 }
+
+/** 深紅底的「每週一篇，寄到你的信箱」整個區塊，版面與個人頁（Yujen）設計稿一致；首頁插在頁尾前 */
+export const SUBSCRIBE_SECTION = `<section style="flex-shrink: 0; box-sizing: border-box; padding: 88px var(--pad); background: #8d2824; display: grid; grid-template-columns: minmax(0, 1fr) 520px; gap: 80px; align-items: center;">
+<div style="display: flex; flex-direction: column; gap: 16px;">
+<h2 class="sub-title" style="margin: 0; font-family: 'Noto Serif TC', serif; font-weight: 700; font-size: 40px; line-height: 56px; letter-spacing: 2px; color: #ffffff;">每週一篇，寄到你的信箱</h2>
+<p style="margin: 0; font-size: 18px; line-height: 32px; color: #ffffff;">中小企業 AI 導入與淨零碳規劃的長文。不推銷、可隨時取消。</p>
+</div>
+${SUBSCRIBE_FORM}
+</section>
+`;
+
+/** 在頁尾前插入訂閱區塊 */
+export function addSubscribeSection(html: string): string {
+  const i = html.indexOf('<footer class="site-footer');
+  if (i < 0) throw new Error('找不到頁尾，無法插入訂閱區塊');
+  return html.slice(0, i) + SUBSCRIBE_SECTION + html.slice(i);
+}

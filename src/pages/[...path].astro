@@ -9,6 +9,7 @@ import pages from '../design/pages.json';
 import hidden from '../lib/hidden-pages.json';
 import { swapSubstackButton, addSubscribeSection } from '../lib/subscribe';
 import { getPosts, blogLogic, latestCards, coverCss, PIN_CSS } from '../lib/posts';
+import { prerender } from '../lib/prerender';
 
 export function getStaticPaths() {
   return Object.entries(pages).filter(([name]) => !hidden.includes(name)).map(([name, p]) => ({
@@ -46,6 +47,8 @@ if (name === 'Services') body = body.replace(/<span style="([^"]*)">(了解服�
 // 首屏最大圖（LCP）：加 fetchpriority 並預載。在這裡處理而不改 src/design，重新匯入設計稿也不會被蓋掉
 const lcpSrc = { Main: '/assets/90a8bab566ecf3cf2ffd4e3c4e53b4da.jpg', Yujen: '/assets/1ac8a65bac4f4f647a4ab1fbafbde316.jpg' }[name as string];
 if (lcpSrc) body = body.replace(`<img src="${lcpSrc}"`, `<img fetchpriority="high" decoding="async" src="${lcpSrc}"`);
+// 動態頁：build 時先依初始資料展開樣板，讓不跑 JS 的爬蟲也讀得到文章連結與內容（見 src/lib/prerender.ts）
+const prerendered = p.dynamic ? prerender(body, logic, name) : undefined;
 ---
 <DesignPage
   name={name}
@@ -57,5 +60,6 @@ if (lcpSrc) body = body.replace(`<img src="${lcpSrc}"`, `<img fetchpriority="hig
   body={body}
   css={css}
   logic={logic}
+  prerendered={prerendered}
   preloadImage={lcpSrc}
 />

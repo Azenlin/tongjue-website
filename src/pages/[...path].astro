@@ -41,6 +41,8 @@ if (name === 'Main') {
   body = addSubscribeSection(body);
   css += '\n@media (max-width:760px){.sub-title{font-size:min(28px, calc((100vw - 32px) / 11.5)) !important;letter-spacing:0 !important}}';
 }
+// 服務項目頁：三張卡片的「了解服務 →」hover 底線統一（設計稿只有第一張有 svc-more，其餘補上；在這裡處理，重新匯入設計稿也不會被蓋掉）
+if (name === 'Services') body = body.replace(/<span style="([^"]*)">(了解服務 →)<\/span>/g, '<span class="svc-more" style="$1">$2</span>');
 // 首屏最大圖（LCP）：加 fetchpriority 並預載。在這裡處理而不改 src/design，重新匯入設計稿也不會被蓋掉
 const lcpSrc = { Main: '/assets/90a8bab566ecf3cf2ffd4e3c4e53b4da.jpg', Yujen: '/assets/1ac8a65bac4f4f647a4ab1fbafbde316.jpg' }[name as string];
 if (lcpSrc) body = body.replace(`<img src="${lcpSrc}"`, `<img fetchpriority="high" decoding="async" src="${lcpSrc}"`);

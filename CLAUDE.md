@@ -8,3 +8,4 @@
 - **push 前跑 `python tools/check.py --build`**（全站檢查約 15 秒）；要看版面用 `--shot <頁面> --find <文字>` 截桌機＋手機圖，不要另外手寫截圖程式。
 - **新增文章不用動設計稿**：在 `src/content/posts/<代稱>/index.mdx` 新增即可（格式見 README「新增文章」）；文字以 vault `07-Outputs` 的定稿為準，定稿後不要再自行改寫（口述素材在草稿階段要修飾成書面語，見 vault 記憶）。
 - **字型是自架並在 build 時自動裁切**（`tools/subset-fonts.mjs`，說明見 README「字型」）：不要加回 Google Fonts 連結，要加字重就改腳本的 `FONTS`。
+- **新文章 push 上線後**：回覆收尾時提醒阿任到 Search Console「要求建立索引」，並附上完整文章網址（`https://tongjuetech.com/insights/<代稱>/`），見 README「新增文章」第 6 步。

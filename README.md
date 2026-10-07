@@ -38,6 +38,7 @@ python tools/check.py --shot yujen --full          # 整頁長截圖
 3. 內文用 Markdown。互動圖表寫成同資料夾的 `.astro` 元件，在 MDX 裡 `import X from './X.astro'` 後用 `<X />` 放進文中（範例：`ai-data-audit/`）
 4. 封面圖放 `public/insights/<代稱>/cover.jpg`（沒有就用灰色預設底）。照片以全彩顯示，白字後面會自動加一層深色漸層；遇到白色元素多、字看不清楚的照片，在 frontmatter 加 `coverDark: true`（漸層加深），或用 `coverPosition: 'center 30%'` 調整取景，讓較深的部分落在字後面。要置頂的文章加 `pinned: true`：列表與首頁排最前面，卡片標「置頂」並在右上角加 pin icon（多篇置頂時再依日期排）
 5. `python tools/check.py --build` 檢查，`--shot insights/<代稱> --full` 看整篇
+6. push 上線後（約 1 分鐘生效），到 [Search Console](https://search.google.com/search-console?resource_id=sc-domain:tongjuetech.com) 最上方搜尋列貼上 `https://tongjuetech.com/insights/<代稱>/` → 「要求建立索引」。可跳過，只是讓 Google 早幾天收錄；收錄狀況交給 vault 的 `/site-performance-check` 定期檢查，不必每篇回頭看
 
 文章頁版型取自設計稿「中小企業 AI 導入指南」頁，觀點列表、首頁與個人頁的「最新觀點」卡片都會自動更新；接法在 `src/lib/posts.ts`。
 
@@ -49,6 +50,7 @@ python tools/check.py --shot yujen --full          # 整頁長截圖
 | `src/layouts/DesignPage.astro` | 共用外框：SEO meta、結構化資料、載入頁面程式 |
 | `src/pages/[...path].astro` | 依 `pages.json` 產生每一頁 |
 | `src/pages/404.astro` | 找不到頁面 |
+| `src/lib/prerender.ts` | 動態頁 build 時先依初始資料展開 `{{ }}`／`<sc-for>`，讓不跑 JS 的爬蟲也讀得到內容；原樣板放 `<template id="dc-tpl">`，載入時換回再交給 dc-lite |
 | `public/js/dc-lite.js` | 設計稿元件的極簡執行環境（取代 claude.ai 畫布的 DC runtime） |
 | `public/assets/` | 圖檔（檔名是設計稿素材庫的 id） |
 | `public/_redirects` | 舊 WordPress 網址的 301 轉址（Cloudflare Pages 格式） |

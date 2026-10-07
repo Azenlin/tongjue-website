@@ -59,6 +59,10 @@ const ld = [...(name === 'Yujen' ? [org, person] : [org]), ...extraLd];
 const formInit = name === 'Contact' && site.formEndpoint
   ? `window.TJ_FORM_ENDPOINT = ${JSON.stringify(site.formEndpoint)};\n`
   : '';
+// 平滑滾動（Lenis，自架於 public/js/）：只用在有視差背景（.para-bg）的頁面，讓滾輪滾動時視差連續移動；
+// 文章等閱讀頁不套用。只在滑鼠類裝置啟用，系統開「減少動態效果」時不啟用；觸控裝置維持系統原生慣性。
+const smoothScroll = body.includes('para-bg');
+const lenisInit = `if (window.Lenis && matchMedia('(pointer: fine)').matches && !matchMedia('(prefers-reduced-motion: reduce)').matches) new Lenis({ autoRaf: true, lerp: 0.12, anchors: true });`;
 const mountScript = `${formInit}${logic}\nDCLite.mount(Component, document.getElementById('dc-root'));`;
 ---
 <!doctype html>
@@ -99,5 +103,8 @@ const mountScript = `${formInit}${logic}\nDCLite.mount(Component, document.getEl
 <script is:inline src="/js/dc-lite.js"></script>
 <script is:inline src="/js/subscribe.js" defer></script>
 <script is:inline set:html={mountScript}></script>
+{smoothScroll && <style is:inline>html.lenis,html.lenis body{height:auto}.lenis.lenis-smooth iframe{pointer-events:none}.lenis [data-lenis-prevent]{overscroll-behavior:contain}</style>}
+{smoothScroll && <script is:inline src="/js/lenis.min.js"></script>}
+{smoothScroll && <script is:inline set:html={lenisInit}></script>}
 </body>
 </html>

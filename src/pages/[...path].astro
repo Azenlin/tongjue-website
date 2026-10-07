@@ -48,6 +48,16 @@ if (name === 'Main') {
   if (!introRe.test(body)) throw new Error('找不到首頁主視覺簡介文字，設計稿可能改版了');
   body = body.replace(introRe, (_m, b1, b2) => `一名來自高雄的 AI 導入顧問，擁有人工智慧及淨零 ESG 等多張專業證照、16 年<b${b1}>製造業工程師</b>與<b${b2}>政府能源顧問</b>經驗；現在率領 AI agent 團隊，從診斷規劃到實際落地都親自負責。`);
 }
+// 單句文字修正：{ 頁面: [[舊文字, 新文字]] }。在這裡處理，重新匯入設計稿也不會被蓋掉；找不到舊文字就讓 build 失敗
+const TEXT_FIXES: Record<string, [string, string][]> = {
+  AITransform: [
+    ['AI 的做法由簡單到複雜分成四層，我只在下一層真的不夠用的時候，才往上爬：', 'AI 的做法由簡單到複雜分成 4 層，我只在這一層真的不夠用的時候，才考慮往上爬：'],
+  ],
+};
+for (const [from, to] of TEXT_FIXES[name as string] ?? []) {
+  if (!body.includes(from)) throw new Error(`${name} 頁找不到要修正的文字：${from}`);
+  body = body.replace(from, () => to);
+}
 // 服務項目頁：三張卡片的「了解服務 →」hover 底線統一（設計稿只有第一張有 svc-more，其餘補上；在這裡處理，重新匯入設計稿也不會被蓋掉）
 if (name === 'Services') body = body.replace(/<span style="([^"]*)">(了解服務 →)<\/span>/g, '<span class="svc-more" style="$1">$2</span>');
 // 首屏最大圖（LCP）：加 fetchpriority 並預載。在這裡處理而不改 src/design，重新匯入設計稿也不會被蓋掉

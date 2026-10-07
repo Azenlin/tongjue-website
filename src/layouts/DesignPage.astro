@@ -4,6 +4,7 @@
  * 版面、樣式、程式都是從設計稿原樣匯入（src/design/），這裡不改內容。
  */
 import site from '../site.json';
+import { stripSubstackIcon } from '../lib/subscribe';
 
 interface Props {
   name: string;
@@ -51,7 +52,6 @@ const person = {
     'https://www.linkedin.com/in/%E6%98%B1%E4%BB%BB-%E6%9E%97-a354a5119/',
     'https://www.instagram.com/azen.comix',
     'https://www.facebook.com/azen1027/',
-    'https://substack.com/@azenlin',
   ],
 };
 const ld = [...(name === 'Yujen' ? [org, person] : [org]), ...extraLd];
@@ -95,7 +95,7 @@ const mountScript = `${formInit}${logic}\nDCLite.mount(Component, document.getEl
 {ld.map((d) => <script type="application/ld+json" is:inline set:html={JSON.stringify(d)}></script>)}
 </head>
 <body>
-<div id="dc-root"><Fragment set:html={body} /><slot /><Fragment set:html={bodyAfter} /></div>
+<div id="dc-root"><Fragment set:html={stripSubstackIcon(body)} /><slot /><Fragment set:html={stripSubstackIcon(bodyAfter)} /></div>
 <script is:inline src="/js/dc-lite.js"></script>
 <script is:inline src="/js/subscribe.js" defer></script>
 <script is:inline set:html={mountScript}></script>

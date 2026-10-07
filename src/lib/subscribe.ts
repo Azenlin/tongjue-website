@@ -19,3 +19,8 @@ export function swapSubstackButton(html: string): string {
   if (!re.test(html)) throw new Error('找不到「到 Substack 訂閱」按鈕，設計稿可能改版了');
   return html.replace(re, SUBSCRIBE_FORM);
 }
+
+/** 頁尾的 Substack 圖示不再顯示（電子報已改用 Kit）。在版面共用外框統一拿掉，重新匯入設計稿也不會被蓋回來 */
+export function stripSubstackIcon(html: string): string {
+  return html.replace(/<a class="foot-icon" href="https:\/\/substack\.com\/@azenlin"[^>]*>[\s\S]*?<\/a>/g, '');
+}

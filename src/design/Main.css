@@ -193,6 +193,7 @@ dl[style*="repeat(3"]>div:not(:first-child){padding-left:12px !important}
 @media (max-width:1100px){.founder-sec{grid-template-columns:280px minmax(0,1fr) !important;gap:48px !important}.founder-photo{width:280px !important;height:350px !important}}
 @media (max-width:760px){
 .home-hero{padding-top:72px !important;padding-bottom:80px !important;gap:28px !important}
+.home-hero h1{font-size:39px !important;line-height:54px !important}
 .hero-sub{font-size:18px !important;line-height:32px !important}
 .hero-cred{font-size:14px !important;line-height:24px !important}
 .founder-sec{grid-template-columns:minmax(0,1fr) !important;gap:32px !important;padding-top:72px !important;padding-bottom:48px !important}

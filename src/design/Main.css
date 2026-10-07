@@ -188,7 +188,7 @@ dl[style*="repeat(3"]>div:nth-child(2){border-right:1px solid #dddddd !important
 dl[style*="repeat(3"]>div:not(:first-child){padding-left:12px !important}
 }
 .nb{display:inline-block}
-.home-hero .para-bg{background:url("/assets/7f81a5b527f535fdb370cd8ec6d149a1.jpg") center 40% / cover no-repeat}
+.home-hero .para-bg{background:url("/assets/13322f276ab484377bed884b2d360316.jpg") center / cover no-repeat}
 .founder-sec .story-link:focus-visible{outline-color:#8d1d22}
 @media (max-width:1100px){.founder-sec{grid-template-columns:280px minmax(0,1fr) !important;gap:48px !important}.founder-photo{width:280px !important;height:350px !important}}
 @media (max-width:760px){

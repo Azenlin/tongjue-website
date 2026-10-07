@@ -11,6 +11,7 @@ import { getCollection, type CollectionEntry } from 'astro:content';
 import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { join } from 'node:path';
+import { SUBSCRIBE_FORM } from './subscribe';
 
 export type Post = CollectionEntry<'posts'>;
 const SITE = 'https://tongjuetech.com';
@@ -229,11 +230,10 @@ export function articleShell(pillarBody: string, p: Post) {
     return `<a href="${v.href}" ${a}><span ${n}>${v.name}</span><span ${t}>${v.text}</span><span ${m}>${v.more}</span></a>`;
   }).join('\n'));
 
-  // 電子報：設計稿的訂閱表單還沒接後端，先改成連到 Substack
+  // 電子報：設計稿的訂閱表單只是示意，換成真的表單（送到 /api/subscribe，見 src/lib/subscribe.ts）
   const subRe = /<sc-if value="\{\{ notDone \}\}"[\s\S]*?<\/sc-if>\s*<sc-if value="\{\{ done \}\}"[\s\S]*?<\/sc-if>/;
   must(s, subRe, '訂閱表單');
-  const btn = s.match(/<button type="button" onClick="\{\{ subscribe \}\}" style="([^"]*)"/);
-  s = s.replace(subRe, `<a href="https://azenlin.substack.com/" target="_blank" rel="noopener" style="${btn ? btn[1] : ''}; display: inline-flex; align-items: center; justify-content: center; text-decoration: none; align-self: flex-start;">到 Substack 訂閱 →</a>`);
+  s = s.replace(subRe, () => SUBSCRIBE_FORM);
 
   // 內文：拆開 <article>，中間放 MDX
   const open = s.match(/<article style="[^"]*">/);

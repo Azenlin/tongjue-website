@@ -7,6 +7,7 @@ import DesignPage from '../layouts/DesignPage.astro';
 import pages from '../design/pages.json';
 // 暫時下架、只當版型用的頁面（例如 PillarAI 是文章頁版型，但「中小企業 AI 導入指南」本身先不上線）
 import hidden from '../lib/hidden-pages.json';
+import { swapSubstackButton } from '../lib/subscribe';
 import { getPosts, blogLogic, latestCards, coverCss, PIN_CSS } from '../lib/posts';
 
 export function getStaticPaths() {
@@ -33,6 +34,8 @@ if (name === 'Blog' || name === 'Main' || name === 'Yujen') {
   if (name === 'Blog') logic = blogLogic(logic, posts);
   else body = latestCards(body, posts);
 }
+// 個人頁的電子報區塊：Substack 連結換成站內訂閱表單
+if (name === 'Yujen') body = swapSubstackButton(body);
 // 首屏最大圖（LCP）：加 fetchpriority 並預載。在這裡處理而不改 src/design，重新匯入設計稿也不會被蓋掉
 const lcpSrc = { Main: '/assets/90a8bab566ecf3cf2ffd4e3c4e53b4da.jpg', Yujen: '/assets/1ac8a65bac4f4f647a4ab1fbafbde316.jpg' }[name as string];
 if (lcpSrc) body = body.replace(`<img src="${lcpSrc}"`, `<img fetchpriority="high" decoding="async" src="${lcpSrc}"`);

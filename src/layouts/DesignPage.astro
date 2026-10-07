@@ -97,6 +97,7 @@ const mountScript = `${formInit}${logic}\nDCLite.mount(Component, document.getEl
 <body>
 <div id="dc-root"><Fragment set:html={body} /><slot /><Fragment set:html={bodyAfter} /></div>
 <script is:inline src="/js/dc-lite.js"></script>
+<script is:inline src="/js/subscribe.js" defer></script>
 <script is:inline set:html={mountScript}></script>
 </body>
 </html>

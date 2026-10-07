@@ -194,6 +194,7 @@ dl[style*="repeat(3"]>div:not(:first-child){padding-left:12px !important}
 @media (max-width:760px){
 .home-hero{padding-top:72px !important;padding-bottom:80px !important;gap:28px !important}
 .home-hero h1{font-size:39px !important;line-height:54px !important}
+.home-hero .para-bg{background-position:left center !important}
 .hero-sub{font-size:18px !important;line-height:32px !important}
 .founder-sec{grid-template-columns:minmax(0,1fr) !important;gap:32px !important;padding-top:72px !important;padding-bottom:48px !important}
 .founder-photo{width:220px !important;height:220px !important;border-radius:50% !important;justify-self:center;box-shadow:0 18px 36px rgba(0,0,0,.14)}

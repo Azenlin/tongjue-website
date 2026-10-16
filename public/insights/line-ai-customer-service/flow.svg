@@ -11,9 +11,9 @@
   <text x="360" y="76" font-size="30" font-weight="700" fill="#1a1a1a" text-anchor="middle">會員在 LINE 發問</text>
   <line x1="360" y1="110" x2="360" y2="154" stroke="#8d1d22" stroke-width="3" marker-end="url(#ah)"/>
 
-  <!-- AI 小幫手 -->
+  <!-- AI 客服機器人 -->
   <rect x="140" y="160" width="440" height="150" rx="18" fill="#8d1d22"/>
-  <text x="360" y="212" font-size="32" font-weight="700" fill="#ffffff" text-anchor="middle">AI 小幫手</text>
+  <text x="360" y="212" font-size="32" font-weight="700" fill="#ffffff" text-anchor="middle">AI 客服機器人</text>
   <text x="360" y="252" font-size="26" fill="#ffffff" text-anchor="middle">先翻工作手冊再回答</text>
   <text x="360" y="288" font-size="24" fill="#f3d9da" text-anchor="middle">（工會自己維護的試算表）</text>
 

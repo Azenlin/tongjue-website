@@ -1,0 +1,17 @@
+---
+// 「幕後怎麼做的」灰底小框：給想知道技術細節的讀者，正文讀者可跳過
+---
+<aside class="bs">
+  <p class="bs-title">幕後怎麼做的</p>
+  <slot />
+</aside>
+
+<style>
+.bs{margin:40px 0 !important;padding:24px 28px;border-radius:12px;background:#f5f5f5;font-size:17px;line-height:30px;color:#333333}
+.bs :global(*){margin:0}
+.bs :global(* + *){margin-top:14px}
+.bs .bs-title{font-family:'Noto Serif TC',serif;font-weight:700;font-size:20px;color:#8d1d22}
+.bs :global(ul){padding-left:1.3em}
+.bs :global(li + li){margin-top:8px}
+@media (max-width:760px){.bs{padding:20px 18px;font-size:16px;line-height:28px}}
+</style>

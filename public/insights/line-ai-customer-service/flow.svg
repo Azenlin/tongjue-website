@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 1040" width="720" height="1040" font-family="'Noto Sans TC','Microsoft JhengHei','PingFang TC',sans-serif">
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#8d1d22"/>
+    </marker>
+  </defs>
+  <rect width="720" height="1040" fill="#ffffff"/>
+
+  <!-- 會員發問 -->
+  <rect x="160" y="20" width="400" height="90" rx="18" fill="#f5f5f5"/>
+  <text x="360" y="76" font-size="30" font-weight="700" fill="#1a1a1a" text-anchor="middle">會員在 LINE 發問</text>
+  <line x1="360" y1="110" x2="360" y2="154" stroke="#8d1d22" stroke-width="3" marker-end="url(#ah)"/>
+
+  <!-- AI 小幫手 -->
+  <rect x="140" y="160" width="440" height="150" rx="18" fill="#8d1d22"/>
+  <text x="360" y="212" font-size="32" font-weight="700" fill="#ffffff" text-anchor="middle">AI 小幫手</text>
+  <text x="360" y="252" font-size="26" fill="#ffffff" text-anchor="middle">先翻工作手冊再回答</text>
+  <text x="360" y="288" font-size="24" fill="#f3d9da" text-anchor="middle">（工會自己維護的試算表）</text>
+
+  <!-- 分岔 -->
+  <line x1="360" y1="310" x2="360" y2="352" stroke="#8d1d22" stroke-width="3"/>
+  <line x1="180" y1="352" x2="540" y2="352" stroke="#8d1d22" stroke-width="3"/>
+  <line x1="180" y1="352" x2="180" y2="434" stroke="#8d1d22" stroke-width="3" marker-end="url(#ah)"/>
+  <line x1="540" y1="352" x2="540" y2="434" stroke="#8d1d22" stroke-width="3" marker-end="url(#ah)"/>
+  <rect x="120" y="374" width="120" height="36" fill="#ffffff"/>
+  <text x="180" y="402" font-size="24" font-weight="700" fill="#8d1d22" text-anchor="middle">答得了</text>
+  <rect x="446" y="374" width="188" height="36" fill="#ffffff"/>
+  <text x="540" y="402" font-size="24" font-weight="700" fill="#8d1d22" text-anchor="middle">答不了／要辦事</text>
+
+  <!-- 左：直接回覆 -->
+  <rect x="16" y="440" width="328" height="100" rx="16" fill="#ffffff" stroke="#dddddd" stroke-width="2"/>
+  <text x="180" y="500" font-size="30" font-weight="700" fill="#1a1a1a" text-anchor="middle">直接回覆會員</text>
+
+  <!-- 右：交給承辦 -->
+  <rect x="376" y="440" width="328" height="110" rx="16" fill="#ffffff" stroke="#dddddd" stroke-width="2"/>
+  <text x="540" y="486" font-size="30" font-weight="700" fill="#1a1a1a" text-anchor="middle">先問齊資料</text>
+  <text x="540" y="526" font-size="24" fill="#5a5a5a" text-anchor="middle">姓名、會員編號、要辦的事</text>
+  <line x1="540" y1="550" x2="540" y2="584" stroke="#8d1d22" stroke-width="3" marker-end="url(#ah)"/>
+
+  <rect x="376" y="590" width="328" height="100" rx="16" fill="#ffffff" stroke="#dddddd" stroke-width="2"/>
+  <text x="540" y="632" font-size="30" font-weight="700" fill="#1a1a1a" text-anchor="middle">通知承辦手機</text>
+  <text x="540" y="670" font-size="24" fill="#5a5a5a" text-anchor="middle">AI 暫停，不插話</text>
+  <line x1="540" y1="690" x2="540" y2="724" stroke="#8d1d22" stroke-width="3" marker-end="url(#ah)"/>
+
+  <rect x="376" y="730" width="328" height="90" rx="16" fill="#ffffff" stroke="#dddddd" stroke-width="2"/>
+  <text x="540" y="785" font-size="30" font-weight="700" fill="#1a1a1a" text-anchor="middle">承辦回覆會員</text>
+
+  <!-- 對話記錄 -->
+  <line x1="180" y1="540" x2="180" y2="866" stroke="#bbbbbb" stroke-width="2" stroke-dasharray="6 6"/>
+  <line x1="540" y1="820" x2="540" y2="866" stroke="#bbbbbb" stroke-width="2" stroke-dasharray="6 6"/>
+  <rect x="16" y="870" width="688" height="150" rx="20" fill="#f5f5f5"/>
+  <text x="44" y="922" font-size="28" font-weight="700" fill="#8d1d22">每一則對話都記錄下來</text>
+  <text x="44" y="964" font-size="26" fill="#5a5a5a">存在工會自己的試算表；每週把答不出來的</text>
+  <text x="44" y="998" font-size="26" fill="#5a5a5a">題目補進工作手冊，機器人越答越準</text>
+</svg>

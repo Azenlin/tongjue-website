@@ -1,0 +1,37 @@
+---
+// 四種回答方式表：桌機是表格，手機改成一題一張卡
+const rows = [
+  ['固定答案', '直接回答', '匯款帳號、入會要準備的資料', 13],
+  ['查表回答', '去查一張有人維護的表', '開課日期、考試日程', 7],
+  ['轉承辦處理', '先把資料問齊，再通知真人', '投保證明、費用試算、確認入帳', 9],
+  ['待組織決定', '過去的回答不一致，先請工會訂規則', '講義和上課影片要不要提供', 1],
+];
+---
+<div class="table-wrap at">
+  <table>
+    <thead><tr><th>回答方式</th><th>機器人怎麼做</th><th>工會的例子</th><th>題數</th></tr></thead>
+    <tbody>
+      {rows.map(([type, how, eg, n]) => (
+        <tr><td>{type}</td><td>{how}</td><td>{eg}</td><td>{n}</td></tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
+<style>
+.at td:last-child,.at th:last-child{text-align:right;white-space:nowrap}
+.at td:first-child{font-weight:600;color:#1a1a1a;white-space:nowrap}
+@media (max-width:760px){
+  .at table,.at tbody,.at tr,.at td{display:block;width:auto}
+  .at thead{display:none}
+  .at tr{position:relative;padding:14px 16px;border:1px solid #dddddd;border-radius:10px;background:#ffffff}
+  .at tr + tr{margin-top:10px}
+  .at td{padding:0 !important;border:0 !important}
+  .at td:first-child{font-size:17px;padding-right:56px !important}
+  .at td:nth-child(2){margin-top:4px}
+  .at td:nth-child(3){margin-top:8px;padding-top:8px !important;border-top:1px solid #eeeeee !important;font-size:14px;line-height:22px;color:#888888}
+  .at td:nth-child(3)::before{content:'例子：';color:#8d1d22}
+  .at td:last-child{position:absolute;top:14px;right:16px;color:#8d1d22;font-weight:600}
+  .at td:last-child::after{content:' 題'}
+}
+</style>

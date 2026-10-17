@@ -1,0 +1,58 @@
+---
+// 工會每月送出的 LINE 訊息量（合併聊天記錄中「傳送者類型 = Account」，2024/01–2026/10）。2026/10 只到 10/15。
+const data = [
+  1123,473,1237,2940,2037,2811,2583,2676,2572,2589,1935,2163,
+  1982,2055,3030,2562,2985,2952,2493,2136,2029,2851,1670,2562,
+  2418,1524,2591,2653,1248,1296,1178,1079,1319,255,
+];
+const total = data.reduce((a, b) => a + b, 0);
+const avg = Math.round(total / data.length);
+const W = 600, H = 300, L = 46, R = 8, T = 34, B = 40;
+const pw = W - L - R, ph = H - T - B, max = 3000;
+const step = pw / data.length, bw = step * 0.68;
+const y = (v: number) => T + ph - (v / max) * ph;
+const bars = data.map((v, i) => ({
+  x: L + i * step + (step - bw) / 2, y: y(v), h: T + ph - y(v), w: bw,
+  partial: i === data.length - 1,
+}));
+const yearTicks = [0, 12, 24].map((i, k) => ({ x: L + i * step, label: `${2024 + k}` }));
+---
+<figure class="mr">
+  <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img" aria-label={`長條圖：2024 年 1 月到 2026 年 10 月，工會每月在 LINE 送出約 1,000 到 3,000 則訊息，34 個月平均每月約 ${avg.toLocaleString()} 則。`}>
+    <text x={L} y="18" class="t">工會每月送出的 LINE 訊息（則）</text>
+    {[0, 1000, 2000, 3000].map((v) => (
+      <g>
+        <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} class={v === 0 ? 'ax' : 'gd'} />
+        <text x={L - 6} y={y(v) + 4} class="yl" text-anchor="end">{v.toLocaleString()}</text>
+      </g>
+    ))}
+    {bars.map((b) => (
+      <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="1.5" class={b.partial ? 'bp' : 'bar'} />
+    ))}
+    <line x1={L} x2={W - R} y1={y(avg)} y2={y(avg)} class="av" />
+    <line x1={W - R - 150} x2={W - R - 130} y1="13" y2="13" class="av" />
+    <text x={W - R} y="18" class="avl" text-anchor="end">平均每月約 {avg.toLocaleString()} 則</text>
+    {yearTicks.map((t) => (
+      <g>
+        <line x1={t.x} x2={t.x} y1={T + ph} y2={T + ph + 6} class="ax" />
+        <text x={t.x + 2} y={T + ph + 22} class="xl">{t.label}</text>
+      </g>
+    ))}
+    <text x={W - R} y={T + ph + 22} class="xl" text-anchor="end">10 月只算到 15 日</text>
+  </svg>
+  <figcaption>2024 年 1 月到 2026 年 10 月，工會在 LINE 官方帳號送出的訊息，共 {total.toLocaleString()} 則（含自動回應訊息）</figcaption>
+</figure>
+
+<style>
+.mr{margin:32px 0 !important}
+.mr svg{display:block;font-family:inherit}
+.mr .t{font-size:15px;font-weight:700;fill:#1a1a1a}
+.mr .yl,.mr .xl{font-size:13px;fill:#888888}
+.mr .gd{stroke:#e5e5e5;stroke-width:1}
+.mr .ax{stroke:#999999;stroke-width:1}
+.mr .bar{fill:#8d1d22}
+.mr .bp{fill:#8d1d22;opacity:.35}
+.mr .av{stroke:#1a1a1a;stroke-width:1.2;stroke-dasharray:5 4}
+.mr .avl{font-size:14px;font-weight:700;fill:#1a1a1a}
+.mr figcaption{margin-top:8px;font-size:13px;line-height:20px;color:#888888;text-align:center}
+</style>

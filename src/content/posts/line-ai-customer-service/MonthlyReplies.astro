@@ -1,58 +1,120 @@
 ---
-// 工會每月送出的 LINE 訊息量（合併聊天記錄中「傳送者類型 = Account」，2024/01–2026/10）。2026/10 只到 10/15。
-const data = [
+// 工會每季送出的 LINE 訊息量（合併聊天記錄中「傳送者類型 = Account」，2024/01–2026/10）。
+// 逐月原始數字在 months；2026 Q4 只有 10/1–10/15，用淡色標示且不算進平均。
+const months = [
   1123,473,1237,2940,2037,2811,2583,2676,2572,2589,1935,2163,
   1982,2055,3030,2562,2985,2952,2493,2136,2029,2851,1670,2562,
   2418,1524,2591,2653,1248,1296,1178,1079,1319,255,
 ];
-const total = data.reduce((a, b) => a + b, 0);
-const avg = Math.round(total / data.length);
-const W = 600, H = 300, L = 46, R = 8, T = 34, B = 40;
-const pw = W - L - R, ph = H - T - B, max = 3000;
-const step = pw / data.length, bw = step * 0.68;
+const quarters = [];
+for (let i = 0; i < months.length; i += 3) {
+  const m = months.slice(i, i + 3);
+  const year = 2024 + Math.floor(i / 12);
+  const q = (i % 12) / 3 + 1;
+  quarters.push({
+    label: `${year} Q${q}`, range: `${(q - 1) * 3 + 1}–${(q - 1) * 3 + m.length} 月`,
+    total: m.reduce((a, b) => a + b, 0), months: m, partial: m.length < 3,
+  });
+}
+const full = quarters.filter((q) => !q.partial);
+const avg = Math.round(full.reduce((a, q) => a + q.total, 0) / full.length);
+const total = months.reduce((a, b) => a + b, 0);
+const W = 600, H = 300, L = 50, R = 8, T = 36, B = 44;
+const pw = W - L - R, ph = H - T - B, max = 9000;
+const step = pw / quarters.length, bw = step * 0.62;
 const y = (v: number) => T + ph - (v / max) * ph;
-const bars = data.map((v, i) => ({
-  x: L + i * step + (step - bw) / 2, y: y(v), h: T + ph - y(v), w: bw,
-  partial: i === data.length - 1,
-}));
-const yearTicks = [0, 12, 24].map((i, k) => ({ x: L + i * step, label: `${2024 + k}` }));
+const bars = quarters.map((q, i) => ({ ...q, x: L + i * step + (step - bw) / 2, cx: L + i * step + step / 2, y: y(q.total), h: T + ph - y(q.total), w: bw }));
 ---
-<figure class="mr">
-  <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img" aria-label={`長條圖：2024 年 1 月到 2026 年 10 月，工會每月在 LINE 送出約 1,000 到 3,000 則訊息，34 個月平均每月約 ${avg.toLocaleString()} 則。`}>
-    <text x={L} y="18" class="t">工會每月送出的 LINE 訊息（則）</text>
-    {[0, 1000, 2000, 3000].map((v) => (
-      <g>
-        <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} class={v === 0 ? 'ax' : 'gd'} />
-        <text x={L - 6} y={y(v) + 4} class="yl" text-anchor="end">{v.toLocaleString()}</text>
-      </g>
-    ))}
-    {bars.map((b) => (
-      <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="1.5" class={b.partial ? 'bp' : 'bar'} />
-    ))}
-    <line x1={L} x2={W - R} y1={y(avg)} y2={y(avg)} class="av" />
-    <line x1={W - R - 150} x2={W - R - 130} y1="13" y2="13" class="av" />
-    <text x={W - R} y="18" class="avl" text-anchor="end">平均每月約 {avg.toLocaleString()} 則</text>
-    {yearTicks.map((t) => (
-      <g>
-        <line x1={t.x} x2={t.x} y1={T + ph} y2={T + ph + 6} class="ax" />
-        <text x={t.x + 2} y={T + ph + 22} class="xl">{t.label}</text>
-      </g>
-    ))}
-    <text x={W - R} y={T + ph + 22} class="xl" text-anchor="end">10 月只算到 15 日</text>
-  </svg>
-  <figcaption>2024 年 1 月到 2026 年 10 月，工會在 LINE 官方帳號送出的訊息，共 {total.toLocaleString()} 則（含自動回應訊息）</figcaption>
+<figure class="mr" data-quarters={JSON.stringify(quarters)}>
+  <div class="mr-box">
+    <svg viewBox={`0 0 ${W} ${H}`} width="100%" role="img" aria-label={`長條圖：2024 年第 1 季到 2026 年第 3 季，工會每季在 LINE 送出約 3,500 到 8,500 則訊息，平均每季約 ${avg.toLocaleString()} 則。`}>
+      <text x={L} y="18" class="t">工會每季送出的 LINE 訊息（則）</text>
+      <line x1={W - R - 150} x2={W - R - 130} y1="13" y2="13" class="av" />
+      <text x={W - R} y="18" class="avl" text-anchor="end">平均每季約 {avg.toLocaleString()} 則</text>
+      {[0, 3000, 6000, 9000].map((v) => (
+        <g>
+          <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} class={v === 0 ? 'ax' : 'gd'} />
+          <text x={L - 6} y={y(v) + 4} class="yl" text-anchor="end">{v.toLocaleString()}</text>
+        </g>
+      ))}
+      {bars.map((b, i) => (
+        <g class="q" data-i={i} tabindex="0" role="button" aria-label={`${b.label}（${b.range}）送出 ${b.total.toLocaleString()} 則`}>
+          <rect x={b.cx - step / 2} y={T} width={step} height={ph} class="hit" />
+          <rect x={b.x} y={b.y} width={b.w} height={b.h} rx="3" class={b.partial ? 'bp' : 'bar'} />
+          <text x={b.cx} y={b.y - 6} class="vl" text-anchor="middle">{b.total.toLocaleString()}</text>
+          <text x={b.cx} y={T + ph + 18} class="xl" text-anchor="middle">Q{b.label.slice(-1)}</text>
+          {b.label.endsWith('Q1') && <text x={b.cx} y={T + ph + 35} class="xl yr" text-anchor="middle">{b.label.slice(0, 4)}</text>}
+        </g>
+      ))}
+      <line x1={L} x2={W - R} y1={y(avg)} y2={y(avg)} class="av" />
+    </svg>
+    <div class="mr-tip" role="status" aria-live="polite" hidden></div>
+  </div>
+  <figcaption>2024 年 1 月到 2026 年 10 月，工會在 LINE 官方帳號送出的訊息共 {total.toLocaleString()} 則（含自動回應）。2026 Q4 只算到 10 月 15 日。滑鼠移上去或點一下長條，可看每月明細。</figcaption>
 </figure>
+
+<script>
+  const fig = document.querySelector<HTMLElement>('.mr');
+  if (fig) {
+    const quarters = JSON.parse(fig.dataset.quarters || '[]');
+    const box = fig.querySelector<HTMLElement>('.mr-box')!;
+    const tip = fig.querySelector<HTMLElement>('.mr-tip')!;
+    const groups = Array.from(fig.querySelectorAll<SVGGElement>('.q'));
+    let active: SVGGElement | null = null;
+    const hide = () => { tip.hidden = true; active?.classList.remove('on'); active = null; };
+    const show = (g: SVGGElement) => {
+      const q = quarters[Number(g.dataset.i)];
+      active?.classList.remove('on');
+      active = g; g.classList.add('on');
+      const rows = q.months.map((v: number, k: number) => `<li><span>${Number(q.range.split('–')[0]) + k} 月</span><b>${v.toLocaleString()} 則</b></li>`).join('');
+      const perDay = q.partial ? '' : `<p class="sub">約每個上班日 ${Math.round(q.total / (3 * 22))} 則</p>`;
+      tip.innerHTML = `<p class="hd">${q.label}（${q.range}${q.partial ? '，只算到 15 日' : ''}）</p><p class="big">${q.total.toLocaleString()} 則</p>${perDay}<ul>${rows}</ul>`;
+      tip.hidden = false;
+      const bar = g.querySelector('.bar, .bp')!.getBoundingClientRect();
+      const b = box.getBoundingClientRect();
+      const tw = tip.offsetWidth;
+      let left = bar.left - b.left + bar.width / 2 - tw / 2;
+      left = Math.max(0, Math.min(left, b.width - tw));
+      tip.style.left = left + 'px';
+      tip.style.top = Math.max(0, bar.top - b.top - tip.offsetHeight - 8) + 'px';
+    };
+    groups.forEach((g) => {
+      g.addEventListener('pointerenter', (e) => { if ((e as PointerEvent).pointerType === 'mouse') show(g); });
+      g.addEventListener('pointerleave', (e) => { if ((e as PointerEvent).pointerType === 'mouse') hide(); });
+      g.addEventListener('click', (e) => { e.stopPropagation(); if (active === g && matchMedia('(hover: none)').matches) hide(); else show(g); });
+      g.addEventListener('focus', () => show(g));
+      g.addEventListener('blur', hide);
+    });
+    document.addEventListener('click', hide);
+  }
+</script>
 
 <style>
 .mr{margin:32px 0 !important}
+.mr-box{position:relative}
 .mr svg{display:block;font-family:inherit}
 .mr .t{font-size:15px;font-weight:700;fill:#1a1a1a}
 .mr .yl,.mr .xl{font-size:13px;fill:#888888}
+.mr .xl.yr{font-weight:700;fill:#555555}
 .mr .gd{stroke:#e5e5e5;stroke-width:1}
 .mr .ax{stroke:#999999;stroke-width:1}
-.mr .bar{fill:#8d1d22}
-.mr .bp{fill:#8d1d22;opacity:.35}
-.mr .av{stroke:#1a1a1a;stroke-width:1.2;stroke-dasharray:5 4}
+.mr .hit{fill:transparent}
+.mr .q{cursor:pointer;outline:none}
+.mr .bar{fill:#f6b3c4;transition:fill .15s}
+.mr .bp{fill:#fbdce4;transition:fill .15s}
+.mr .q:hover .bar,.mr .q.on .bar,.mr .q:focus-visible .bar{fill:#ee8aa5}
+.mr .q:hover .bp,.mr .q.on .bp,.mr .q:focus-visible .bp{fill:#f6b3c4}
+.mr .vl{font-size:13px;font-weight:700;fill:#555555}
+.mr .av{stroke:#1a1a1a;stroke-width:1.2;stroke-dasharray:5 4;pointer-events:none}
 .mr .avl{font-size:14px;font-weight:700;fill:#1a1a1a}
+.mr-tip{position:absolute;z-index:2;min-width:150px;padding:12px 14px;border-radius:10px;background:#ffffff;border:1px solid #e5e5e5;box-shadow:0 4px 16px rgba(0,0,0,.12);font-size:14px;line-height:22px;color:#333333;pointer-events:none}
+.mr-tip[hidden]{display:none}
+.mr-tip :global(p),.mr-tip :global(ul){margin:0}
+.mr-tip :global(.hd){font-size:13px;color:#888888}
+.mr-tip :global(.big){font-family:'Noto Serif TC',serif;font-size:22px;line-height:30px;font-weight:700;color:#1a1a1a}
+.mr-tip :global(.sub){font-size:13px;color:#8d1d22}
+.mr-tip :global(ul){margin-top:8px;padding:8px 0 0;list-style:none;border-top:1px solid #eeeeee}
+.mr-tip :global(li){display:flex;justify-content:space-between;gap:16px;margin:0;font-size:13px;line-height:20px}
+.mr-tip :global(li span){color:#888888}
 .mr figcaption{margin-top:8px;font-size:13px;line-height:20px;color:#888888;text-align:center}
 </style>

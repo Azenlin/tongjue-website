@@ -100,10 +100,10 @@ const bars = quarters.map((q, i) => ({ ...q, x: L + i * step + (step - bw) / 2, 
 .mr .ax{stroke:#999999;stroke-width:1}
 .mr .hit{fill:transparent}
 .mr .q{cursor:pointer;outline:none}
-.mr .bar{fill:#f6b3c4;transition:fill .15s}
-.mr .bp{fill:#fbdce4;transition:fill .15s}
-.mr .q:hover .bar,.mr .q.on .bar,.mr .q:focus-visible .bar{fill:#ee8aa5}
-.mr .q:hover .bp,.mr .q.on .bp,.mr .q:focus-visible .bp{fill:#f6b3c4}
+.mr .bar{fill:var(--brand-tint,#ffd0d0);transition:fill .15s}
+.mr .bp{fill:var(--brand-soft,#f7ecec);transition:fill .15s}
+.mr .q:hover .bar,.mr .q.on .bar,.mr .q:focus-visible .bar{fill:var(--brand,#8d1d22)}
+.mr .q:hover .bp,.mr .q.on .bp,.mr .q:focus-visible .bp{fill:var(--brand-tint,#ffd0d0)}
 .mr .vl{font-size:13px;font-weight:700;fill:#555555}
 .mr .av{stroke:#1a1a1a;stroke-width:1.2;stroke-dasharray:5 4;pointer-events:none}
 .mr .avl{font-size:14px;font-weight:700;fill:#1a1a1a}
@@ -112,7 +112,7 @@ const bars = quarters.map((q, i) => ({ ...q, x: L + i * step + (step - bw) / 2, 
 .mr-tip :global(p),.mr-tip :global(ul){margin:0}
 .mr-tip :global(.hd){font-size:13px;color:#888888}
 .mr-tip :global(.big){font-family:'Noto Serif TC',serif;font-size:22px;line-height:30px;font-weight:700;color:#1a1a1a}
-.mr-tip :global(.sub){font-size:13px;color:#8d1d22}
+.mr-tip :global(.sub){font-size:13px;color:var(--brand,#8d1d22)}
 .mr-tip :global(ul){margin-top:8px;padding:8px 0 0;list-style:none;border-top:1px solid #eeeeee}
 .mr-tip :global(li){display:flex;justify-content:space-between;gap:16px;margin:0;font-size:13px;line-height:20px}
 .mr-tip :global(li span){color:#888888}

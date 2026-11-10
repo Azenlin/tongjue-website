@@ -60,8 +60,15 @@ for (const [from, to] of TEXT_FIXES[name as string] ?? []) {
 }
 // 服務項目頁：三張卡片的「了解服務 →」hover 底線統一（設計稿只有第一張有 svc-more，其餘補上；在這裡處理，重新匯入設計稿也不會被蓋掉）
 if (name === 'Services') body = body.replace(/<span style="([^"]*)">(了解服務 →)<\/span>/g, '<span class="svc-more" style="$1">$2</span>');
+// 首頁首屏底圖（.para-bg，透明度 15% 的 CSS 背景）才是首頁真正的 LCP，原本是 2000px JPG 211 KB、要等 CSS 解析完才開始下載。
+// 換成 1200px WebP 42 KB（public/assets/home-hero-bg.webp，由原圖 13322f….jpg 縮製）並預載（2026-11-10）
+const HERO_BG = { from: '/assets/13322f276ab484377bed884b2d360316.jpg', to: '/assets/home-hero-bg.webp' };
+if (name === 'Main') {
+  if (!css.includes(HERO_BG.from)) throw new Error('Main.css 找不到首屏底圖網址，設計稿可能改版了，請更新 [...path].astro 的 HERO_BG');
+  css = css.replace(HERO_BG.from, HERO_BG.to);
+}
 // 首屏最大圖（LCP）：加 fetchpriority 並預載。在這裡處理而不改 src/design，重新匯入設計稿也不會被蓋掉
-const lcpSrc = { Main: '/assets/90a8bab566ecf3cf2ffd4e3c4e53b4da.jpg', Yujen: '/assets/1ac8a65bac4f4f647a4ab1fbafbde316.jpg' }[name as string];
+const lcpSrc = { Main: HERO_BG.to, Yujen: '/assets/1ac8a65bac4f4f647a4ab1fbafbde316.jpg' }[name as string];
 if (lcpSrc) body = body.replace(`<img src="${lcpSrc}"`, `<img fetchpriority="high" decoding="async" src="${lcpSrc}"`);
 // 動態頁：build 時先依初始資料展開樣板，讓不跑 JS 的爬蟲也讀得到文章連結與內容（見 src/lib/prerender.ts）
 const prerendered = p.dynamic ? prerender(body, logic, name) : undefined;

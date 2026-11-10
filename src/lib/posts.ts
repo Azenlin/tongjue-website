@@ -63,6 +63,22 @@ export function coverOf(p: Post): string | undefined {
 }
 
 /**
+ * 卡片專用的小尺寸封面（tools/card-covers.mjs 在建置前產生：寬 800px WebP，檔名帶原圖指紋）。
+ * 找不到與目前原圖指紋相符的檔案（例如剛換封面、還沒跑建置）就退回原圖，不讓卡片開天窗。
+ */
+export function cardCoverOf(p: Post): string | undefined {
+  for (const ext of ['jpg', 'jpeg', 'png', 'webp']) {
+    const dir = join(process.cwd(), 'public', 'insights', p.id);
+    const file = join(dir, `cover.${ext}`);
+    if (existsSync(file)) {
+      const hash = createHash('md5').update(readFileSync(file)).digest('hex').slice(0, 8);
+      const card = `cover-card.${hash}.webp`;
+      return existsSync(join(dir, card)) ? `/insights/${p.id}/${card}` : coverOf(p);
+    }
+  }
+}
+
+/**
  * 封面上的深色漸層（照片維持全彩，只在白字後面變暗；與設計稿同一組數值）：
  *   card：卡片，字在下半部，從底部往上淡到透明
  *   hero：文章頁標題區，字從上排到下，整張帶一點底色、下半部較深
@@ -80,7 +96,7 @@ const SCRIM_DARK = {
 /** 每篇文章的卡片／標題區底圖 class */
 export function coverCss(posts: Post[], kind: 'card' | 'hero' = 'card', selector?: string) {
   return posts.map((p) => {
-    const url = coverOf(p);
+    const url = kind === 'card' ? cardCoverOf(p) : coverOf(p);
     const scrim = (p.data.coverDark ? SCRIM_DARK : SCRIM)[kind];
     const img = url ? `${scrim},url("${url}")` : `${scrim},linear-gradient(135deg,#9a9a9a,#c8c8c8)`;
     return `${selector ?? `.post-img-${p.id}`}{background-image:${img};background-size:cover;background-position:${p.data.coverPosition ?? 'center'}}`;

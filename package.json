@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && node tools/subset-fonts.mjs",
+    "build": "node tools/card-covers.mjs && astro build && node tools/subset-fonts.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
